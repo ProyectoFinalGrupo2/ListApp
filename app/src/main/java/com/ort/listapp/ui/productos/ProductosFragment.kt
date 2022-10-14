@@ -25,7 +25,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.R
 import com.ort.listapp.adapters.ProductoAdapter
-import com.ort.listapp.entities.Producto
+import com.ort.listapp.domain.model.Producto
 
 class ProductosFragment : Fragment() {
 
@@ -120,8 +120,8 @@ class ProductosFragment : Fragment() {
         popUp = popupBuilder.create()
         popUp.show()
         nombreProd.text = producto.nombre
-        precioProducto.text =  "$"+producto.precio.toString()
-        Glide.with(popUpView).load(producto.imgUrl).into(imagen)
+        precioProducto.text =  "$"+producto.precioMax.toString()
+        Glide.with(popUpView).load(producto.imgURL()).into(imagen)
         botonAgregar.setOnClickListener {
             cantActual++
             cantidad.text = cantActual.toString()
@@ -137,23 +137,23 @@ class ProductosFragment : Fragment() {
     fun cargarStock(){
         var i = 0
         while(i<15){
-            listaStock.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg", "https://imagenes.preciosclaros.gob.ar/productos/5410171921991.jpg"))
+            listaStock.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
             i += 1
         }
     }
     fun cargarProdsFav(){
-        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg", "https://imagenes.preciosclaros.gob.ar/productos/5410171921991.jpg"))
-        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg", "https://imagenes.preciosclaros.gob.ar/productos/5410171921991.jpg"))
-        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg", "https://imagenes.preciosclaros.gob.ar/productos/5410171921991.jpg"))
-        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg", "https://imagenes.preciosclaros.gob.ar/productos/5410171921991.jpg"))
-        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg", "https://imagenes.preciosclaros.gob.ar/productos/5410171921991.jpg"))
-        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg", "https://imagenes.preciosclaros.gob.ar/productos/5410171921991.jpg"))
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
     }
     fun cargarProdsPersonalizados(){
-        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg", "https://imagenes.preciosclaros.gob.ar/productos/5410171921991.jpg"))
-        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg", "https://imagenes.preciosclaros.gob.ar/productos/5410171921991.jpg"))
-        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg", "https://imagenes.preciosclaros.gob.ar/productos/5410171921991.jpg"))
-        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg", "https://imagenes.preciosclaros.gob.ar/productos/5410171921991.jpg"))
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg" ))
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg") )
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
     }
 
     fun crearPopUp(){

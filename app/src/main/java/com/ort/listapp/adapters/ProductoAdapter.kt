@@ -10,7 +10,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ort.listapp.R
-import com.ort.listapp.entities.Producto
+import com.ort.listapp.domain.model.Producto
 
 class ProductoAdapter(
     var productos: MutableList<Producto>,
@@ -63,7 +63,7 @@ class ProductoAdapter(
         //Solamente itera sobre los elementos en pantalla e itera a medida que se scrollea
         holder.setNombre(productos[position].nombre)
         holder.setPrecio(productos[position].precioMax)
-        holder.loadImg(productos[position].imgURL)
+        holder.loadImg(productos[position].imgURL())
 
 
         //Se le settea un click listener a las cards
