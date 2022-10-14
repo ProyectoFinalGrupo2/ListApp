@@ -1,11 +1,17 @@
 package com.ort.listapp.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.inflate
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.resources.Compatibility.Api21Impl.inflate
+import androidx.core.content.res.ColorStateListInflaterCompat.inflate
+import androidx.core.content.res.ComplexColorCompat.inflate
+import androidx.core.graphics.drawable.DrawableCompat.inflate
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +28,8 @@ class Productos : Fragment() {
 
     }
     lateinit var v: View
-
+    lateinit var popUp : AlertDialog
+    lateinit var popupBuilder : AlertDialog.Builder
     var listaProdsFavs : MutableList<Producto> = ArrayList<Producto>()
     var listaProdsPersonalizados : MutableList<Producto> = ArrayList<Producto>()
     var listaStock : MutableList<Producto> = ArrayList<Producto>()
@@ -111,6 +118,14 @@ class Productos : Fragment() {
         listaProdsPersonalizados.add(Producto(6,"Tomate 1Kg", 350.00, null))
         listaProdsPersonalizados.add(Producto(7,"palta x1", 75.00, null))
         listaProdsPersonalizados.add(Producto(8,"facturas x6", 400.00, null))
+
+    }
+
+    fun crearPopUp(){
+        var popUpView : View
+        popupBuilder = AlertDialog.Builder(context)
+        popUpView = getLayoutInflater().inflate(R.layout.popup_producto_layout,null)
+
 
     }
 }

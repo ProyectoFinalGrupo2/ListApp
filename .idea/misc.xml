@@ -3,14 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Ort/4to cuatrimestre/TP3/Tps/ListApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.121" />
-        <entry key="..\:/Ort/4to cuatrimestre/TP3/Tps/ListApp/app/src/main/res/drawable/border.xml" value="0.12" />
-        <entry key="..\:/Ort/4to cuatrimestre/TP3/Tps/ListApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.121" />
-        <entry key="..\:/Ort/4to cuatrimestre/TP3/Tps/ListApp/app/src/main/res/layout/activity_main.xml" value="0.2765399737876802" />
-        <entry key="..\:/Ort/4to cuatrimestre/TP3/Tps/ListApp/app/src/main/res/layout/fragment_agregar_productos.xml" value="0.264" />
-        <entry key="..\:/Ort/4to cuatrimestre/TP3/Tps/ListApp/app/src/main/res/layout/fragment_productos.xml" value="0.264" />
-        <entry key="..\:/Ort/4to cuatrimestre/TP3/Tps/ListApp/app/src/main/res/layout/item_producto.xml" value="0.7246835443037974" />
-        <entry key="..\:/Ort/4to cuatrimestre/TP3/Tps/ListApp/app/src/main/res/layout/recview_lista_productos.xml" value="0.3084795321637427" />
+        <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/drawable/popup_xml.xml" value="0.2265" />
+        <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/fragment_productos.xml" value="0.4" />
+        <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/item_producto.xml" value="0.4" />
+        <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/piopup_producto_layout.xml" value="0.1" />
+        <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/popup_producto_layout.xml" value="0.24895833333333334" />
       </map>
     </option>
   </component>
