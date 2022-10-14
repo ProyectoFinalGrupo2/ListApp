@@ -1,4 +1,4 @@
-package com.ort.listapp.fragments
+package com.ort.listapp.ui.login
 
 import androidx.lifecycle.ViewModel
 
