@@ -1,18 +1,16 @@
 package com.ort.listapp.domain.model
 
-import java.util.Date
-
 data class Lista(
-    val id: Int,
+    val id: String,
     val nombre: String,
-    val fechaCreacion: Date,
+    val fechaCreacion: String,
     val tipoLista: TipoLista,
     val productos: List<ProductoListado>,
 )
 
 data class ProductoListado(
     val cantidad: Int,
-    val usuarioId: Int,
+    val usuarioId: String,
     val productoId: String,
 )
 

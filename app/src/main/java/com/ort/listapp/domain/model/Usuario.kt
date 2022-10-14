@@ -1,10 +1,10 @@
 package com.ort.listapp.domain.model
 
 data class Usuario(
-    val id: Int,
+    val id: String,
     val nombre: String,
     val apodo: String,
     val email: String,
     val password: String,
-    val familias: List<Familia>
+    val familias: List<String>
 )
