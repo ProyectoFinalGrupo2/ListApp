@@ -9,7 +9,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
-        android:name="com.ort.listapp.fragments.Productos"
+        android:name="com.ort.listapp.fragments.HomeFragment"
         android:layout_width="405dp"
         android:layout_height="727dp"
         tools:layout_editor_absoluteX="1dp"
