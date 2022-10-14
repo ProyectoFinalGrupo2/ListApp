@@ -1,4 +1,4 @@
-package com.ort.listapp.fragments
+package com.ort.listapp.ui.productos
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,10 +15,10 @@ import com.ort.listapp.R
 import com.ort.listapp.adapters.ProductoAdapter
 import com.ort.listapp.entities.Producto
 
-class Productos : Fragment() {
+class ProductosFragment : Fragment() {
 
     companion object {
-        fun newInstance() = Productos()
+        fun newInstance() = ProductosFragment()
 
     }
     lateinit var v: View
