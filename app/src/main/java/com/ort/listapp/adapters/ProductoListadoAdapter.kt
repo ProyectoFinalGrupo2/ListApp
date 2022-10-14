@@ -29,6 +29,11 @@ class ProductoListadoAdapter(
             var txtNombre : TextView = view.findViewById(R.id.nombreListadoItem)
             txtNombre.text = nombre
         }
+
+        fun setPrecioMax(precioMax:Double){
+            var txtPrecio : TextView = view.findViewById(R.id.precioItem)
+            txtPrecio.text = ("$" + precioMax.toString())
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductoListadoHolder {
@@ -38,6 +43,7 @@ class ProductoListadoAdapter(
 
     override fun onBindViewHolder(holder: ProductoListadoHolder, position: Int) {
         holder.setNombre(productos[position].nombre)
+        holder.setPrecioMax(productos[position].precioMax)
     }
 
     override fun getItemCount(): Int {
