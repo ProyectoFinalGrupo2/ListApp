@@ -3,17 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/drawable/border.xml" value="0.1885" />
-        <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/font/.xml" value="0.4348958333333333" />
-        <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/layout/activity_main.xml" value="0.4046875" />
-        <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/layout/fragment_home.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/layout/fragment_item_lista.xml" value="0.4466666666666667" />
-        <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/layout/fragment_lista_de_compras.xml" value="0.1796875" />
-        <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/layout/fragment_login.xml" value="0.4466666666666667" />
-        <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/layout/fragment_productos.xml" value="0.3671875" />
-        <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/layout/item_lista2.xml" value="0.5" />
-        <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/layout/item_producto.xml" value="0.6" />
-        <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/layout/item_producto2.xml" value="0.25052083333333336" />
+        <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/drawable/border.xml" value="0.2265" />
+        <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/drawable/popup_xml.xml" value="0.2265" />
+        <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/fragment_productos.xml" value="0.4" />
+        <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/item_producto.xml" value="0.4" />
+        <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/piopup_producto_layout.xml" value="0.1" />
+        <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/popup_producto_layout.xml" value="0.1" />
       </map>
     </option>
   </component>
