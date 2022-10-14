@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navgraph"
+    app:startDestination="@id/lista_de_comprasFragment">
+
+    <fragment
+        android:id="@+id/lista_de_comprasFragment"
+        android:name="com.ort.listapp.ui.lista_de_compras.ListaDeComprasFragment"
+        android:label="fragment_lista_de_compras"
+        tools:layout="@layout/fragment_lista_de_compras" />
+    <fragment
+        android:id="@+id/alacenaFragment"
+        android:name="com.ort.listapp.ui.alacena.AlacenaFragment"
+        android:label="fragment_alacena"
+        tools:layout="@layout/fragment_alacena" />
+    <fragment
+        android:id="@+id/productosFragment"
+        android:name="com.ort.listapp.ui.productos.ProductosFragment"
+        android:label="ProductosFragment" />
+</navigation>

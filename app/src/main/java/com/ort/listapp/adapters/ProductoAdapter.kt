@@ -27,7 +27,7 @@ class ProductoAdapter(
         }
         //Se hace una función por cada cosa que pasa en el item
         fun setNombre(nombre:String){
-            var txtNombre : TextView = view.findViewById(R.id.txtNombreProducto)
+            var txtNombre : TextView = view.findViewById(R.id.nombreListadoItem)
             txtNombre.text = nombre
         }
         fun setPrecio(precio:Double){
@@ -62,8 +62,8 @@ class ProductoAdapter(
         //Iteración de la lista y va  usando las funciones set
         //Solamente itera sobre los elementos en pantalla e itera a medida que se scrollea
         holder.setNombre(productos[position].nombre)
-        holder.setPrecio(productos[position].precio)
-        holder.loadImg(productos[position].imgUrl)
+        holder.setPrecio(productos[position].precioMax)
+        holder.loadImg(productos[position].imgURL)
 
 
         //Se le settea un click listener a las cards
