@@ -3,12 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/drawable/border.xml" value="0.2265" />
         <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/drawable/popup_xml.xml" value="0.2265" />
         <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/fragment_productos.xml" value="0.4" />
         <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/item_producto.xml" value="0.4" />
         <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/piopup_producto_layout.xml" value="0.1" />
-        <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/popup_producto_layout.xml" value="0.24895833333333334" />
+        <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/popup_producto_layout.xml" value="0.2" />
       </map>
     </option>
   </component>

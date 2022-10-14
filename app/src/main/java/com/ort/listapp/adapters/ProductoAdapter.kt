@@ -15,7 +15,7 @@ import com.ort.listapp.entities.Producto
 class ProductoAdapter(
     var productos: MutableList<Producto>,
     val context: Context,
-    var onClick : (Int) -> Unit
+    var onClick : (Producto) -> Unit
 ) : RecyclerView.Adapter<ProductoAdapter.ProductoHolder>() {
 
 
@@ -68,7 +68,7 @@ class ProductoAdapter(
 
         //Se le settea un click listener a las cards
         holder.getCard().setOnClickListener(){
-            onClick(position)
+            onClick(productos[position])
         }
     }
 

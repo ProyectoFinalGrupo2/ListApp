@@ -1,13 +1,18 @@
 package com.ort.listapp.fragments
 
 import android.app.AlertDialog
+import android.icu.text.NumberFormat
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.inflate
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.resources.Compatibility.Api21Impl.inflate
 import androidx.core.content.res.ColorStateListInflaterCompat.inflate
 import androidx.core.content.res.ComplexColorCompat.inflate
@@ -16,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.R
 import com.ort.listapp.adapters.ProductoAdapter
@@ -78,14 +84,14 @@ class Productos : Fragment() {
         recStock.setHasFixedSize(true)
         recStock.layoutManager = GridLayoutManager(requireContext(),3)
 
-        recProdsFavoritos.adapter = ProductoAdapter(listaProdsFavs,requireContext()){ pos->
-            onItemClick(pos)
+        recProdsFavoritos.adapter = ProductoAdapter(listaProdsFavs,requireContext()){ prod->
+            onItemClick(prod)
         }
-        recProdsPersonalizados.adapter =  ProductoAdapter(listaProdsPersonalizados,requireContext()){ pos->
-            onItemClick(pos)
+        recProdsPersonalizados.adapter =  ProductoAdapter(listaProdsPersonalizados,requireContext()){ prod->
+            onItemClick(prod)
         }
-        recStock.adapter = ProductoAdapter(listaStock,requireContext()) { pos ->
-            onItemClick(pos)
+        recStock.adapter = ProductoAdapter(listaStock,requireContext()) { prod->
+            onItemClick(prod)
         }
 
         btnFiltrado.setOnClickListener{
@@ -95,8 +101,37 @@ class Productos : Fragment() {
     }
 
 
-    fun onItemClick ( position : Int )  {
-        Snackbar.make(v,position.toString(),Snackbar.LENGTH_SHORT).show()
+    fun onItemClick ( producto: Producto)  {
+        popupBuilder = AlertDialog.Builder(context)
+        var popUpView = getLayoutInflater().inflate(R.layout.popup_producto_layout,null)
+        var botonAgregar = popUpView.findViewById<Button>(R.id.btn_sumar_agregarprod)
+        var botonRestar = popUpView.findViewById<Button>(R.id.btn_restar_agregarprod)
+        var cantidad = popUpView.findViewById<TextView>(R.id.txt_cantidad_agregarprod)
+        var imagen = popUpView.findViewById<ImageView>(R.id.img_producto_popup)
+        var nombreProd =  popUpView.findViewById<TextView>(R.id.txt_nom_prod_popup)
+        var precioProducto =  popUpView.findViewById<TextView>(R.id.txt_precio_prod_popup)
+        var cantActual = 0
+
+
+       //cantidad.setText(0)
+
+
+        popupBuilder.setView(popUpView)
+        popUp = popupBuilder.create()
+        popUp.show()
+        nombreProd.text = producto.nombre
+        precioProducto.text =  "$"+producto.precio.toString()
+        Glide.with(popUpView).load(producto.imgUrl).into(imagen)
+        botonAgregar.setOnClickListener {
+            cantActual++
+            cantidad.text = cantActual.toString()
+        }
+        botonRestar.setOnClickListener {
+            if(cantActual > 0) {
+                cantActual--
+                cantidad.text = cantActual.toString()
+            }
+        }
     }
 
     fun cargarStock(){
@@ -122,9 +157,20 @@ class Productos : Fragment() {
     }
 
     fun crearPopUp(){
-        var popUpView : View
+
         popupBuilder = AlertDialog.Builder(context)
-        popUpView = getLayoutInflater().inflate(R.layout.popup_producto_layout,null)
+        var popUpView = getLayoutInflater().inflate(R.layout.popup_producto_layout,null)
+        var botonAgregar = popUpView.findViewById<Button>(R.id.btn_sumar_agregarprod)
+        var botonRestar = popUpView.findViewById<Button>(R.id.btn_restar_agregarprod)
+        var cantidad = popUpView.findViewById<EditText>(R.id.txt_precio_prod_popup)
+
+        cantidad.inputType = 0
+
+
+        popupBuilder.setView(popUpView)
+        popUp = popupBuilder.create()
+        popUp.show()
+
 
 
     }
