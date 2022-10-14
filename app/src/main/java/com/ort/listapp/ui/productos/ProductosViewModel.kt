@@ -1,4 +1,4 @@
-package com.ort.listapp.fragments
+package com.ort.listapp.ui.productos
 
 import androidx.lifecycle.ViewModel
 import com.ort.listapp.entities.Producto
