@@ -90,6 +90,7 @@
         android:gravity="center"
         android:inputType="number"
         android:text="0"
+        android:textSize="26dp"
         android:textColor="#222221"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
