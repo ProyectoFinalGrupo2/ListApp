@@ -6,35 +6,26 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.ort.listapp.R
-import com.ort.listapp.entities.Producto
 
-class HomeFragment : Fragment() {
+class ItemLista : Fragment() {
 
     companion object {
-        fun newInstance() = HomeFragment()
+        fun newInstance() = ItemLista()
     }
 
-    lateinit var v: View
-    var productos : MutableList<Producto> = ArrayList<Producto>()
-
-    lateinit var listaCompra: RecyclerView
-
-    private lateinit var viewModel: HomeViewModel
+    private lateinit var viewModel: ItemListaViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        v = inflater.inflate(R.layout.fragment_home, container, false)
-        listaCompra = v.findViewById(R.id.listaCompra)
-        return v
+        return inflater.inflate(R.layout.fragment_item_lista, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ItemListaViewModel::class.java)
         // TODO: Use the ViewModel
     }
 
