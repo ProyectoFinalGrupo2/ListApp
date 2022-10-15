@@ -9,10 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.inflate
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.resources.Compatibility.Api21Impl.inflate
 import androidx.core.content.res.ColorStateListInflaterCompat.inflate
 import androidx.core.content.res.ComplexColorCompat.inflate
@@ -110,12 +107,20 @@ class ProductosFragment : Fragment() {
         var imagen = popUpView.findViewById<ImageView>(R.id.img_producto_popup)
         var nombreProd =  popUpView.findViewById<TextView>(R.id.txt_nom_prod_popup)
         var precioProducto =  popUpView.findViewById<TextView>(R.id.txt_precio_prod_popup)
+        var subtotal = popUpView.findViewById<TextView>(R.id.txt_subtotal_popup)
+        var btnCerrar = popUpView.findViewById<ImageButton>(R.id.btn_cerrar_popup)
         var cantActual = 0
 
 
        //cantidad.setText(0)
 
-
+        fun actualizarSubtotal(){
+            if(cantActual > 0){
+                subtotal.text = "Subtotal: $"+producto.precioMax * cantActual
+            }else{
+                subtotal.text= ""
+            }
+        }
         popupBuilder.setView(popUpView)
         popUp = popupBuilder.create()
         popUp.show()
@@ -125,13 +130,21 @@ class ProductosFragment : Fragment() {
         botonAgregar.setOnClickListener {
             cantActual++
             cantidad.text = cantActual.toString()
+            actualizarSubtotal()
+
         }
         botonRestar.setOnClickListener {
             if(cantActual > 0) {
                 cantActual--
                 cantidad.text = cantActual.toString()
+                actualizarSubtotal()
             }
         }
+
+        btnCerrar.setOnClickListener{
+            popUp.dismiss()
+        }
+
     }
 
     fun cargarStock(){
