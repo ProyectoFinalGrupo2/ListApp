@@ -1,19 +1,31 @@
 package com.ort.listapp.ui.productos
 
+import android.app.AlertDialog
+import android.icu.text.NumberFormat
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.inflate
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.resources.Compatibility.Api21Impl.inflate
+import androidx.core.content.res.ColorStateListInflaterCompat.inflate
+import androidx.core.content.res.ComplexColorCompat.inflate
+import androidx.core.graphics.drawable.DrawableCompat.inflate
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.R
 import com.ort.listapp.adapters.ProductoAdapter
-import com.ort.listapp.entities.Producto
+import com.ort.listapp.domain.model.Producto
 
 class ProductosFragment : Fragment() {
 
@@ -22,7 +34,8 @@ class ProductosFragment : Fragment() {
 
     }
     lateinit var v: View
-
+    lateinit var popUp : AlertDialog
+    lateinit var popupBuilder : AlertDialog.Builder
     var listaProdsFavs : MutableList<Producto> = ArrayList<Producto>()
     var listaProdsPersonalizados : MutableList<Producto> = ArrayList<Producto>()
     var listaStock : MutableList<Producto> = ArrayList<Producto>()
@@ -51,7 +64,7 @@ class ProductosFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(ProductosViewModel::class.java)
-        viewModel.cargarProdsFavs()
+        //viewModel.cargarProdsFavs()
         // TODO: Use the ViewModel
     }
 
@@ -71,14 +84,14 @@ class ProductosFragment : Fragment() {
         recStock.setHasFixedSize(true)
         recStock.layoutManager = GridLayoutManager(requireContext(),3)
 
-        recProdsFavoritos.adapter = ProductoAdapter(listaProdsFavs,requireContext()){ pos->
-            onItemClick(pos)
+        recProdsFavoritos.adapter = ProductoAdapter(listaProdsFavs,requireContext()){ prod->
+            onItemClick(prod)
         }
-        recProdsPersonalizados.adapter =  ProductoAdapter(listaProdsPersonalizados,requireContext()){ pos->
-            onItemClick(pos)
+        recProdsPersonalizados.adapter =  ProductoAdapter(listaProdsPersonalizados,requireContext()){ prod->
+            onItemClick(prod)
         }
-        recStock.adapter = ProductoAdapter(listaStock,requireContext()) { pos ->
-            onItemClick(pos)
+        recStock.adapter = ProductoAdapter(listaStock,requireContext()) { prod->
+            onItemClick(prod)
         }
 
         btnFiltrado.setOnClickListener{
@@ -88,29 +101,77 @@ class ProductosFragment : Fragment() {
     }
 
 
-    fun onItemClick ( position : Int )  {
-        Snackbar.make(v,position.toString(),Snackbar.LENGTH_SHORT).show()
+    fun onItemClick ( producto: Producto)  {
+        popupBuilder = AlertDialog.Builder(context)
+        var popUpView = getLayoutInflater().inflate(R.layout.popup_producto_layout,null)
+        var botonAgregar = popUpView.findViewById<Button>(R.id.btn_sumar_agregarprod)
+        var botonRestar = popUpView.findViewById<Button>(R.id.btn_restar_agregarprod)
+        var cantidad = popUpView.findViewById<TextView>(R.id.txt_cantidad_agregarprod)
+        var imagen = popUpView.findViewById<ImageView>(R.id.img_producto_popup)
+        var nombreProd =  popUpView.findViewById<TextView>(R.id.txt_nom_prod_popup)
+        var precioProducto =  popUpView.findViewById<TextView>(R.id.txt_precio_prod_popup)
+        var cantActual = 0
+
+
+       //cantidad.setText(0)
+
+
+        popupBuilder.setView(popUpView)
+        popUp = popupBuilder.create()
+        popUp.show()
+        nombreProd.text = producto.nombre
+        precioProducto.text =  "$"+producto.precioMax.toString()
+        Glide.with(popUpView).load(producto.imgURL()).into(imagen)
+        botonAgregar.setOnClickListener {
+            cantActual++
+            cantidad.text = cantActual.toString()
+        }
+        botonRestar.setOnClickListener {
+            if(cantActual > 0) {
+                cantActual--
+                cantidad.text = cantActual.toString()
+            }
+        }
     }
 
     fun cargarStock(){
         var i = 0
         while(i<15){
-            listaStock.add(Producto(i+1,"producto "+i,100.000,null))
-            i++
+            listaStock.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
+            i += 1
         }
     }
     fun cargarProdsFav(){
-        listaProdsFavs.add(Producto(1,"Coca Cola 2,5L", 550.00, "https://arcordiezb2c.vteximg.com.br/arquivos/ids/157821-500-400/GASEOSA-COCA-COLA-PET-1-1808.jpg?v=637432184480130000"))
-        listaProdsFavs.add(Producto(2, "Pepitos", 250.00,"https://www.distribuidorapop.com.ar/wp-content/uploads/2017/07/galletitas-pepitos-venta.jpg" ))
-        listaProdsFavs.add(Producto(3, "Chocolinas",275.00,"https://jumboargentina.vtexassets.com/arquivos/ids/582951/Galletitas-Chocolinas-250-Gr-1-3431.jpg?v=637234676248800000"))
-        listaProdsFavs.add(Producto(4, "Oreos",250.50,"https://ardiaprod.vtexassets.com/arquivos/ids/228248/Galletitas-Oreo-118-Gr-_1.jpg?v=637956480395200000"))
-
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
     }
     fun cargarProdsPersonalizados(){
-        listaProdsPersonalizados.add(Producto(5,"Lechuga 1Kg", 500.00, null))
-        listaProdsPersonalizados.add(Producto(6,"Tomate 1Kg", 350.00, null))
-        listaProdsPersonalizados.add(Producto(7,"palta x1", 75.00, null))
-        listaProdsPersonalizados.add(Producto(8,"facturas x6", 400.00, null))
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg" ))
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg") )
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
+    }
+
+    fun crearPopUp(){
+
+        popupBuilder = AlertDialog.Builder(context)
+        var popUpView = getLayoutInflater().inflate(R.layout.popup_producto_layout,null)
+        var botonAgregar = popUpView.findViewById<Button>(R.id.btn_sumar_agregarprod)
+        var botonRestar = popUpView.findViewById<Button>(R.id.btn_restar_agregarprod)
+        var cantidad = popUpView.findViewById<EditText>(R.id.txt_precio_prod_popup)
+
+        cantidad.inputType = 0
+
+
+        popupBuilder.setView(popUpView)
+        popUp = popupBuilder.create()
+        popUp.show()
+
+
 
     }
 }
