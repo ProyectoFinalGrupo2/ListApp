@@ -49,9 +49,9 @@
         android:textColor="#222221"
         android:textSize="26dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_restar_agregarprod"
-        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_nom_prod_popup" />
 
     <TextView
@@ -65,7 +65,7 @@
         android:inputType="number"
         android:textColor="#7C7C7B"
         android:textSize="22dp"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toTopOf="@+id/btn_agregar_lista"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -136,7 +136,7 @@
         app:srcCompat="?attr/actionModeCloseDrawable" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn_agregar_lista"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"

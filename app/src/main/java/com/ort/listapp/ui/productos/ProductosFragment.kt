@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.R
 import com.ort.listapp.adapters.ProductoAdapter
 import com.ort.listapp.databinding.FragmentProductosBinding
@@ -29,15 +31,6 @@ class ProductosFragment : Fragment() {
     lateinit var v: View
     lateinit var popUp : AlertDialog
     lateinit var popupBuilder : AlertDialog.Builder
-    var listaProdsFavs : MutableList<Producto> = ArrayList<Producto>()
-    var listaProdsPersonalizados : MutableList<Producto> = ArrayList<Producto>()
-    var listaStock : MutableList<Producto> = ArrayList<Producto>()
-
-    lateinit var recProdsFavoritos:RecyclerView
-    lateinit var recProdsPersonalizados:RecyclerView
-    lateinit var recStock:RecyclerView
-    private lateinit var viewModel: ProductosViewModel
-    lateinit var btnFiltrado : Button
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -89,8 +82,20 @@ class ProductosFragment : Fragment() {
         var imagen = popUpView.findViewById<ImageView>(R.id.img_producto_popup)
         var nombreProd =  popUpView.findViewById<TextView>(R.id.txt_nom_prod_popup)
         var precioProducto =  popUpView.findViewById<TextView>(R.id.txt_precio_prod_popup)
+        var subtotal = popUpView.findViewById<TextView>(R.id.txt_subtotal_popup)
+        var btnCerrar = popUpView.findViewById<ImageButton>(R.id.btn_cerrar_popup)
+        var btnAgregar = popUpView.findViewById<Button>(R.id.btn_agregar_lista)
+
         var cantActual = 0
 
+
+        fun actualizarSubtotal(){
+            if(cantActual > 0){
+                subtotal.text = "Subtotal: $"+producto.precioMax * cantActual
+            }else{
+                subtotal.text= ""
+            }
+        }
         popupBuilder.setView(popUpView)
         popUp = popupBuilder.create()
         popUp.show()
@@ -100,12 +105,24 @@ class ProductosFragment : Fragment() {
         botonAgregar.setOnClickListener {
             cantActual++
             cantidad.text = cantActual.toString()
+            actualizarSubtotal()
         }
         botonRestar.setOnClickListener {
             if(cantActual > 0) {
                 cantActual--
                 cantidad.text = cantActual.toString()
+                actualizarSubtotal()
             }
+        }
+
+        btnCerrar.setOnClickListener{
+            popUp.dismiss()
+        }
+
+        btnAgregar.setOnClickListener{
+            Snackbar.make(popUpView, "Se agregó el producto "+producto.nombre+" en "+cantActual+" cantidades", Snackbar.LENGTH_SHORT).show()
+            //popUp.dismiss()
+           //  productosViewModel.agregarProducto()
         }
     }
 

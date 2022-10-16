@@ -23,7 +23,7 @@
         tools:ignore="TextContrastCheck" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn_agregar_lista"
         android:layout_width="136dp"
         android:layout_height="49dp"
         android:backgroundTint="#C9AEEC"
