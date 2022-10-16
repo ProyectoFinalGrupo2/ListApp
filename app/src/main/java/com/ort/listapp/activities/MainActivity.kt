@@ -10,10 +10,8 @@ import com.ort.listapp.data.ProductoRepository
 import com.ort.listapp.domain.model.Lista
 import com.ort.listapp.domain.model.ProductoListado
 import com.ort.listapp.domain.model.TipoLista
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
     private lateinit var bottomNavView: BottomNavigationView
@@ -31,24 +29,24 @@ class MainActivity : AppCompatActivity() {
 
         val prs = repo.getProductos() // Después tiene un metodo que les trae los productos
 
-        val parentJob = Job()
-        val scope = CoroutineScope(Dispatchers.Default + parentJob)
-        scope.launch {
-            val listOfProductsId = listOf(
-                "5410171921991",
-                "0040000017318",
-                "7790250047162",
-                "0080432400432",
-                "7790895007057",
-                "7790742656018",
-                "0000075024956",
-                "7891000244111",
-                "0000075024956",
-                "4058075498051",
-            )
-            val prs2 = repo.getProductosFromListaIds(listOfProductsId)
-            prs2.forEach {
-                println(it.imgURL()) // Los imgURL son autogenerados por la clase a partir de su id
+        runBlocking {
+            launch {
+                val listOfProductsId = listOf(
+                    "5410171921991",
+                    "0040000017318",
+                    "7790250047162",
+                    "0080432400432",
+                    "7790895007057",
+                    "7790742656018",
+                    "0000075024956",
+                    "7891000244111",
+                    "0000075024956",
+                    "4058075498051",
+                )
+                val prs2 = repo.getProductosByListaIds(listOfProductsId)
+                prs2.forEach {
+                    println(it.toString()) // Los imgURL son autogenerados por la clase a partir de su id
+                }
             }
         }
 
