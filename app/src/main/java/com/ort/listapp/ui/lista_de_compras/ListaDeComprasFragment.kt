@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ort.listapp.R
 import com.ort.listapp.adapters.ProductoListadoAdapter
 import com.ort.listapp.data.ProductoRepository
-import com.ort.listapp.entities.Producto
+import com.ort.listapp.domain.model.ProductoListado
 
 class ListaDeComprasFragment : Fragment() {
 
@@ -27,7 +27,7 @@ class ListaDeComprasFragment : Fragment() {
 
     val prs = repo.getProductos()
 
-    var productos : MutableList<Producto> = ArrayList<Producto>()
+    var productos : MutableList<ProductoListado> = ArrayList<ProductoListado>()
 
     private lateinit var viewModel: ListaDeComprasViewModel
 
@@ -58,21 +58,14 @@ class ListaDeComprasFragment : Fragment() {
     }
 
     fun cargarProds(){
-        prs.forEach {
-            productos.add(
-                Producto(
-                    it.id,
-                    it.id_Categoria,
-                    it.id_subCategoria,
-                    it.marca,
-                    it.nombre,
-                    it.precioMin,
-                    it.precioMax,
-                    it.presentacion,
-                    it.imgURL()
-                )
-            )
-        }
+        productos.add(ProductoListado(4, "Juan", "4058075498051"))
+        productos.add(ProductoListado(2, "Candela", "7891000244111"))
+        productos.add(ProductoListado(8, "Valentino", "0000075024956"))
+        productos.add(ProductoListado(2, "Candela", "7790742656018"))
+        productos.add(ProductoListado(1, "Rafael", "7790895007057"))
+        productos.add(ProductoListado(4, "Valentino", "0080432400432"))
+        productos.add(ProductoListado(3, "Valentino", "7790250047162"))
+        productos.add(ProductoListado(1, "Martin", "0040000017318"))
+        productos.add(ProductoListado(3, "Martin", "5410171921991"))
     }
-
 }

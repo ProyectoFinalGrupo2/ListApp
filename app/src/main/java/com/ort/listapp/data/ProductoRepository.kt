@@ -151,6 +151,18 @@ class ProductoRepository {
         }
         return listaProductos
     }
+
+    fun getProductosFromListaIdsNoAPI(lista: List<String>): MutableList<Producto> {
+        val listaProductos: MutableList<Producto> = arrayListOf()
+        for (productoId in lista) {
+            val producto = productoList.find { it.id == productoId }
+            if (producto != null) {
+                producto.id = productoId
+                listaProductos.add(producto)
+            }
+        }
+        return listaProductos
+    }
 //
 //    suspend fun getProducto(productoId: String): Producto {
 //        val resp = productosRef.document(productoId).get().await()

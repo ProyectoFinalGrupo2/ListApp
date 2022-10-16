@@ -8,12 +8,6 @@ data class Lista(
     val productos: List<ProductoListado>,
 )
 
-data class ProductoListado(
-    val cantidad: Int,
-    val usuarioId: String,
-    val productoId: String,
-)
-
 enum class TipoLista {
     LISTA_DE_COMPRAS,
     ALACENA_VIRTUAL,
