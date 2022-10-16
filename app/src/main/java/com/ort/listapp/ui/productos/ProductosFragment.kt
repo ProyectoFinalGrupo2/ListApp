@@ -1,35 +1,29 @@
 package com.ort.listapp.ui.productos
 
 import android.app.AlertDialog
-import android.icu.text.NumberFormat
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.inflate
 import android.view.ViewGroup
-import android.widget.*
-import androidx.appcompat.resources.Compatibility.Api21Impl.inflate
-import androidx.core.content.res.ColorStateListInflaterCompat.inflate
-import androidx.core.content.res.ComplexColorCompat.inflate
-import androidx.core.graphics.drawable.DrawableCompat.inflate
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.R
 import com.ort.listapp.adapters.ProductoAdapter
+import com.ort.listapp.databinding.FragmentProductosBinding
 import com.ort.listapp.domain.model.Producto
 
 class ProductosFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ProductosFragment()
+    private var _binding: FragmentProductosBinding? = null
 
-    }
+    private val binding get() = _binding!!
+
     lateinit var v: View
     lateinit var popUp : AlertDialog
     lateinit var popupBuilder : AlertDialog.Builder
@@ -44,28 +38,37 @@ class ProductosFragment : Fragment() {
     lateinit var btnFiltrado : Button
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        v = inflater.inflate(R.layout.fragment_productos, container, false)
+        /*v = inflater.inflate(R.layout.fragment_productos, container, false)
         recProdsFavoritos = v.findViewById(R.id.recViewProductos)
         recProdsPersonalizados = v.findViewById(R.id.listaProdsPersonalizados)
         recStock = v.findViewById(R.id.recListaStock)
         btnFiltrado = v.findViewById(R.id.btnFiltrarProductos)
-        cargarStock()
-        cargarProdsFav()
-        cargarProdsPersonalizados()
-        return v
+        cargarStock()*/
+        /*cargarProdsFav()*/
+        /*cargarProdsPersonalizados()*/
+        /*return v*/
+        val productosViewModel = ViewModelProvider(this).get(ProductosViewModel::class.java)
+
+        _binding = FragmentProductosBinding.inflate(inflater, container, false)
+        val root: View =binding.root
+
+        val recViewProductos: RecyclerView = binding.recViewProductos
+        productosViewModel.recProdsFavoritos.observe(viewLifecycleOwner){
+
+            recProdsFavoritos.adapter = ProductoAdapter(productosViewModel.recProdsFavoritos,requireContext()){ prod->
+                onItemClick(prod)
+            }
+
+        }
+
+        return root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ProductosViewModel::class.java)
-        //viewModel.cargarProdsFavs()
-        // TODO: Use the ViewModel
-    }
-
-    override fun onStart() {
+    /*override fun onStart() {
         super.onStart()
 
         recProdsFavoritos.setHasFixedSize(true)
@@ -95,8 +98,7 @@ class ProductosFragment : Fragment() {
 
             recProdsFavoritos.layoutManager = GridLayoutManager(requireContext(),3)
         }
-    }
-
+    }*/
 
     fun onItemClick ( producto: Producto)  {
         popupBuilder = AlertDialog.Builder(context)
@@ -107,20 +109,12 @@ class ProductosFragment : Fragment() {
         var imagen = popUpView.findViewById<ImageView>(R.id.img_producto_popup)
         var nombreProd =  popUpView.findViewById<TextView>(R.id.txt_nom_prod_popup)
         var precioProducto =  popUpView.findViewById<TextView>(R.id.txt_precio_prod_popup)
-        var subtotal = popUpView.findViewById<TextView>(R.id.txt_subtotal_popup)
-        var btnCerrar = popUpView.findViewById<ImageButton>(R.id.btn_cerrar_popup)
         var cantActual = 0
 
 
        //cantidad.setText(0)
 
-        fun actualizarSubtotal(){
-            if(cantActual > 0){
-                subtotal.text = "Subtotal: $"+producto.precioMax * cantActual
-            }else{
-                subtotal.text= ""
-            }
-        }
+
         popupBuilder.setView(popUpView)
         popUp = popupBuilder.create()
         popUp.show()
@@ -130,24 +124,16 @@ class ProductosFragment : Fragment() {
         botonAgregar.setOnClickListener {
             cantActual++
             cantidad.text = cantActual.toString()
-            actualizarSubtotal()
-
         }
         botonRestar.setOnClickListener {
             if(cantActual > 0) {
                 cantActual--
                 cantidad.text = cantActual.toString()
-                actualizarSubtotal()
             }
         }
-
-        btnCerrar.setOnClickListener{
-            popUp.dismiss()
-        }
-
     }
 
-    fun cargarStock(){
+    /*fun cargarStock(){
         var i = 0
         while(i<15){
             listaStock.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
@@ -184,8 +170,11 @@ class ProductosFragment : Fragment() {
         popUp = popupBuilder.create()
         popUp.show()
 
-
-
+        }
+*/
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
 

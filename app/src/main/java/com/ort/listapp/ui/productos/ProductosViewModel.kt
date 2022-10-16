@@ -1,14 +1,35 @@
 package com.ort.listapp.ui.productos
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ort.listapp.entities.Producto
+import androidx.recyclerview.widget.RecyclerView
+import com.ort.listapp.domain.model.Producto
 
 class ProductosViewModel : ViewModel() {
 
-    //val name = MutableLiveData<String>()
-    var listaProdsFavs : MutableList<Producto> = ArrayList<Producto>()
+    var listaProdsFavs : MutableList<com.ort.listapp.domain.model.Producto> = ArrayList<Producto>()
 
-    lateinit var texto : String
+    fun cargarProdsFav(){
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
+        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
+    }
+
+    private val _recProdsFavoritos = MutableLiveData<List<Producto>>().apply {
+        cargarProdsFav()
+        value = listaProdsFavs
+    }
+    val recProdsFavoritos: MutableLiveData<List<Producto>> = _recProdsFavoritos
+
+
+    //val name = MutableLiveData<String>()
+    /*var listaProdsFavs : MutableList<Producto> = ArrayList<Producto>()
+
+    lateinit var texto : String*/
 
 
 

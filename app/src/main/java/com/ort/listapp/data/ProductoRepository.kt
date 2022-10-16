@@ -139,17 +139,25 @@ class ProductoRepository {
         return productoList
     }
 
-    suspend fun getProductosFromListaIds(lista: List<String>): MutableList<Producto> {
+    suspend fun getProductosByListaIds(lista: List<String>): MutableList<Producto> {
         val listaProductos: MutableList<Producto> = arrayListOf()
         for (productoId in lista) {
-            val documentSnapshot = productosRef.document(productoId).get().await()
-            val producto = documentSnapshot.toObject<Producto>()
+            val producto = getProductoById(productoId)
             if (producto != null) {
-                producto.id = productoId
                 listaProductos.add(producto)
             }
         }
         return listaProductos
+    }
+
+    suspend fun getProductoById(productoId: String): Producto? {
+        val documentSnapshot = productosRef.document(productoId).get().await()
+        if (documentSnapshot.exists()) {
+            val producto = documentSnapshot.toObject<Producto>()!!
+            producto.id = productoId
+            return producto
+        }
+        return null
     }
 
     fun getProductosFromListaIdsNoAPI(lista: List<String>): MutableList<Producto> {
@@ -163,10 +171,5 @@ class ProductoRepository {
         }
         return listaProductos
     }
-//
-//    suspend fun getProducto(productoId: String): Producto {
-//        val resp = productosRef.document(productoId).get().await()
-//    }
-
 
 }
