@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/productosFragment"
+        android:icon="@drawable/productos_icon"
+        android:title="Productos" />
+
+    <item
+        android:id="@+id/lista_de_comprasFragment"
+        android:icon="@drawable/lista_de_compras_icon"
+        android:title="Lista de Compras"
+        />
+    <item
+        android:id="@+id/alacenaFragment"
+        android:icon="@drawable/alacena_icon"
+        android:title="Alacena Virtual" />
+</menu>

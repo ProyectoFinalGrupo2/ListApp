@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/img_producto_popup"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginBottom="20dp"
+        android:textColor="#222221"
+        app:layout_constraintBottom_toTopOf="@+id/txt_nom_prod_popup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/txt_nom_prod_popup"
+        android:layout_width="wrap_content"
+        android:layout_height="39dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+
+        android:textColor="#222221"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_producto_popup" />
+
+    <TextView
+        android:id="@+id/txt_precio_prod_popup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="123dp"
+        android:gravity="center"
+        android:inputType="number"
+        android:text="0"
+        android:textColor="#222221"
+        android:textSize="26dp"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintTop_toBottomOf="@+id/txt_nom_prod_popup" />
+
+    <Button
+        android:id="@+id/btn_restar_agregarprod"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="112dp"
+        android:text="-"
+        app:backgroundTint="#E4F5FF"
+        app:iconTint="#000000"
+        app:layout_constraintEnd_toEndOf="@+id/txt_cantidad_agregarprod"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_precio_prod_popup"
+        app:rippleColor="#000000" />
+
+    <Button
+        android:id="@+id/btn_sumar_agregarprod"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="16dp"
+        android:text="+"
+        app:backgroundTint="#E4F5FF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/txt_cantidad_agregarprod"
+        app:layout_constraintTop_toBottomOf="@+id/txt_precio_prod_popup" />
+
+    <TextView
+        android:id="@+id/txt_cantidad_agregarprod"
+        android:layout_width="71dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:inputType="number"
+        android:text="0"
+        android:textSize="26dp"
+        android:textColor="#222221"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_precio_prod_popup" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="231dp"
+        android:layout_marginBottom="33dp"
+        app:layout_constraintBottom_toTopOf="@+id/img_producto_popup"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintHorizontal_bias="0.125"
+        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintTop_toTopOf="@+id/view"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="?attr/actionModeCloseDrawable" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="Agregar a la Lista"
+        app:backgroundTint="#E4F5FF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_cantidad_agregarprod" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

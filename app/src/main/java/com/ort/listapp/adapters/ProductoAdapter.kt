@@ -7,16 +7,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ort.listapp.R
 import com.ort.listapp.domain.model.Producto
 
 class ProductoAdapter(
-    var productos: MutableLiveData<List<Producto>>,
+    var productos: MutableList<Producto>,
     val context: Context,
-    var onClick: (Producto) -> Unit
+    var onClick : (Producto) -> Unit
 ) : RecyclerView.Adapter<ProductoAdapter.ProductoHolder>() {
 
 
@@ -62,7 +61,7 @@ class ProductoAdapter(
     override fun onBindViewHolder(holder: ProductoHolder, position: Int) {
         //Iteración de la lista y va  usando las funciones set
         //Solamente itera sobre los elementos en pantalla e itera a medida que se scrollea
-        holder.setNombre(productos)
+        holder.setNombre(productos[position].nombre)
         holder.setPrecio(productos[position].precioMax)
         holder.loadImg(productos[position].imgURL())
 
