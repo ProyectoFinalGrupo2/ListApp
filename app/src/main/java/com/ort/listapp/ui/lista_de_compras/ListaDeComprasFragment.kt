@@ -37,17 +37,19 @@ class ListaDeComprasFragment : Fragment() {
     ): View? {
         v = inflater.inflate(R.layout.fragment_lista_de_compras, container, false)
         listaCompra = v.findViewById(R.id.listaCompra)
-        cargarProds()
+
         return v
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         viewModel = ViewModelProvider(this).get(ListaDeComprasViewModel::class.java)
     }
 
     override fun onStart() {
         super.onStart()
+        cargarProds()
         listaCompra.setHasFixedSize(true)
         listaCompra.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,false)
 
