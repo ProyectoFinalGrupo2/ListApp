@@ -122,7 +122,7 @@ class ProductosFragment : Fragment() {
         btnAgregar.setOnClickListener{
             Snackbar.make(popUpView, "Se agregó el producto "+producto.nombre+" en "+cantActual+" cantidades", Snackbar.LENGTH_SHORT).show()
             //popUp.dismiss()
-           //  productosViewModel.agregarProducto()
+            //productosViewModel.agregarProducto()
         }
     }
 
