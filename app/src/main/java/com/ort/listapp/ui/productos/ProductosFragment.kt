@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,12 +22,15 @@ import com.ort.listapp.R
 import com.ort.listapp.adapters.ProductoAdapter
 import com.ort.listapp.databinding.FragmentProductosBinding
 import com.ort.listapp.domain.model.Producto
+import com.ort.listapp.ui.lista_de_compras.ListaDeComprasViewModel
 
 class ProductosFragment : Fragment() {
 
     private var _binding: FragmentProductosBinding? = null
 
     private val binding get() = _binding!!
+
+    private val listaDeComprasViewModel: ListaDeComprasViewModel by activityViewModels()
 
     lateinit var v: View
     lateinit var popUp : AlertDialog
@@ -122,7 +126,7 @@ class ProductosFragment : Fragment() {
         btnAgregar.setOnClickListener{
             Snackbar.make(popUpView, "Se agregó el producto "+producto.nombre+" en "+cantActual+" cantidades", Snackbar.LENGTH_SHORT).show()
             //popUp.dismiss()
-            //productosViewModel.agregarProducto()
+            listaDeComprasViewModel.agregarProducto(producto.id, cantActual, "Martin")
         }
     }
 
