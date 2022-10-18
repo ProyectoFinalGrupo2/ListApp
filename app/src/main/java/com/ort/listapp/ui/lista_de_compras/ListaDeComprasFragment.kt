@@ -25,17 +25,6 @@ class ListaDeComprasFragment : Fragment() {
     private lateinit var binding: FragmentListaDeComprasBinding
     private val viewModel: ListaDeComprasViewModel by viewModels()
 
-    lateinit var v: View
-
-    lateinit var listaCompra: RecyclerView
-
-    val repo = ProductoRepository()
-
-    val prs = repo.getProductos()
-
-
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,12 +35,10 @@ class ListaDeComprasFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
         viewModel.cargarProds()
         binding.listaCompra.setHasFixedSize(true)
         binding.listaCompra.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,false)
-
-        binding.listaCompra.adapter = ProductoListadoAdapter(viewModel.listaDeCompras.productos, requireContext())
+        binding.listaCompra.adapter = ProductoListadoAdapter(viewModel.listaDeCompras.getProds(), requireContext())
     }
 
     fun onItemClick ( position : Int )  {

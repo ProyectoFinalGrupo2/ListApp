@@ -24,14 +24,8 @@ class ListaDeComprasViewModel : ViewModel() {
     }
 
     fun cargarProds(){
-        listaDeCompras.agregarProducto(ProductoListado(4, "Juan", "4058075498051"))
-        listaDeCompras.agregarProducto(ProductoListado(2, "Candela", "7891000244111"))
-        listaDeCompras.agregarProducto(ProductoListado(8, "Valentino", "0000075024956"))
-        listaDeCompras.agregarProducto(ProductoListado(2, "Candela", "7790742656018"))
-        listaDeCompras.agregarProducto(ProductoListado(1, "Rafael", "7790895007057"))
-        listaDeCompras.agregarProducto(ProductoListado(4, "Valentino", "0080432400432"))
-        listaDeCompras.agregarProducto(ProductoListado(3, "Valentino", "7790250047162"))
-        listaDeCompras.agregarProducto(ProductoListado(1, "Martin", "0040000017318"))
-        listaDeCompras.agregarProducto(ProductoListado(3, "Martin", "5410171921991"))
+        listaDeCompras.productos.forEach{
+            agregarProducto(it.productoId, it.cantidad, it.usuarioId)
+        }
     }
 }

@@ -54,9 +54,10 @@ class ProductoListadoAdapter(
 
     val repo = ProductoRepository()
     val prods = repo.getProductosFromListaIdsNoAPI(cargarListaIds())
+    var p: Producto? = Producto()
 
     override fun onBindViewHolder(holder: ProductoListadoHolder, position: Int) {
-        val p = prods.find { it.id == prods[position].id }
+        p = prods.find { it.id == prods[position].id }
         holder.setNombre(p!!.nombre)
         holder.setPrecioMax(p!!.precioMax)
         holder.setCantidad(productos[position].cantidad)

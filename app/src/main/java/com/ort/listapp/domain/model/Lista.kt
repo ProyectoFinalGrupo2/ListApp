@@ -21,6 +21,10 @@ data class Lista(
     fun buscarProductoPorId(id: String) : ProductoListado?{
         return productos.find { it.productoId == id };
     }
+
+    fun getProds() : MutableList<ProductoListado>{
+        return productos
+    }
 }
 
 enum class TipoLista {
