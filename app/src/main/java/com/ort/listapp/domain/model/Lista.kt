@@ -5,8 +5,23 @@ data class Lista(
     val nombre: String,
     val fechaCreacion: String,
     val tipoLista: TipoLista,
-    val productos: List<ProductoListado>,
-)
+    val productos: MutableList<ProductoListado> = ArrayList<ProductoListado>(),
+) {
+
+    fun agregarProducto(prod:ProductoListado){
+        productos.add(prod)
+        //acá debe llamar al repositorio para agregar el productos en la lista en la base de datos
+    }
+
+    fun removerProducto(prod:ProductoListado){
+        productos.remove(prod)
+        //acá debe llamar al repositorio para remover el productos de la lista en la base de datos
+    }
+
+    fun buscarProductoPorId(id: String) : ProductoListado?{
+        return productos.find { it.productoId == id };
+    }
+}
 
 enum class TipoLista {
     LISTA_DE_COMPRAS,

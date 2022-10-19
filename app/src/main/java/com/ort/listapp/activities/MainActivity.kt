@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
             "pruebaListaCompras",
             "2022/05/05",
             TipoLista.LISTA_DE_COMPRAS,
-            listOf(
+            mutableListOf(
                 ProductoListado(1, "usuarioId", "5410171921991"),
                 ProductoListado(2, "usuarioId", "0040000017318"),
                 ProductoListado(3, "usuarioId", "7790250047162"),

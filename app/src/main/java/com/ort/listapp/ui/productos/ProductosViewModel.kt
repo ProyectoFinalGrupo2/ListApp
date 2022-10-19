@@ -1,34 +1,64 @@
 package com.ort.listapp.ui.productos
 
-import androidx.lifecycle.LiveData
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.viewModelScope
+import com.ort.listapp.data.ProductoRepository
 import com.ort.listapp.domain.model.Producto
+import kotlinx.coroutines.launch
 
 class ProductosViewModel : ViewModel() {
 
+    val repositorio = ProductoRepository()
     var listaProdsFavs : MutableList<Producto> = ArrayList<Producto>()
     var listaProdsPersonalizados : MutableList<Producto> = ArrayList<Producto>()
     var listaStock : MutableList<Producto> = ArrayList<Producto>()
 
+
     fun cargarProdsPersonalizados(){
-        listaProdsPersonalizados.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
-        listaProdsPersonalizados.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
-        listaProdsPersonalizados.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
-        listaProdsPersonalizados.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
-        listaProdsPersonalizados.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
-        listaProdsPersonalizados.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
+        val listaProductosId = listOf(
+            "5410171921991",
+            "0040000017318",
+            "7790250047162",
+            "0080432400432",
+            "7790895007057",
+            "0000077900319",
+            "7790742656018",
+            "7891000244111",
+            "0000075024956",
+            "4058075498051",
+        )
+        viewModelScope.launch {
+            val result: MutableList<Producto> = repositorio.getProductosByListaIds(listaProductosId)
+            if(result != null){
+                recProdsPers.postValue(result)
+            }
+        }
     }
 
     fun cargarProdsFav(){
-        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
-        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
-        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
-        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
-        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
-        listaProdsFavs.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
+        viewModelScope.launch {
+            val listaProductosId = listOf(
+                "7790250047162",
+                "5410171921991",
+                "0040000017318",
+                "7891000244111",
+                "0000075024956",
+                "0080432400432",
+                "4058075498051",
+                "7790895007057",
+                "7790742656018",
+            )
+            viewModelScope.launch {
+                val result: MutableList<Producto> = repositorio.getProductosByListaIds(listaProductosId)
+                if(result != null){
+                    recProdsFavoritos.postValue(result)
+                }
+            }
+        }
     }
+
 
     fun cargarStock(){
         listaStock.add(Producto("5410171921991", "01", "0108", "MC CAIN", "Croquetas de Papas Noisettes Mc Cain 1 Kg", 978.0, 997.0, "1.0 kg"))
@@ -54,25 +84,23 @@ class ProductosViewModel : ViewModel() {
 
     }
 
-    private val _recProdsFavoritos = MutableLiveData<MutableList<Producto>>().apply {
+
+    val recProdsFavoritos: MutableLiveData<MutableList<Producto>> = MutableLiveData<MutableList<Producto>>().apply {
         cargarProdsFav()
-        value = listaProdsFavs
     }
-    val recProdsFavoritos: MutableLiveData<MutableList<Producto>> = _recProdsFavoritos
 
-    private val _recProdsPers = MutableLiveData<MutableList<Producto>>().apply {
+
+    val recProdsPers: MutableLiveData<MutableList<Producto>> =  MutableLiveData<MutableList<Producto>>().apply {
         cargarProdsPersonalizados()
-        value = listaProdsPersonalizados
     }
-    val recProdsPers: MutableLiveData<MutableList<Producto>> = _recProdsPers
 
-    private val _recStock = MutableLiveData<MutableList<Producto>>().apply {
+
+    val recStock: MutableLiveData<MutableList<Producto>> = MutableLiveData<MutableList<Producto>>().apply {
         cargarStock()
         value = listaStock
     }
-    val recStock: MutableLiveData<MutableList<Producto>> = _recStock
-
     fun agregarProducto(cantidad:Int,idProducto:String){
         //conectar con firebase
+        //
     }
 }

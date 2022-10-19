@@ -1,4 +1,4 @@
-package com.ort.listapp.ui.alacena
+package com.ort.listapp.ui.lista
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -8,24 +8,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.ort.listapp.R
-import com.ort.listapp.databinding.FragmentAlacenaBinding
 import com.ort.listapp.databinding.FragmentListaBinding
 
-class AlacenaFragment : Fragment() {
+class ListaFragment : Fragment() {
 
     companion object {
-        fun newInstance() = AlacenaFragment()
+        fun newInstance() = ListaFragment()
     }
 
-    private lateinit var binding: FragmentAlacenaBinding
-    private val viewModel: AlacenaViewModel by viewModels()
+    private lateinit var binding: FragmentListaBinding
+    private val viewModel: ListaViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentAlacenaBinding.inflate(inflater, container, false)
+        binding = FragmentListaBinding.inflate(inflater, container, false)
         return binding.root
     }
-
 }
