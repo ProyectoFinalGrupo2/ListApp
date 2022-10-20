@@ -1,6 +1,5 @@
 package com.ort.listapp.ui.lista_de_compras
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ort.listapp.domain.model.Lista
@@ -11,13 +10,18 @@ class ListaDeComprasViewModel() : ViewModel() {
 //    var listaDeCompras: Lista =
 //        Lista("listaDePrueba", "Lista 1: Familia García", "hoy", TipoLista.LISTA_DE_COMPRAS)
 
-    val lista = Lista(
-        "listaDePrueba",
-        "Lista 1: Familia García",
-        "hoy",
-        TipoLista.LISTA_DE_COMPRAS,
-        mutableListOf(
-            ProductoListado(4, "Juan", "4058075498051"),
+    var listaDeCompras: MutableLiveData<Lista> = MutableLiveData<Lista>()
+
+    //val listaDeCompras: LiveData<Lista> = _listaDeCompras
+
+    init {
+        listaDeCompras.value = Lista(
+            "listaDePrueba",
+            "Lista 1: Familia García",
+            "hoy",
+            TipoLista.LISTA_DE_COMPRAS,
+            mutableListOf(
+                ProductoListado(4, "Juan", "4058075498051"),
 //            ProductoListado(2, "Candela", "7891000244111"),
 //            ProductoListado(8, "Valentino", "0000075024956"),
 //            ProductoListado(2, "Candela", "7790742656018"),
@@ -26,29 +30,35 @@ class ListaDeComprasViewModel() : ViewModel() {
 //            ProductoListado(3, "Valentino", "7790250047162"),
 //            ProductoListado(1, "Martin", "0040000017318"),
 //            ProductoListado(3, "Martin", "5410171921991"),
+            )
         )
-    )
-
-    private val _listaDeCompras: MutableLiveData<Lista> = MutableLiveData<Lista>().apply {
-        value = lista
     }
-    val listaDeCompras: LiveData<Lista> = _listaDeCompras
+
 
     fun agregarProducto(idProducto: String, cantidad: Int, idUsuario: String) {
-        _listaDeCompras.value?.agregarProducto(ProductoListado(cantidad, idUsuario, idProducto))
-        _listaDeCompras.postValue(lista)
+
+        listaDeCompras.value?.agregarProducto(ProductoListado(cantidad, idUsuario, idProducto))
+       // _listaDeCompras.postValue(lista)
+        val lista = Lista("listaDePrueba",
+            "Lista 1: Familia García",
+            "hoy",
+            TipoLista.LISTA_DE_COMPRAS,
+            listaDeCompras.value!!.productos
+
+        )
+        listaDeCompras.value = lista
+        //listaDeCompras.postValue(lista)
     }
 
     fun removerProducto(idProducto: String) {
         val productoListado = buscarProductoListadoPorIdProducto(idProducto)
         if (productoListado != null) {
-            _listaDeCompras.value?.removerProducto(productoListado)
-            _listaDeCompras.postValue(lista)
+            listaDeCompras.value?.removerProducto(productoListado)
         }
     }
 
     fun buscarProductoListadoPorIdProducto(id: String): ProductoListado? {
-        return _listaDeCompras.value?.buscarProductoPorId(id)
+        return listaDeCompras.value?.buscarProductoPorId(id)
     }
 
 //    fun cargarProds() {

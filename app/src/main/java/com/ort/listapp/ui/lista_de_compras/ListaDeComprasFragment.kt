@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +21,7 @@ class ListaDeComprasFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentListaDeComprasBinding
-    private val viewModel: ListaDeComprasViewModel by viewModels()
+    private val viewModel: ListaDeComprasViewModel by activityViewModels()
 
     lateinit var v: View
 
@@ -49,17 +50,19 @@ class ListaDeComprasFragment : Fragment() {
             binding.listaCompra.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             binding.listaCompra.adapter =
-                viewModel.listaDeCompras.value?.let {
+
                     ProductoListadoAdapter(
                         it.productos,
                         requireContext()
                     )
-                }
+
         })
     }
 
     fun onItemClick(position: Int) {
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
 }
