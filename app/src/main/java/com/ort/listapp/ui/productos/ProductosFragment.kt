@@ -90,7 +90,7 @@ class ProductosFragment : Fragment() {
         var btnCerrar = popUpView.findViewById<ImageButton>(R.id.btn_cerrar_popup)
         var btnAgregar = popUpView.findViewById<Button>(R.id.btn_agregar_lista)
 
-        var cantActual = 0
+        var cantActual = 1
 
 
         fun actualizarSubtotal(){
@@ -112,7 +112,7 @@ class ProductosFragment : Fragment() {
             actualizarSubtotal()
         }
         botonRestar.setOnClickListener {
-            if(cantActual > 0) {
+            if(cantActual > 1) {
                 cantActual--
                 cantidad.text = cantActual.toString()
                 actualizarSubtotal()

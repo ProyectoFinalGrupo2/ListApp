@@ -113,7 +113,7 @@
         android:background="@color/white"
         android:gravity="center"
         android:inputType="number"
-        android:text="0"
+        android:text="1"
         android:textColor="#222221"
         android:textSize="26dp"
         app:layout_constraintEnd_toEndOf="parent"
