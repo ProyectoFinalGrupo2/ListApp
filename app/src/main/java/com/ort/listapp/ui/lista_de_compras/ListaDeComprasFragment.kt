@@ -10,8 +10,9 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ort.listapp.adapters.ProductoListadoAdapter
-import com.ort.listapp.data.ProductoRepository
 import com.ort.listapp.databinding.FragmentListaDeComprasBinding
+import com.ort.listapp.domain.model.TipoLista
+import com.ort.listapp.ui.FamilyViewModel
 
 class ListaDeComprasFragment : Fragment() {
 
@@ -20,15 +21,11 @@ class ListaDeComprasFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentListaDeComprasBinding
-    private val viewModel: ListaDeComprasViewModel by activityViewModels()
 
-    lateinit var v: View
+    //    private val viewModel: ListaDeComprasViewModel by activityViewModels()
+    private val viewModel: FamilyViewModel by activityViewModels()
 
     lateinit var listaCompra: RecyclerView
-
-    val repo = ProductoRepository()
-
-    val prs = repo.getProductos()
 
 
     override fun onCreateView(
@@ -42,16 +39,17 @@ class ListaDeComprasFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        viewModel.getListaDeCompras().observe(this, Observer {
+        viewModel.getFamilia().observe(this, Observer {
             binding.listaCompra.setHasFixedSize(true)
             binding.listaCompra.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-            binding.listaCompra.adapter = viewModel.getListaDeCompras().value?.let { it ->
-                ProductoListadoAdapter(
-                    it.productos,
-                    requireContext()
-                )
-            }
+            binding.listaCompra.adapter =
+                viewModel.getListaByTipo(TipoLista.LISTA_DE_COMPRAS)?.productos?.let { it ->
+                    ProductoListadoAdapter(
+                        it,
+                        requireContext()
+                    )
+                }
         })
     }
 
