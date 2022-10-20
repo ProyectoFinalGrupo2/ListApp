@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.R
 import com.ort.listapp.adapters.ProductoAdapter
@@ -49,6 +50,7 @@ class ProductosFragment : Fragment() {
         val recViewProductosFav: RecyclerView = binding.recViewProductos
         val recViewProdPersonalizados: RecyclerView = binding.listaProdsPersonalizados
         val recViewStock: RecyclerView = binding.recListaStock
+        val btnCrearProducto : FloatingActionButton = binding.btnNuevoProducto
 
         recViewProductosFav.setHasFixedSize(true)
         recViewProductosFav.layoutManager = LinearLayoutManager(requireContext(),RecyclerView.HORIZONTAL,false)
@@ -73,12 +75,24 @@ class ProductosFragment : Fragment() {
                 onItemClick(prod)
             }
         })
+        btnCrearProducto.setOnClickListener(){
+            crearProductoPersonalizado()
+        }
         return root
         }
 
 
-    fun onItemClick ( producto: Producto)  {
+    fun crearProductoPersonalizado(){
         popupBuilder = AlertDialog.Builder(context)
+        var popUpView = getLayoutInflater().inflate(R.layout.popup_crear_producto,null)
+        popupBuilder.setView(popUpView)
+        popUp = popupBuilder.create()
+        popUp.show()
+    }
+
+    fun onItemClick ( producto: Producto) {
+        popupBuilder = AlertDialog.Builder(context)
+
         var popUpView = getLayoutInflater().inflate(R.layout.popup_producto_layout,null)
         var botonAgregar = popUpView.findViewById<Button>(R.id.btn_sumar_agregarprod)
         var botonRestar = popUpView.findViewById<Button>(R.id.btn_restar_agregarprod)
