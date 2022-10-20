@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,26 +42,21 @@ class ListaDeComprasFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-
-
-        viewModel.listaDeCompras.observe(this, Observer {
+        viewModel.getListaDeCompras().observe(this, Observer {
             binding.listaCompra.setHasFixedSize(true)
             binding.listaCompra.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-            binding.listaCompra.adapter =
-
-                    ProductoListadoAdapter(
-                        it.productos,
-                        requireContext()
-                    )
-
+            binding.listaCompra.adapter = viewModel.getListaDeCompras().value?.let { it ->
+                ProductoListadoAdapter(
+                    it.productos,
+                    requireContext()
+                )
+            }
         })
     }
 
     fun onItemClick(position: Int) {
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
+
 }
