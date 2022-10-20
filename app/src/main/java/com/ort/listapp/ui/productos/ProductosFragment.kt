@@ -134,18 +134,19 @@ class ProductosFragment : Fragment() {
                 "Se agregó el producto " + producto.nombre + " en " + cantActual + " cantidades",
                 Snackbar.LENGTH_SHORT
             ).show()
-            //popUp.dismiss()
             viewModel.agregarProductoEnLista(
                 TipoLista.LISTA_DE_COMPRAS,
                 producto.id,
                 cantActual,
                 "Martin"
             )
+            // TODO
             // Prueba para agregar al mismo producto en favoritos
             viewModel.agregarProductoFavorito(producto.id)
             // Prueba de borrado de productos precargados en ListaCompras y Favoritos
             viewModel.removerProductoDeLista(TipoLista.LISTA_DE_COMPRAS, "4058075498051")
-            viewModel.removerProductoFavorito("0080432400432")
+            viewModel.eliminarProductoFavorito("0080432400432")
+            popUp.dismiss()
         }
     }
 

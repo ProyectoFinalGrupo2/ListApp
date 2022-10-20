@@ -17,11 +17,11 @@ class FamilyViewModel : ViewModel() {
             loadFamilia(it)
         }
     }
-    val listaDeCompras = MutableLiveData<MutableList<Lista>>().apply {
-        value = familia.value?.listas
-            ?.filter { it.tipoLista == TipoLista.LISTA_DE_COMPRAS }
-            ?.toMutableList()
-    }
+//    val listaDeCompras = MutableLiveData<MutableList<Lista>>().apply {
+//        value = familia.value?.listas
+//            ?.filter { it.tipoLista == TipoLista.LISTA_DE_COMPRAS }
+//            ?.toMutableList()
+//    }
 
     private fun loadFamilia(it: MutableLiveData<Familia>) {
         it.value = Familia(
@@ -126,7 +126,7 @@ class FamilyViewModel : ViewModel() {
         actualizarFamilia(familia)
     }
 
-    fun removerProductoFavorito(idProducto: String) {
+    fun eliminarProductoFavorito(idProducto: String) {
         val familia = this.familia.value
         familia?.productosFavoritos?.remove(idProducto)
         actualizarFamilia(familia)
