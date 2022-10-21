@@ -2,13 +2,11 @@ package com.ort.listapp.ui.productos
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -17,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.R
 import com.ort.listapp.adapters.ProductoAdapter
@@ -24,6 +23,7 @@ import com.ort.listapp.databinding.FragmentProductosBinding
 import com.ort.listapp.domain.model.Producto
 import com.ort.listapp.domain.model.TipoLista
 import com.ort.listapp.ui.FamilyViewModel
+import org.w3c.dom.Text
 
 class ProductosFragment : Fragment() {
 
@@ -50,6 +50,7 @@ class ProductosFragment : Fragment() {
         val recViewProductosFav: RecyclerView = binding.recViewProductos
         val recViewProdPersonalizados: RecyclerView = binding.listaProdsPersonalizados
         val recViewStock: RecyclerView = binding.recListaStock
+        val btnCrearProducto : FloatingActionButton = binding.btnNuevoProducto
 
         recViewProductosFav.setHasFixedSize(true)
         recViewProductosFav.layoutManager =
@@ -78,10 +79,35 @@ class ProductosFragment : Fragment() {
                 onItemClick(prod)
             }
         })
+
+        btnCrearProducto.setOnClickListener {
+            crearProductoPersonalizado()
+        }
         return root
     }
+    fun crearProductoPersonalizado(){
+        popupBuilder = AlertDialog.Builder(context)
+        var popUpView = getLayoutInflater().inflate(R.layout.popup_crear_producto,null)
+        var btnCerrar = popUpView.findViewById<ImageButton>(R.id.btn_cerrar_popup)
+        var btnCrear = popUpView.findViewById<Button>(R.id.btn_crear_producto)
+        var nombreProd = popUpView.findViewById<EditText>(R.id.txt_producto_pers_nombre)
+        var precioProducto = popUpView.findViewById<EditText>(R.id.txt_producto_pers_precio)
+        var marcaProducto = popUpView.findViewById<EditText>(R.id.txt_producto_pers_marca)
+        var presentacion = popUpView.findViewById<EditText>(R.id.txt_producto_pers_presentacion)
+        val nombree = nombreProd.text.toString()+marcaProducto.text.toString()+ presentacion.text.toString()
+        popupBuilder.setView(popUpView)
+        popUp = popupBuilder.create()
+        popUp.show()
 
+        btnCrear.setOnClickListener(){
+            viewModel.agregarProductoPersonalizado(nombreProd.text.toString(),precioProducto.text.toString().toDouble() ,"1",marcaProducto.text.toString(), presentacion.text.toString())
+            popUp.dismiss()
+        }
+        btnCerrar.setOnClickListener({
+            popUp.dismiss()
+        })
 
+    }
     fun onItemClick(producto: Producto) {
         popupBuilder = AlertDialog.Builder(context)
         var popUpView = getLayoutInflater().inflate(R.layout.popup_producto_layout, null)
@@ -93,7 +119,7 @@ class ProductosFragment : Fragment() {
         var precioProducto = popUpView.findViewById<TextView>(R.id.txt_precio_prod_popup)
         var subtotal = popUpView.findViewById<TextView>(R.id.txt_subtotal_popup)
         var btnCerrar = popUpView.findViewById<ImageButton>(R.id.btn_cerrar_popup)
-        var btnAgregar = popUpView.findViewById<Button>(R.id.btn_agregar_lista)
+        var btnAgregar = popUpView.findViewById<Button>(R.id.btn_crear_producto)
 
         var cantActual = 1
 
