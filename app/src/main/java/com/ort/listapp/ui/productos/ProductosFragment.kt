@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -31,8 +32,10 @@ class ProductosFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    //    private val listaDeComprasViewModel: ListaDeComprasViewModel by activityViewModels()
+   // private var productoViewModel: ProductosViewModel by viewModels()
     private val viewModel: FamilyViewModel by activityViewModels()
+    private val productosViewModel: ProductosViewModel by activityViewModels()
+
 
     lateinit var popUp: AlertDialog
     lateinit var popupBuilder: AlertDialog.Builder
@@ -42,7 +45,7 @@ class ProductosFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val productosViewModel = ViewModelProvider(this).get(ProductosViewModel::class.java)
+       //var productosViewModel = ViewModelProvider(this).get(ProductosViewModel::class.java)
 
         _binding = FragmentProductosBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -94,18 +97,29 @@ class ProductosFragment : Fragment() {
         var precioProducto = popUpView.findViewById<EditText>(R.id.txt_producto_pers_precio)
         var marcaProducto = popUpView.findViewById<EditText>(R.id.txt_producto_pers_marca)
         var presentacion = popUpView.findViewById<EditText>(R.id.txt_producto_pers_presentacion)
-        val nombree = nombreProd.text.toString()+marcaProducto.text.toString()+ presentacion.text.toString()
+        var spinner = popUpView.findViewById<Spinner>(R.id.txt_producto_pers_categoria)
+
         popupBuilder.setView(popUpView)
         popUp = popupBuilder.create()
+        val adapter = ArrayAdapter(popUp.context,android.R.layout.simple_list_item_1,productosViewModel.getCategorias())
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+
         popUp.show()
 
-        btnCrear.setOnClickListener(){
-            viewModel.agregarProductoPersonalizado(nombreProd.text.toString(),precioProducto.text.toString().toDouble() ,"1",marcaProducto.text.toString(), presentacion.text.toString())
+        btnCrear.setOnClickListener{
+            val valido = productosViewModel.validarFormCrearProd(nombreProd,precioProducto)
+            if(valido){
+                val nombre = nombreProd.text.toString()+" "+marcaProducto.text.toString()+ " "+presentacion.text.toString()
+                val precio = precioProducto.text.toString().toDouble()
+                viewModel.agregarProductoPersonalizado(nombre,precio,"1",marcaProducto.text.toString(), presentacion.text.toString())
+                popUp.dismiss()
+            }
+        }
+
+        btnCerrar.setOnClickListener {
             popUp.dismiss()
         }
-        btnCerrar.setOnClickListener({
-            popUp.dismiss()
-        })
 
     }
     fun onItemClick(producto: Producto) {
