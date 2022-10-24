@@ -1,6 +1,7 @@
 package com.ort.listapp.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,11 +42,7 @@ class ProductoAdapter(
 
         fun loadImg(url: String?){
             var albumCover: ImageView = view.findViewById(R.id.fotoProducto)
-            if(url != null) {
-                Glide.with(view).load(url).into(albumCover)
-            }else{
-                Glide.with(view).load(R.drawable.placeholder).into(albumCover)
-            }
+            Glide.with(view).load(url).placeholder(R.drawable.placeholder).into(albumCover)
         }
 
       /*  fun setLista(productos: MutableList<Producto>) {

@@ -58,31 +58,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_producto_pers_nombre" />
 
-        <EditText
-            android:id="@+id/txt_producto_pers_marca"
-            android:layout_width="270dp"
-            android:layout_height="44dp"
-            android:layout_marginTop="35dp"
-            android:ems="10"
-            android:hint="Marca"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.503"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_producto_pers_precio" />
-
-        <EditText
-            android:id="@+id/txt_producto_pers_presentacion"
-            android:layout_width="270dp"
-            android:layout_height="44dp"
-            android:layout_marginTop="35dp"
-            android:ems="10"
-            android:hint="Presentación"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_producto_pers_marca" />
-
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -95,7 +70,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_producto_pers_presentacion">
+            app:layout_constraintTop_toBottomOf="@+id/txt_producto_pers_precio">
 
                 <TextView
                     android:layout_width="wrap_content"

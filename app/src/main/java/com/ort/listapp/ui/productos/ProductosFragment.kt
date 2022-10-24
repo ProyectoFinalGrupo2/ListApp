@@ -55,6 +55,15 @@ class ProductosFragment : Fragment() {
         val recViewStock: RecyclerView = binding.recListaStock
         val btnCrearProducto : FloatingActionButton = binding.btnNuevoProducto
 
+        recViewProdPersonalizados.setHasFixedSize(true)
+        recViewProdPersonalizados.layoutManager =
+            LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+        viewModel.getFamilia().observe(viewLifecycleOwner) {
+            recViewProdPersonalizados.adapter =
+                ProductoAdapter(viewModel.getProductosPersonalizados(), requireContext()) { prod ->
+                    onItemClick(prod)
+                }
+        }
         recViewProductosFav.setHasFixedSize(true)
         recViewProductosFav.layoutManager =
             LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
@@ -65,15 +74,7 @@ class ProductosFragment : Fragment() {
                 }
         }
 
-        recViewProdPersonalizados.setHasFixedSize(true)
-        recViewProdPersonalizados.layoutManager =
-            LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-        viewModel.getFamilia().observe(viewLifecycleOwner) {
-            recViewProdPersonalizados.adapter =
-                ProductoAdapter(viewModel.getProductosPersonalizados(), requireContext()) { prod ->
-                    onItemClick(prod)
-                }
-        }
+
 
         recViewStock.setHasFixedSize(true)
         recViewStock.layoutManager = GridLayoutManager(requireContext(), 3)
@@ -95,8 +96,6 @@ class ProductosFragment : Fragment() {
         var btnCrear = popUpView.findViewById<Button>(R.id.btn_crear_producto)
         var nombreProd = popUpView.findViewById<EditText>(R.id.txt_producto_pers_nombre)
         var precioProducto = popUpView.findViewById<EditText>(R.id.txt_producto_pers_precio)
-        var marcaProducto = popUpView.findViewById<EditText>(R.id.txt_producto_pers_marca)
-        var presentacion = popUpView.findViewById<EditText>(R.id.txt_producto_pers_presentacion)
         var spinner = popUpView.findViewById<Spinner>(R.id.txt_producto_pers_categoria)
 
         popupBuilder.setView(popUpView)
@@ -110,9 +109,7 @@ class ProductosFragment : Fragment() {
         btnCrear.setOnClickListener{
             val valido = productosViewModel.validarFormCrearProd(nombreProd,precioProducto)
             if(valido){
-                val nombre = nombreProd.text.toString()+" "+marcaProducto.text.toString()+ " "+presentacion.text.toString()
-                val precio = precioProducto.text.toString().toDouble()
-                viewModel.agregarProductoPersonalizado(nombre,precio,"1",marcaProducto.text.toString(), presentacion.text.toString())
+                viewModel.agregarProductoPersonalizado(nombreProd.text.toString(),precioProducto.text.toString().toDouble(),spinner.toString())
                 popUp.dismiss()
             }
         }
@@ -184,8 +181,8 @@ class ProductosFragment : Fragment() {
             // Prueba para agregar al mismo producto en favoritos
             viewModel.agregarProductoFavorito(producto.id)
             // Prueba de borrado de productos precargados en ListaCompras y Favoritos
-            viewModel.removerProductoDeLista(TipoLista.LISTA_DE_COMPRAS, "4058075498051")
-            viewModel.eliminarProductoFavorito("0080432400432")
+            //viewModel.removerProductoDeLista(TipoLista.LISTA_DE_COMPRAS, "4058075498051")
+            //viewModel.eliminarProductoFavorito("0080432400432")
             popUp.dismiss()
         }
     }

@@ -135,8 +135,8 @@ class FamilyViewModel : ViewModel() {
     fun getProductosPersonalizados(): MutableList<Producto> {
         return this.familia.value?.productosPersonalizados?.toMutableList()!!
     }
-    fun agregarProductoPersonalizado(nombre: String,precio:Double,id_categoria:String,marca:String,presentacion:String) {
-        val producto : Producto = Producto("7790250047162",id_categoria,id_categoria,marca,nombre,precio,precio,presentacion)
+    fun agregarProductoPersonalizado(nombre: String,precio:Double,id_categoria:String) {
+        val producto = Producto("1234567",id_categoria,id_categoria,"",nombre,precio,precio,"")
         val familia = this.familia.value
         familia?.productosPersonalizados?.add(producto)
         actualizarFamilia(familia)

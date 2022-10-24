@@ -286,7 +286,7 @@ class ProductosViewModel : ViewModel() {
         lista.add("LIMPIEZA")
         lista.add("MASCOTAS")
         lista.add("PERFUMERÍA Y CUIDADO PERSONAL")
-   
+
         return lista
     }
 }
