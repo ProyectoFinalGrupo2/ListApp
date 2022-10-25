@@ -5,8 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ort.listapp.data.ProductoRepository
 import com.ort.listapp.domain.model.*
-import kotlinx.coroutines.async
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 class FamilyViewModel : ViewModel() {
 
@@ -17,11 +18,6 @@ class FamilyViewModel : ViewModel() {
             loadFamilia(it)
         }
     }
-//    val listaDeCompras = MutableLiveData<MutableList<Lista>>().apply {
-//        value = familia.value?.listas
-//            ?.filter { it.tipoLista == TipoLista.LISTA_DE_COMPRAS }
-//            ?.toMutableList()
-//    }
 
     private fun loadFamilia(it: MutableLiveData<Familia>) {
         it.value = Familia(
@@ -108,17 +104,15 @@ class FamilyViewModel : ViewModel() {
         }?.get(0)
     }
 
-    fun getProductosFavoritos(): MutableList<Producto> {
+    fun getProductosFavoritos(): List<Producto> {
         val listaIds = this.familia.value?.productosFavoritos!!
-        var productos = mutableListOf<Producto>()
-        runBlocking {
-            val resp = async { repositorio.getProductosByListaIds(listaIds) }
-            runBlocking {
-                productos = resp.await()
+        return runBlocking {
+            withContext(Dispatchers.Default) {
+                repositorio.getProductosByListaIds(listaIds)
             }
         }
-        return productos
     }
+
 
     fun agregarProductoFavorito(idProducto: String) {
         val familia = this.familia.value
@@ -135,8 +129,10 @@ class FamilyViewModel : ViewModel() {
     fun getProductosPersonalizados(): MutableList<Producto> {
         return this.familia.value?.productosPersonalizados?.toMutableList()!!
     }
-    fun agregarProductoPersonalizado(nombre: String,precio:Double,id_categoria:String) {
-        val producto = Producto("1234567",id_categoria,id_categoria,"",nombre,precio,precio,"")
+
+    fun agregarProductoPersonalizado(nombre: String, precio: Double, id_categoria: String) {
+        val producto =
+            Producto("1234567", id_categoria, id_categoria, "", nombre, precio, precio, "")
         val familia = this.familia.value
         familia?.productosPersonalizados?.add(producto)
         actualizarFamilia(familia)

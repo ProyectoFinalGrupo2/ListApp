@@ -26,9 +26,9 @@
         app:layout_constraintVertical_bias="0.425" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/etBuscar"
         android:layout_width="279dp"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:layout_marginTop="48dp"
         android:background="#C9AEEC"
         android:bottomLeftRadius="15dp"
@@ -50,7 +50,7 @@
     <EditText
         android:id="@+id/editTextTextPersonName2"
         android:layout_width="279dp"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:background="#C9AEEC"
         android:ems="10"
         android:hint="Contraseña"
@@ -59,7 +59,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/etBuscar"
         app:layout_constraintVertical_bias="0.099" />
 
     <ImageView
@@ -92,6 +92,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="textView"
-        app:layout_constraintTop_toBottomOf="@+id/logo"
-        tools:layout_editor_absoluteX="-15dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo" />
 </androidx.constraintlayout.widget.ConstraintLayout>

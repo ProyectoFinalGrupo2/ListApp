@@ -1,7 +1,11 @@
 package com.ort.listapp.domain.model
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Producto(
-    var id: String = "",
+    @SerialName("objectID") var id: String = "",
     var id_Categoria: String = "",
     var id_subCategoria: String = "",
     var marca: String = "",
