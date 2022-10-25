@@ -1,7 +1,7 @@
 package com.ort.listapp.domain.model
 
 data class Familia(
-    val id: String = "",
+    var id: String = "",
     val nombre: String = "",
     val password: String = "",
     val usuarios: List<String> = listOf(),
