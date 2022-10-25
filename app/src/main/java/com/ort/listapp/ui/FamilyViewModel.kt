@@ -14,7 +14,7 @@ import kotlinx.coroutines.withContext
 
 class FamilyViewModel : ViewModel() {
 
-    val repositorio = ProductoRepository()
+    val repoProductos = ProductoRepository()
     val repoFamilia = FamiliaRepository()
 
     private val familia: MutableLiveData<Familia> by lazy {
@@ -27,62 +27,6 @@ class FamilyViewModel : ViewModel() {
         viewModelScope.launch {
             it.value = repoFamilia.getFamiliaById("familiaId")
         }
-//        it.value = Familia(
-//            "familiaId",
-//            "Los Argento",
-//            listas = arrayListOf(
-//                Lista(
-//                    "listaDePrueba",
-//                    "Lista 1: Familia García",
-//                    "hoy",
-//                    TipoLista.LISTA_DE_COMPRAS,
-//                    mutableListOf(
-//                        ProductoListado(8, "Valentino", "0000075024956"),
-//                        ProductoListado(2, "Candela", "7790742656018"),
-//                        ProductoListado(1, "Rafael", "7790895007057"),
-//                        ProductoListado(3, "Martin", "5410171921991"),
-//                    )
-//                )
-//            ),
-//            productosFavoritos = arrayListOf(
-//                "0080432400432",
-////                "7790895007057",
-////                "7790742656018",
-////                "0000077900319"
-//            ),
-//            productosPersonalizados = arrayListOf(
-//                Producto(
-//                    "5410171921991",
-//                    "01",
-//                    "0108",
-//                    "MC CAIN",
-//                    "Croquetas de Papas Noisettes Mc Cain 1 Kg",
-//                    978.0,
-//                    997.0,
-//                    "1.0 kg"
-//                ),
-//                Producto(
-//                    "0040000017318",
-//                    "02",
-//                    "0208",
-//                    "M&M",
-//                    "Confites de Chocolate M&M 150 Gr",
-//                    1010.0,
-//                    1047.99,
-//                    "150.0 gr"
-//                ),
-//                Producto(
-//                    "7790250047162",
-//                    "03",
-//                    "0302",
-//                    "BABYSEC",
-//                    "Pañal G Babysec Premium 1 U",
-//                    865.65,
-//                    865.65,
-//                    "1.0 un"
-//                ),
-//            )
-//        )
     }
 
     fun getFamilia(): LiveData<Familia> {
@@ -99,7 +43,7 @@ class FamilyViewModel : ViewModel() {
         val listaIds = this.familia.value?.productosFavoritos!!
         return runBlocking {
             withContext(Dispatchers.Default) {
-                repositorio.getProductosByListaIds(listaIds)
+                repoProductos.getProductosByListaIds(listaIds)
             }
         }
     }

@@ -4,9 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ort.listapp.R
 import com.ort.listapp.data.ProductoRepository
 import com.ort.listapp.domain.model.Producto
@@ -15,13 +16,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
-class ProductoListadoAdapter(
+class AlacenaAdapter(
     var productos: List<ProductoListado>,
-    val context: Context,
-    var onClick: (ProductoListado) -> Unit
-) : RecyclerView.Adapter<ProductoListadoAdapter.ProductoListadoHolder>() {
+    val context: Context
+) : RecyclerView.Adapter<AlacenaAdapter.AlacenaHolder>() {
 
-    class ProductoListadoHolder(v: View) : RecyclerView.ViewHolder(v) {
+    class AlacenaHolder(v: View) : RecyclerView.ViewHolder(v) {
         //Se escriben funciones que quiero que se ejecuten cuando se renderice cada item
         private var view: View
 
@@ -31,17 +31,7 @@ class ProductoListadoAdapter(
 
         fun setNombre(nombre: String) {
             var txtNombre: TextView = view.findViewById(R.id.nombre)
-            txtNombre.text = nombre
-        }
-
-        fun setPrecioMax(precioMax: Double) {
-            var txtPrecio: TextView = view.findViewById(R.id.precioItem)
-            txtPrecio.text = ("$" + precioMax.toString())
-        }
-
-        fun setUsuario(usuario: String) {
-            var txtUsuario: TextView = view.findViewById(R.id.usuarioNombre)
-            txtUsuario.text = usuario
+            txtNombre.text = nombre.split(' ')[0]
         }
 
         fun setCantidad(cantidad: Int) {
@@ -49,16 +39,16 @@ class ProductoListadoAdapter(
             txtCantidad.text = cantidad.toString()
         }
 
-        fun getButton(): Button {
-            return view.findViewById(R.id.delete)
+        fun loadImg(url: String?) {
+            val albumCover: ImageView = view.findViewById(R.id.fotoProducto)
+            Glide.with(view).load(url).placeholder(R.drawable.placeholder).into(albumCover)
         }
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductoListadoHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.fragment_item_lista, parent, false)
-        return (ProductoListadoHolder(view))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlacenaHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_producto_alacena, parent, false)
+        return (AlacenaHolder(view))
     }
 
     val repo = ProductoRepository()
@@ -69,17 +59,11 @@ class ProductoListadoAdapter(
     }
     var p: Producto? = Producto()
 
-    override fun onBindViewHolder(holder: ProductoListadoHolder, position: Int) {
+    override fun onBindViewHolder(holder: AlacenaHolder, position: Int) {
         p = prods.find { it.id == prods[position].id }
         holder.setNombre(p!!.nombre)
-        holder.setPrecioMax(p!!.precioMax)
         holder.setCantidad(productos[position].cantidad)
-        holder.setUsuario(productos[position].usuarioId)
-
-        holder.getButton().setOnClickListener {
-            onClick(productos[position])
-        }
-
+        holder.loadImg(p!!.imgURL())
     }
 
     override fun getItemCount(): Int {

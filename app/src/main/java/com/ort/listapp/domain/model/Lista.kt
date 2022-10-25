@@ -5,30 +5,23 @@ data class Lista(
     val nombre: String? = null,
     val fechaCreacion: String? = null,
     val tipoLista: TipoLista? = null,
-    val productos: MutableList<ProductoListado> = ArrayList<ProductoListado>(),
+    val productos: MutableList<ProductoListado> = mutableListOf(),
 ) {
 
     fun agregarProducto(prod: ProductoListado) {
         productos.add(prod)
-        //acá debe llamar al repositorio para agregar el productos en la lista en la base de datos
     }
 
     fun removerProducto(prod: ProductoListado) {
         productos.remove(prod)
-        //acá debe llamar al repositorio para remover el productos de la lista en la base de datos
     }
 
     fun removerProductoPorId(id: String) {
         productos.remove(productos.find { it.productoId == id })
-        //acá debe llamar al repositorio para remover el productos de la lista en la base de datos
     }
 
     fun buscarProductoPorId(id: String): ProductoListado? {
         return productos.find { it.productoId == id };
-    }
-
-    fun getProds(): MutableList<ProductoListado> {
-        return productos
     }
 }
 
