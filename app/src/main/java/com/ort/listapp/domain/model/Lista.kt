@@ -1,10 +1,10 @@
 package com.ort.listapp.domain.model
 
 data class Lista(
-    val id: String,
-    val nombre: String,
-    val fechaCreacion: String,
-    val tipoLista: TipoLista,
+    val id: String? = null,
+    val nombre: String? = null,
+    val fechaCreacion: String? = null,
+    val tipoLista: TipoLista? = null,
     val productos: MutableList<ProductoListado> = ArrayList<ProductoListado>(),
 ) {
 
