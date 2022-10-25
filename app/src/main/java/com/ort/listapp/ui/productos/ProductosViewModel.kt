@@ -3,280 +3,298 @@ package com.ort.listapp.ui.productos
 import android.widget.EditText
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.algolia.search.client.ClientSearch
+import com.algolia.search.helper.deserialize
+import com.algolia.search.model.APIKey
+import com.algolia.search.model.ApplicationID
+import com.algolia.search.model.IndexName
+import com.algolia.search.model.search.Query
 import com.ort.listapp.domain.model.Producto
+import kotlinx.coroutines.launch
 
 class ProductosViewModel : ViewModel() {
 
-    var listaStock: MutableList<Producto> = ArrayList<Producto>()
+    val recStock = MutableLiveData<List<Producto>>()
 
-    val recStock: MutableLiveData<MutableList<Producto>> =
-        MutableLiveData<MutableList<Producto>>().apply {
-            cargarStock()
-            value = listaStock
+    private val client = ClientSearch(
+        applicationID = ApplicationID("ENBZ8I8018"),
+        apiKey = APIKey("404abf3f51b527e0cc1f492c64d0b849"),
+    )
+    private val indexName = IndexName("productos")
+    private val index = client.initIndex(indexName)
+
+    fun getProductosByText(searchText: String) {
+        val query = Query(searchText)
+        viewModelScope.launch {
+            val result = index.search(query)
+            val hits: List<Producto> = result.hits.deserialize(Producto.serializer())
+            recStock.postValue(hits)
         }
-
-    fun cargarStock() {
-        listaStock.add(
-            Producto(
-                "5410171921991",
-                "01",
-                "0108",
-                "MC CAIN",
-                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
-                978.0,
-                997.0,
-                "1.0 kg"
-            )
-        )
-        listaStock.add(
-            Producto(
-                "5410171921991",
-                "01",
-                "0108",
-                "MC CAIN",
-                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
-                978.0,
-                997.0,
-                "1.0 kg"
-            )
-        )
-        listaStock.add(
-            Producto(
-                "5410171921991",
-                "01",
-                "0108",
-                "MC CAIN",
-                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
-                978.0,
-                997.0,
-                "1.0 kg"
-            )
-        )
-        listaStock.add(
-            Producto(
-                "5410171921991",
-                "01",
-                "0108",
-                "MC CAIN",
-                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
-                978.0,
-                997.0,
-                "1.0 kg"
-            )
-        )
-        listaStock.add(
-            Producto(
-                "5410171921991",
-                "01",
-                "0108",
-                "MC CAIN",
-                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
-                978.0,
-                997.0,
-                "1.0 kg"
-            )
-        )
-        listaStock.add(
-            Producto(
-                "5410171921991",
-                "01",
-                "0108",
-                "MC CAIN",
-                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
-                978.0,
-                997.0,
-                "1.0 kg"
-            )
-        )
-        listaStock.add(
-            Producto(
-                "5410171921991",
-                "01",
-                "0108",
-                "MC CAIN",
-                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
-                978.0,
-                997.0,
-                "1.0 kg"
-            )
-        )
-        listaStock.add(
-            Producto(
-                "5410171921991",
-                "01",
-                "0108",
-                "MC CAIN",
-                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
-                978.0,
-                997.0,
-                "1.0 kg"
-            )
-        )
-        listaStock.add(
-            Producto(
-                "5410171921991",
-                "01",
-                "0108",
-                "MC CAIN",
-                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
-                978.0,
-                997.0,
-                "1.0 kg"
-            )
-        )
-        listaStock.add(
-            Producto(
-                "5410171921991",
-                "01",
-                "0108",
-                "MC CAIN",
-                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
-                978.0,
-                997.0,
-                "1.0 kg"
-            )
-        )
-        listaStock.add(
-            Producto(
-                "5410171921991",
-                "01",
-                "0108",
-                "MC CAIN",
-                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
-                978.0,
-                997.0,
-                "1.0 kg"
-            )
-        )
-        listaStock.add(
-            Producto(
-                "5410171921991",
-                "01",
-                "0108",
-                "MC CAIN",
-                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
-                978.0,
-                997.0,
-                "1.0 kg"
-            )
-        )
-        listaStock.add(
-            Producto(
-                "5410171921991",
-                "01",
-                "0108",
-                "MC CAIN",
-                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
-                978.0,
-                997.0,
-                "1.0 kg"
-            )
-        )
-        listaStock.add(
-            Producto(
-                "5410171921991",
-                "01",
-                "0108",
-                "MC CAIN",
-                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
-                978.0,
-                997.0,
-                "1.0 kg"
-            )
-        )
-        listaStock.add(
-            Producto(
-                "5410171921991",
-                "01",
-                "0108",
-                "MC CAIN",
-                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
-                978.0,
-                997.0,
-                "1.0 kg"
-            )
-        )
-        listaStock.add(
-            Producto(
-                "5410171921991",
-                "01",
-                "0108",
-                "MC CAIN",
-                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
-                978.0,
-                997.0,
-                "1.0 kg"
-            )
-        )
-        listaStock.add(
-            Producto(
-                "5410171921991",
-                "01",
-                "0108",
-                "MC CAIN",
-                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
-                978.0,
-                997.0,
-                "1.0 kg"
-            )
-        )
-        listaStock.add(
-            Producto(
-                "5410171921991",
-                "01",
-                "0108",
-                "MC CAIN",
-                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
-                978.0,
-                997.0,
-                "1.0 kg"
-            )
-        )
-        listaStock.add(
-            Producto(
-                "5410171921991",
-                "01",
-                "0108",
-                "MC CAIN",
-                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
-                978.0,
-                997.0,
-                "1.0 kg"
-            )
-        )
-        listaStock.add(
-            Producto(
-                "5410171921991",
-                "01",
-                "0108",
-                "MC CAIN",
-                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
-                978.0,
-                997.0,
-                "1.0 kg"
-            )
-        )
-
     }
 
-    fun validarFormCrearProd(nombre:EditText,precio:EditText) : Boolean{
+//    fun cargarStock() {
+//        listaStock.add(
+//            Producto(
+//                "5410171921991",
+//                "01",
+//                "0108",
+//                "MC CAIN",
+//                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
+//                978.0,
+//                997.0,
+//                "1.0 kg"
+//            )
+//        )
+//        listaStock.add(
+//            Producto(
+//                "5410171921991",
+//                "01",
+//                "0108",
+//                "MC CAIN",
+//                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
+//                978.0,
+//                997.0,
+//                "1.0 kg"
+//            )
+//        )
+//        listaStock.add(
+//            Producto(
+//                "5410171921991",
+//                "01",
+//                "0108",
+//                "MC CAIN",
+//                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
+//                978.0,
+//                997.0,
+//                "1.0 kg"
+//            )
+//        )
+//        listaStock.add(
+//            Producto(
+//                "5410171921991",
+//                "01",
+//                "0108",
+//                "MC CAIN",
+//                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
+//                978.0,
+//                997.0,
+//                "1.0 kg"
+//            )
+//        )
+//        listaStock.add(
+//            Producto(
+//                "5410171921991",
+//                "01",
+//                "0108",
+//                "MC CAIN",
+//                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
+//                978.0,
+//                997.0,
+//                "1.0 kg"
+//            )
+//        )
+//        listaStock.add(
+//            Producto(
+//                "5410171921991",
+//                "01",
+//                "0108",
+//                "MC CAIN",
+//                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
+//                978.0,
+//                997.0,
+//                "1.0 kg"
+//            )
+//        )
+//        listaStock.add(
+//            Producto(
+//                "5410171921991",
+//                "01",
+//                "0108",
+//                "MC CAIN",
+//                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
+//                978.0,
+//                997.0,
+//                "1.0 kg"
+//            )
+//        )
+//        listaStock.add(
+//            Producto(
+//                "5410171921991",
+//                "01",
+//                "0108",
+//                "MC CAIN",
+//                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
+//                978.0,
+//                997.0,
+//                "1.0 kg"
+//            )
+//        )
+//        listaStock.add(
+//            Producto(
+//                "5410171921991",
+//                "01",
+//                "0108",
+//                "MC CAIN",
+//                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
+//                978.0,
+//                997.0,
+//                "1.0 kg"
+//            )
+//        )
+//        listaStock.add(
+//            Producto(
+//                "5410171921991",
+//                "01",
+//                "0108",
+//                "MC CAIN",
+//                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
+//                978.0,
+//                997.0,
+//                "1.0 kg"
+//            )
+//        )
+//        listaStock.add(
+//            Producto(
+//                "5410171921991",
+//                "01",
+//                "0108",
+//                "MC CAIN",
+//                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
+//                978.0,
+//                997.0,
+//                "1.0 kg"
+//            )
+//        )
+//        listaStock.add(
+//            Producto(
+//                "5410171921991",
+//                "01",
+//                "0108",
+//                "MC CAIN",
+//                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
+//                978.0,
+//                997.0,
+//                "1.0 kg"
+//            )
+//        )
+//        listaStock.add(
+//            Producto(
+//                "5410171921991",
+//                "01",
+//                "0108",
+//                "MC CAIN",
+//                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
+//                978.0,
+//                997.0,
+//                "1.0 kg"
+//            )
+//        )
+//        listaStock.add(
+//            Producto(
+//                "5410171921991",
+//                "01",
+//                "0108",
+//                "MC CAIN",
+//                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
+//                978.0,
+//                997.0,
+//                "1.0 kg"
+//            )
+//        )
+//        listaStock.add(
+//            Producto(
+//                "5410171921991",
+//                "01",
+//                "0108",
+//                "MC CAIN",
+//                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
+//                978.0,
+//                997.0,
+//                "1.0 kg"
+//            )
+//        )
+//        listaStock.add(
+//            Producto(
+//                "5410171921991",
+//                "01",
+//                "0108",
+//                "MC CAIN",
+//                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
+//                978.0,
+//                997.0,
+//                "1.0 kg"
+//            )
+//        )
+//        listaStock.add(
+//            Producto(
+//                "5410171921991",
+//                "01",
+//                "0108",
+//                "MC CAIN",
+//                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
+//                978.0,
+//                997.0,
+//                "1.0 kg"
+//            )
+//        )
+//        listaStock.add(
+//            Producto(
+//                "5410171921991",
+//                "01",
+//                "0108",
+//                "MC CAIN",
+//                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
+//                978.0,
+//                997.0,
+//                "1.0 kg"
+//            )
+//        )
+//        listaStock.add(
+//            Producto(
+//                "5410171921991",
+//                "01",
+//                "0108",
+//                "MC CAIN",
+//                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
+//                978.0,
+//                997.0,
+//                "1.0 kg"
+//            )
+//        )
+//        listaStock.add(
+//            Producto(
+//                "5410171921991",
+//                "01",
+//                "0108",
+//                "MC CAIN",
+//                "Croquetas de Papas Noisettes Mc Cain 1 Kg",
+//                978.0,
+//                997.0,
+//                "1.0 kg"
+//            )
+//        )
+//
+//    }
+
+    fun validarFormCrearProd(nombre: EditText, precio: EditText): Boolean {
         var valido = false
-        if(nombre.text.toString().length > 0){
-             if(precio.text.toString().length > 0 ){
-                 if( precio.text.toString().toDouble() >= 0){
-                     valido = true
-                 }
-             }else{
-                 precio.error ="El precio debe ser mayor a $0.00"
-             }
-         }else{
-             nombre.error = "El nombre no puede estar vacío."
-         }
+        if (nombre.text.toString().isNotEmpty()) {
+            if (precio.text.toString().isNotEmpty()) {
+                if (precio.text.toString().toDouble() >= 0) {
+                    valido = true
+                }
+            } else {
+                precio.error = "El precio debe ser mayor a $0.00"
+            }
+        } else {
+            nombre.error = "El nombre no puede estar vacío."
+        }
         return valido
     }
 
-    fun getCategorias(): MutableList<String>{
-        var lista :MutableList<String> = ArrayList<String>()
+    fun getCategorias(): MutableList<String> {
+        val lista: MutableList<String> = ArrayList<String>()
         lista.add("ALIMENTOS CONGELADOS")
         lista.add("ALMACÉN")
         lista.add("BEBÉS")

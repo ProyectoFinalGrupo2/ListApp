@@ -4,6 +4,9 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.ort.listapp.domain.model.Producto
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.tasks.await
 
 class ProductoRepository {
@@ -139,16 +142,14 @@ class ProductoRepository {
         return productoList
     }
 
-    suspend fun getProductosByListaIds(lista: List<String>): MutableList<Producto> {
-        val listaProductos: MutableList<Producto> = arrayListOf()
-        for (productoId in lista) {
-            val producto = getProductoById(productoId)
-            if (producto != null) {
-                listaProductos.add(producto)
-            }
+    suspend fun getProductosByListaIds(lista: List<String>): List<Producto> =
+        coroutineScope {
+            lista.map { productoId ->
+                async {
+                    getProductoById(productoId) ?: Producto()
+                }
+            }.awaitAll()
         }
-        return listaProductos
-    }
 
     suspend fun getProductoById(productoId: String): Producto? {
         val documentSnapshot = productosRef.document(productoId).get().await()
@@ -160,16 +161,16 @@ class ProductoRepository {
         return null
     }
 
-    fun getProductosFromListaIdsNoAPI(lista: List<String>): MutableList<Producto> {
-        val listaProductos: MutableList<Producto> = arrayListOf()
-        for (productoId in lista) {
-            val producto = productoList.find { it.id == productoId }
-            if (producto != null) {
-                producto.id = productoId
-                listaProductos.add(producto)
-            }
-        }
-        return listaProductos
-    }
+//    fun getProductosFromListaIdsNoAPI(lista: List<String>): MutableList<Producto> {
+//        val listaProductos: MutableList<Producto> = arrayListOf()
+//        for (productoId in lista) {
+//            val producto = productoList.find { it.id == productoId }
+//            if (producto != null) {
+//                producto.id = productoId
+//                listaProductos.add(producto)
+//            }
+//        }
+//        return listaProductos
+//    }
 
 }
