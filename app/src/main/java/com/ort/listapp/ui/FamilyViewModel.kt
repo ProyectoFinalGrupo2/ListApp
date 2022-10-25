@@ -30,15 +30,10 @@ class FamilyViewModel : ViewModel() {
                     "hoy",
                     TipoLista.LISTA_DE_COMPRAS,
                     mutableListOf(
-                        ProductoListado(4, "Juan", "4058075498051"),
-//                        ProductoListado(2, "Candela", "7891000244111"),
-//            ProductoListado(8, "Valentino", "0000075024956"),
-//            ProductoListado(2, "Candela", "7790742656018"),
-//            ProductoListado(1, "Rafael", "7790895007057"),
-//            ProductoListado(4, "Valentino", "0080432400432"),
-//            ProductoListado(3, "Valentino", "7790250047162"),
-//            ProductoListado(1, "Martin", "0040000017318"),
-//            ProductoListado(3, "Martin", "5410171921991"),
+                        ProductoListado(8, "Valentino", "0000075024956"),
+                        ProductoListado(2, "Candela", "7790742656018"),
+                        ProductoListado(1, "Rafael", "7790895007057"),
+                        ProductoListado(3, "Martin", "5410171921991"),
                     )
                 )
             ),

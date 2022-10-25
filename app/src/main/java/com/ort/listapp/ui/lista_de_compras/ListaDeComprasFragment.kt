@@ -22,11 +22,7 @@ class ListaDeComprasFragment : Fragment() {
 
     private lateinit var binding: FragmentListaDeComprasBinding
 
-    //    private val viewModel: ListaDeComprasViewModel by activityViewModels()
     private val viewModel: FamilyViewModel by activityViewModels()
-
-    lateinit var listaCompra: RecyclerView
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,11 +40,8 @@ class ListaDeComprasFragment : Fragment() {
             binding.listaCompra.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             binding.listaCompra.adapter =
-                viewModel.getListaByTipo(TipoLista.LISTA_DE_COMPRAS)?.productos?.let { it ->
-                    ProductoListadoAdapter(
-                        it,
-                        requireContext()
-                    )
+                viewModel.getListaByTipo(TipoLista.LISTA_DE_COMPRAS)?.productos?.let {
+                    ProductoListadoAdapter(it, requireContext())
                 }
         })
     }
