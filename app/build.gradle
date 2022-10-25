@@ -91,4 +91,5 @@ dependencies {
 
     // Algolia
     implementation "com.algolia:instantsearch-android:3.1.4"
+    //
 }
