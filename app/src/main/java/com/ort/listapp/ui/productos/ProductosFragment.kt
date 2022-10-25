@@ -118,6 +118,7 @@ class ProductosFragment : Fragment() {
         val nombreProd = popUpView.findViewById<EditText>(R.id.txt_producto_pers_nombre)
         val precioProducto = popUpView.findViewById<EditText>(R.id.txt_producto_pers_precio)
         val spinner = popUpView.findViewById<Spinner>(R.id.txt_producto_pers_categoria)
+        val switchFav = popUpView.findViewById<Switch>(R.id.switch_prod_pers_fav)
 
         popupBuilder.setView(popUpView)
         popUp = popupBuilder.create()
@@ -134,11 +135,14 @@ class ProductosFragment : Fragment() {
         btnCrear.setOnClickListener {
             val valido = productosViewModel.validarFormCrearProd(nombreProd, precioProducto)
             if (valido) {
-                viewModel.agregarProductoPersonalizado(
+                val idProdCreado = viewModel.agregarProductoPersonalizado(
                     nombreProd.text.toString(),
                     precioProducto.text.toString().toDouble(),
                     spinner.toString()
                 )
+                if(switchFav.isChecked){
+                    viewModel.agregarProductoFavorito(idProdCreado)
+                }
                 popUp.dismiss()
             }
         }
