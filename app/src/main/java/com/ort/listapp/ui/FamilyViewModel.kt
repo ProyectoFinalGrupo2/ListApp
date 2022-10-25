@@ -74,20 +74,9 @@ class FamilyViewModel : ViewModel() {
                     865.65,
                     "1.0 un"
                 ),
-                Producto(
-                    "7891000244111",
-                    "08",
-                    "0801",
-                    "DOG CHOW",
-                    "Alimento para Perros Humedo Razas Pequeñas Pollo Dog Chow 100 Gr",
-                    172.0,
-                    196.0,
-                    "100.0 gr"
-                )
             )
         )
     }
-
 
     fun getFamilia(): LiveData<Familia> {
         return this.familia
@@ -107,7 +96,6 @@ class FamilyViewModel : ViewModel() {
             }
         }
     }
-
 
     fun agregarProductoFavorito(idProducto: String) {
         val familia = this.familia.value
