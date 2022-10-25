@@ -208,11 +208,6 @@ class ProductosFragment : Fragment() {
                 cantActual,
                 "Martin"
             )
-            // Prueba para agregar al mismo producto en favoritos
-//            viewModel.agregarProductoFavorito(producto.id)
-            // Prueba de borrado de productos precargados en ListaCompras y Favoritos
-            //viewModel.removerProductoDeLista(TipoLista.LISTA_DE_COMPRAS, "4058075498051")
-            //viewModel.eliminarProductoFavorito("0080432400432")
             popUp.dismiss()
         }
     }
