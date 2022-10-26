@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.ort.listapp.ListaAppApplication.Companion.prefsHelper
 import com.ort.listapp.R
 import com.ort.listapp.adapters.ProductoAdapter
 import com.ort.listapp.databinding.FragmentProductosBinding
@@ -140,7 +141,7 @@ class ProductosFragment : Fragment() {
                     precioProducto.text.toString().toDouble(),
                     spinner.selectedItem.toString()
                 )
-                if(switchFav.isChecked){
+                if (switchFav.isChecked) {
                     viewModel.agregarProductoFavorito(idProdCreado)
                 }
                 popUp.dismiss()
@@ -172,7 +173,8 @@ class ProductosFragment : Fragment() {
 
         fun actualizarSubtotal() {
             if (cantActual > 0) {
-                subtotal.text = "Subtotal: $${DecimalFormat("#.##").format(producto.precioMax * cantActual)}"
+                subtotal.text =
+                    "Subtotal: $${DecimalFormat("#.##").format(producto.precioMax * cantActual)}"
             } else {
                 subtotal.text = ""
             }
@@ -205,7 +207,7 @@ class ProductosFragment : Fragment() {
                 TipoLista.LISTA_DE_COMPRAS,
                 producto.id,
                 cantActual,
-                "Martin"
+                prefsHelper.getUserName()
             )
             popUp.dismiss()
         }
@@ -216,7 +218,7 @@ class ProductosFragment : Fragment() {
         }
     }
 
-    private fun editarProducto(producto : Producto) {
+    private fun editarProducto(producto: Producto) {
         popupBuilder = AlertDialog.Builder(context)
         val popUpView = layoutInflater.inflate(R.layout.popup_crear_producto, null)
         val btnCerrar = popUpView.findViewById<ImageButton>(R.id.btn_cerrar_popup)
