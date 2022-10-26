@@ -25,7 +25,7 @@ class FamilyViewModel : ViewModel() {
 
     fun loadFamilia(it: MutableLiveData<Familia>) {
         viewModelScope.launch {
-            it.value = repoFamilia.getFamiliaById("familiaId")
+            it.value = repoFamilia.getFamiliaById("martin")
         }
     }
 
@@ -66,7 +66,10 @@ class FamilyViewModel : ViewModel() {
         val familia = this.familia.value
         viewModelScope.launch {
             familia?.productosPersonalizados?.remove(producto)
+            eliminarProductoFavorito(producto.id)
+            removerProductoDeLista(TipoLista.LISTA_DE_COMPRAS,producto.id)
             actualizarFamilia(familia!!)
+
         }
 
     }
