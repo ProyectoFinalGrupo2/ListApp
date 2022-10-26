@@ -110,9 +110,9 @@ class ProductosFragment : Fragment() {
         }
     }
 
-    fun crearProductoPersonalizado() {
+    private fun crearProductoPersonalizado() {
         popupBuilder = AlertDialog.Builder(context)
-        val popUpView = getLayoutInflater().inflate(R.layout.popup_crear_producto, null)
+        val popUpView = layoutInflater.inflate(R.layout.popup_crear_producto, null)
         val btnCerrar = popUpView.findViewById<ImageButton>(R.id.btn_cerrar_popup)
         val btnCrear = popUpView.findViewById<Button>(R.id.btn_crear_producto)
         val nombreProd = popUpView.findViewById<EditText>(R.id.txt_producto_pers_nombre)
@@ -156,7 +156,7 @@ class ProductosFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     fun onItemClick(producto: Producto) {
         popupBuilder = AlertDialog.Builder(context)
-        val popUpView = getLayoutInflater().inflate(R.layout.popup_producto_layout, null)
+        val popUpView = layoutInflater.inflate(R.layout.popup_producto_layout, null)
         val botonAgregar = popUpView.findViewById<Button>(R.id.btn_sumar_agregarprod)
         val botonRestar = popUpView.findViewById<Button>(R.id.btn_restar_agregarprod)
         val cantidad = popUpView.findViewById<TextView>(R.id.txt_cantidad_agregarprod)
@@ -216,9 +216,9 @@ class ProductosFragment : Fragment() {
         }
     }
 
-    fun editarProducto(producto : Producto) {
+    private fun editarProducto(producto : Producto) {
         popupBuilder = AlertDialog.Builder(context)
-        val popUpView = getLayoutInflater().inflate(R.layout.popup_crear_producto, null)
+        val popUpView = layoutInflater.inflate(R.layout.popup_crear_producto, null)
         val btnCerrar = popUpView.findViewById<ImageButton>(R.id.btn_cerrar_popup)
         val btnBorrar = popUpView.findViewById<Button>(R.id.btn_borrar_producto)
         val btnEditar = popUpView.findViewById<Button>(R.id.btn_crear_producto)
@@ -247,7 +247,7 @@ class ProductosFragment : Fragment() {
         btnEditar.setOnClickListener {
             val valido = productosViewModel.validarFormCrearProd(nombreProd, precioProducto)
             if (valido) {
-                val idProdCreado = viewModel.actualizarProductoPersonalizado(
+                viewModel.actualizarProductoPersonalizado(
                     producto.id,
                     nombreProd.text.toString(),
                     precioProducto.text.toString().toDouble(),
