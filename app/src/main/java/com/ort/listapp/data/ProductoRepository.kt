@@ -18,19 +18,21 @@ class ProductoRepository {
         coroutineScope {
             lista.map { productoId ->
                 async {
-                    getProductoById(productoId) ?: Producto()
+                    getProductoById(productoId)
                 }
             }.awaitAll()
         }
 
-    private suspend fun getProductoById(productoId: String): Producto? {
+    private suspend fun getProductoById(productoId: String): Producto {
+        var producto = Producto(id = productoId, nombre = "No encontrado")
         val documentSnapshot = productosRef.document(productoId).get().await()
         if (documentSnapshot.exists()) {
-            val producto = documentSnapshot.toObject<Producto>()!!
-            producto.id = productoId
-            return producto
+            documentSnapshot.toObject<Producto>()?.let {
+                producto = it
+                producto.id = productoId
+            }
         }
-        return null
+        return producto
     }
 
 }

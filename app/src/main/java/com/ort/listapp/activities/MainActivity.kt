@@ -11,6 +11,9 @@ import com.ort.listapp.domain.model.Familia
 import com.ort.listapp.domain.model.Lista
 import com.ort.listapp.domain.model.ProductoListado
 import com.ort.listapp.domain.model.TipoLista
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
     private lateinit var bottomNavView: BottomNavigationView
@@ -22,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
         bottomNavView = findViewById(R.id.bottomNavigationView)
         NavigationUI.setupWithNavController(bottomNavView, navHostFragment.navController)
-
 
         val familiaRepository = FamiliaRepository()
 
@@ -91,11 +93,11 @@ class MainActivity : AppCompatActivity() {
 //            )
         )
 
-//        runBlocking {
-//            withContext(Dispatchers.Default) {
+        runBlocking {
+            withContext(Dispatchers.Default) {
 //                familiaRepository.guardarFamilia(familia)
-//            }
-//        }
+            }
+        }
 
     }
 }

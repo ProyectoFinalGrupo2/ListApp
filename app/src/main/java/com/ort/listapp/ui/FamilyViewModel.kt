@@ -17,17 +17,23 @@ class FamilyViewModel : ViewModel() {
     val repoProductos = ProductoRepository()
     val repoFamilia = FamiliaRepository()
 
-    private val familia: MutableLiveData<Familia> by lazy {
+    private val familia by lazy {
         MutableLiveData<Familia>().also {
-            loadFamilia(it)
+//            loadFamilia(it)
+            repoFamilia.suscribeFamilia(it)
         }
     }
 
-    fun loadFamilia(it: MutableLiveData<Familia>) {
-        viewModelScope.launch {
-            it.value = repoFamilia.getFamiliaById("martin")
-        }
-    }
+//    fun loadFamilia(it: MutableLiveData<Familia>) {
+//        viewModelScope.launch {
+//            try {
+//                it.value = repoFamilia.getFamiliaById("familiaId")
+//            } catch (e: Exception) {
+//                Log.w(TAG, "Error getting documents: ", e)
+//            }
+//        }
+//    }
+
 
     fun getFamilia(): LiveData<Familia> {
         return this.familia
@@ -60,42 +66,18 @@ class FamilyViewModel : ViewModel() {
         actualizarFamilia(familia!!)
     }
 
-    fun eliminarProductoPersonalizado(producto: Producto) {
-        // val prod = repoProductos.getProductoById(idProducto)
-
-        val familia = this.familia.value
-        viewModelScope.launch {
-            familia?.productosPersonalizados?.remove(producto)
-            eliminarProductoFavorito(producto.id)
-            removerProductoDeLista(TipoLista.LISTA_DE_COMPRAS,producto.id)
-            actualizarFamilia(familia!!)
-
-        }
-
-    }
-
     fun getProductosPersonalizados(): MutableList<Producto> {
         return this.familia.value?.productosPersonalizados?.toMutableList()!!
     }
 
-    fun agregarProductoPersonalizado(nombre: String, precio: Double, id_categoria: String) :String {
+    fun agregarProductoPersonalizado(nombre: String, precio: Double, id_categoria: String) {
         val producto =
             Producto("1234567", id_categoria, id_categoria, "", nombre, precio, precio, "")
         val familia = this.familia.value
         familia?.productosPersonalizados?.add(producto)
         actualizarFamilia(familia!!)
-        return producto.id
     }
 
-    fun actualizarProductoPersonalizado(idProducto: String,nombre: String, precio: Double, id_categoria: String){
-        val familia = this.familia.value
-        val prod = familia?.productosPersonalizados?.find { it.id == idProducto }
-        prod?.id = idProducto
-        prod?.nombre = nombre
-        prod?.precioMax = precio
-        prod?.id_Categoria = id_categoria
-        actualizarFamilia(familia!!)
-    }
     fun agregarProductoEnLista(
         tipoLista: TipoLista,
         idProducto: String,
@@ -133,7 +115,7 @@ class FamilyViewModel : ViewModel() {
     }
 
     private fun actualizarFamilia(familia: Familia) {
-        this.familia.postValue(familia)
+//        this.familia.postValue(familia)
         viewModelScope.launch {
             repoFamilia.guardarFamilia(familia)
         }
