@@ -60,6 +60,17 @@ class FamilyViewModel : ViewModel() {
         actualizarFamilia(familia!!)
     }
 
+     fun eliminarProductoPersonalizado(producto: Producto) {
+       // val prod = repoProductos.getProductoById(idProducto)
+
+        val familia = this.familia.value
+         viewModelScope.launch {
+             familia?.productosPersonalizados?.remove(producto)
+             actualizarFamilia(familia!!)
+         }
+
+    }
+
     fun getProductosPersonalizados(): MutableList<Producto> {
         return this.familia.value?.productosPersonalizados?.toMutableList()!!
     }

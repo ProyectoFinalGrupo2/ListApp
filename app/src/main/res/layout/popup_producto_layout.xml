@@ -11,14 +11,14 @@
         android:id="@+id/img_producto_popup"
         android:layout_width="220dp"
         android:layout_height="220dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="31dp"
         android:layout_marginBottom="20dp"
         android:textColor="#222221"
         app:layout_constraintBottom_toTopOf="@+id/txt_nom_prod_popup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -125,7 +125,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="33dp"
         app:layout_constraintBottom_toTopOf="@+id/img_producto_popup"
         app:layout_constraintEnd_toEndOf="parent"
@@ -151,6 +151,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_subtotal_popup"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btn_editar_producto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="12dp"
+        android:text="Editar"
+        android:textColor="#222221"
+        app:backgroundTint="#E4F5FF"
+        app:iconTint="#000000"
+        app:layout_constraintStart_toEndOf="@+id/btn_cerrar_popup"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.157"
+        app:layout_constraintStart_toEndOf="@+id/btn_editar_producto"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/corazon_desmarcado" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

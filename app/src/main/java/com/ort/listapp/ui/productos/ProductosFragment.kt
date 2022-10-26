@@ -15,13 +15,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.R
 import com.ort.listapp.adapters.ProductoAdapter
 import com.ort.listapp.databinding.FragmentProductosBinding
 import com.ort.listapp.domain.model.Producto
 import com.ort.listapp.domain.model.TipoLista
 import com.ort.listapp.ui.FamilyViewModel
+import java.text.DecimalFormat
 
 class ProductosFragment : Fragment() {
 
@@ -166,13 +166,13 @@ class ProductosFragment : Fragment() {
         val subtotal = popUpView.findViewById<TextView>(R.id.txt_subtotal_popup)
         val btnCerrar = popUpView.findViewById<ImageButton>(R.id.btn_cerrar_popup)
         val btnAgregar = popUpView.findViewById<Button>(R.id.btn_crear_producto)
-
+        val btnEditar = popUpView.findViewById<Button>(R.id.btn_editar_producto)
         var cantActual = 1
 
 
         fun actualizarSubtotal() {
             if (cantActual > 0) {
-                subtotal.text = "Subtotal: $${producto.precioMax * cantActual}"
+                subtotal.text = "Subtotal: $${DecimalFormat("#.##").format(producto.precioMax * cantActual)}"
             } else {
                 subtotal.text = ""
             }
@@ -201,11 +201,6 @@ class ProductosFragment : Fragment() {
         }
 
         btnAgregar.setOnClickListener {
-            Snackbar.make(
-                popUpView,
-                "Se agregó el producto " + producto.nombre + " en " + cantActual + " cantidades",
-                Snackbar.LENGTH_SHORT
-            ).show()
             viewModel.agregarProductoEnLista(
                 TipoLista.LISTA_DE_COMPRAS,
                 producto.id,
@@ -214,6 +209,63 @@ class ProductosFragment : Fragment() {
             )
             popUp.dismiss()
         }
+
+        btnEditar.setOnClickListener {
+            popUp.dismiss()
+            editarProducto(producto)
+        }
+    }
+
+    fun editarProducto(producto : Producto) {
+        popupBuilder = AlertDialog.Builder(context)
+        val popUpView = getLayoutInflater().inflate(R.layout.popup_crear_producto, null)
+        val btnCerrar = popUpView.findViewById<ImageButton>(R.id.btn_cerrar_popup)
+        val btnBorrar = popUpView.findViewById<Button>(R.id.btn_borrar_producto)
+        val btnEditar = popUpView.findViewById<Button>(R.id.btn_crear_producto)
+        val nombreProd = popUpView.findViewById<EditText>(R.id.txt_producto_pers_nombre)
+        val precioProducto = popUpView.findViewById<EditText>(R.id.txt_producto_pers_precio)
+        val spinner = popUpView.findViewById<Spinner>(R.id.txt_producto_pers_categoria)
+        val switchFav = popUpView.findViewById<Switch>(R.id.switch_prod_pers_fav)
+
+        btnEditar.text = "Confirmar Edición"
+        btnBorrar.visibility = View.VISIBLE
+        btnBorrar.text = "Borrar Producto"
+        nombreProd.setText(producto.nombre)
+        precioProducto.setText(producto.precioMax.toString())
+        popupBuilder.setView(popUpView)
+        popUp = popupBuilder.create()
+        val adapter = ArrayAdapter(
+            popUp.context,
+            android.R.layout.simple_list_item_1,
+            productosViewModel.getCategorias()
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+
+        popUp.show()
+
+        /*btnEditar.setOnClickListener {
+            val valido = productosViewModel.validarFormCrearProd(nombreProd, precioProducto)
+            if (valido) {
+                val idProdCreado = viewModel.agregarProductoPersonalizado(
+                    nombreProd.text.toString(),
+                    precioProducto.text.toString().toDouble(),
+                    spinner.toString()
+                )
+                if(switchFav.isChecked){
+                    viewModel.agregarProductoFavorito(idProdCreado)
+                }
+                popUp.dismiss()
+            }
+        }*/
+        btnBorrar.setOnClickListener {
+            viewModel.eliminarProductoPersonalizado(producto)
+        }
+
+        btnCerrar.setOnClickListener {
+            popUp.dismiss()
+        }
+
     }
 
     override fun onDestroyView() {
