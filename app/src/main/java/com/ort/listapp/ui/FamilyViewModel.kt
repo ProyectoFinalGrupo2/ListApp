@@ -60,64 +60,93 @@ class FamilyViewModel : ViewModel() {
         actualizarFamilia(familia!!)
     }
 
-    fun eliminarProductoFavorito(idProducto: String) {
-        val familia = this.familia.value
-        familia?.productosFavoritos?.remove(idProducto)
-        actualizarFamilia(familia!!)
-    }
-
-    fun getProductosPersonalizados(): MutableList<Producto> {
-        return this.familia.value?.productosPersonalizados?.toMutableList()!!
-    }
-
-    fun agregarProductoPersonalizado(nombre: String, precio: Double, id_categoria: String) {
-        val producto =
-            Producto("1234567", id_categoria, id_categoria, "", nombre, precio, precio, "")
-        val familia = this.familia.value
-        familia?.productosPersonalizados?.add(producto)
-        actualizarFamilia(familia!!)
-    }
-
-    fun agregarProductoEnLista(
-        tipoLista: TipoLista,
+    fun actualizarProductoPersonalizado(
         idProducto: String,
-        cantidad: Int,
-        idUsuario: String
+        nombre: String,
+        precio: Double,
+        id_categoria: String
     ) {
         val familia = this.familia.value
-        if (familia != null) {
-            getListaByTipoEnFamilia(familia, tipoLista).agregarProducto(
-                ProductoListado(
-                    cantidad,
-                    idUsuario,
-                    idProducto
-                )
-            )
-        }
+        val prod = familia?.productosPersonalizados?.find { it.id == idProducto }
+        prod?.id = idProducto
+        prod?.nombre = nombre
+        prod?.precioMax = precio
+        prod?.id_Categoria = id_categoria
         actualizarFamilia(familia!!)
     }
 
-    fun removerProductoDeLista(
-        tipoLista: TipoLista,
-        idProducto: String,
-    ) {
+    fun eliminarProductoPersonalizado(producto: Producto) {
+        // val prod = repoProductos.getProductoById(idProducto)
+
         val familia = this.familia.value
-        if (familia != null) {
-            getListaByTipoEnFamilia(familia, tipoLista).removerProductoPorId(idProducto)
-        }
-        actualizarFamilia(familia!!)
-    }
-
-    private fun getListaByTipoEnFamilia(familia: Familia, tipoLista: TipoLista): Lista {
-        return familia.listas.filter {
-            it.tipoLista == tipoLista
-        }[0]
-    }
-
-    private fun actualizarFamilia(familia: Familia) {
-//        this.familia.postValue(familia)
         viewModelScope.launch {
-            repoFamilia.guardarFamilia(familia)
+            familia?.productosPersonalizados?.remove(producto)
+            eliminarProductoFavorito(producto.id)
+            removerProductoDeLista(TipoLista.LISTA_DE_COMPRAS,producto.id)
+            actualizarFamilia(familia!!)
         }
     }
-}
+
+        fun eliminarProductoFavorito(idProducto: String) {
+            val familia = this.familia.value
+            familia?.productosFavoritos?.remove(idProducto)
+            actualizarFamilia(familia!!)
+        }
+
+        fun getProductosPersonalizados(): MutableList<Producto> {
+            return this.familia.value?.productosPersonalizados?.toMutableList()!!
+        }
+
+        fun agregarProductoPersonalizado(nombre: String, precio: Double, id_categoria: String) : String{
+            val producto =
+                Producto("1234567", id_categoria, id_categoria, "", nombre, precio, precio, "")
+            val familia = this.familia.value
+            familia?.productosPersonalizados?.add(producto)
+            actualizarFamilia(familia!!)
+            return producto.id
+        }
+
+        fun agregarProductoEnLista(
+            tipoLista: TipoLista,
+            idProducto: String,
+            cantidad: Int,
+            idUsuario: String
+        ) {
+            val familia = this.familia.value
+            if (familia != null) {
+                getListaByTipoEnFamilia(familia, tipoLista).agregarProducto(
+                    ProductoListado(
+                        cantidad,
+                        idUsuario,
+                        idProducto
+                    )
+                )
+            }
+            actualizarFamilia(familia!!)
+        }
+
+        fun removerProductoDeLista(
+            tipoLista: TipoLista,
+            idProducto: String,
+        ) {
+            val familia = this.familia.value
+            if (familia != null) {
+                getListaByTipoEnFamilia(familia, tipoLista).removerProductoPorId(idProducto)
+            }
+            actualizarFamilia(familia!!)
+        }
+
+        private fun getListaByTipoEnFamilia(familia: Familia, tipoLista: TipoLista): Lista {
+            return familia.listas.filter {
+                it.tipoLista == tipoLista
+            }[0]
+        }
+
+        private fun actualizarFamilia(familia: Familia) {
+//        this.familia.postValue(familia)
+            viewModelScope.launch {
+                repoFamilia.guardarFamilia(familia)
+            }
+        }
+    }
+
