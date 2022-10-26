@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
+import com.ort.listapp.ListaAppApplication.Companion.prefsHelper
 import com.ort.listapp.R
 import com.ort.listapp.adapters.ProductoAdapter
 import com.ort.listapp.databinding.FragmentProductosBinding
@@ -206,7 +207,7 @@ class ProductosFragment : Fragment() {
                 TipoLista.LISTA_DE_COMPRAS,
                 producto.id,
                 cantActual,
-                "Martin"
+                prefsHelper.getUserName()
             )
             popUp.dismiss()
         }

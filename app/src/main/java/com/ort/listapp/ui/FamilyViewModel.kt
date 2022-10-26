@@ -17,17 +17,23 @@ class FamilyViewModel : ViewModel() {
     val repoProductos = ProductoRepository()
     val repoFamilia = FamiliaRepository()
 
-    private val familia: MutableLiveData<Familia> by lazy {
+    private val familia by lazy {
         MutableLiveData<Familia>().also {
-            loadFamilia(it)
+//            loadFamilia(it)
+            repoFamilia.suscribeFamilia(it)
         }
     }
 
-    fun loadFamilia(it: MutableLiveData<Familia>) {
-        viewModelScope.launch {
-            it.value = repoFamilia.getFamiliaById("familiaId")
-        }
-    }
+//    fun loadFamilia(it: MutableLiveData<Familia>) {
+//        viewModelScope.launch {
+//            try {
+//                it.value = repoFamilia.getFamiliaById("familiaId")
+//            } catch (e: Exception) {
+//                Log.w(TAG, "Error getting documents: ", e)
+//            }
+//        }
+//    }
+
 
     fun getFamilia(): LiveData<Familia> {
         return this.familia
@@ -109,7 +115,7 @@ class FamilyViewModel : ViewModel() {
     }
 
     private fun actualizarFamilia(familia: Familia) {
-        this.familia.postValue(familia)
+//        this.familia.postValue(familia)
         viewModelScope.launch {
             repoFamilia.guardarFamilia(familia)
         }
