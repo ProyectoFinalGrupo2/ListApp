@@ -60,14 +60,14 @@ class FamilyViewModel : ViewModel() {
         actualizarFamilia(familia!!)
     }
 
-     fun eliminarProductoPersonalizado(producto: Producto) {
-       // val prod = repoProductos.getProductoById(idProducto)
+    fun eliminarProductoPersonalizado(producto: Producto) {
+        // val prod = repoProductos.getProductoById(idProducto)
 
         val familia = this.familia.value
-         viewModelScope.launch {
-             familia?.productosPersonalizados?.remove(producto)
-             actualizarFamilia(familia!!)
-         }
+        viewModelScope.launch {
+            familia?.productosPersonalizados?.remove(producto)
+            actualizarFamilia(familia!!)
+        }
 
     }
 
@@ -84,6 +84,15 @@ class FamilyViewModel : ViewModel() {
         return producto.id
     }
 
+    fun actualizarProductoPersonalizado(idProducto: String,nombre: String, precio: Double, id_categoria: String){
+        val familia = this.familia.value
+        val prod = familia?.productosPersonalizados?.find { it.id == idProducto }
+        prod?.id = idProducto
+        prod?.nombre = nombre
+        prod?.precioMax = precio
+        prod?.id_Categoria = id_categoria
+        actualizarFamilia(familia!!)
+    }
     fun agregarProductoEnLista(
         tipoLista: TipoLista,
         idProducto: String,

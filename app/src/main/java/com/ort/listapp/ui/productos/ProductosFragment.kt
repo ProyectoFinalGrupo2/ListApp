@@ -138,7 +138,7 @@ class ProductosFragment : Fragment() {
                 val idProdCreado = viewModel.agregarProductoPersonalizado(
                     nombreProd.text.toString(),
                     precioProducto.text.toString().toDouble(),
-                    spinner.toString()
+                    spinner.selectedItem.toString()
                 )
                 if(switchFav.isChecked){
                     viewModel.agregarProductoFavorito(idProdCreado)
@@ -244,22 +244,24 @@ class ProductosFragment : Fragment() {
 
         popUp.show()
 
-        /*btnEditar.setOnClickListener {
+        btnEditar.setOnClickListener {
             val valido = productosViewModel.validarFormCrearProd(nombreProd, precioProducto)
             if (valido) {
-                val idProdCreado = viewModel.agregarProductoPersonalizado(
+                val idProdCreado = viewModel.actualizarProductoPersonalizado(
+                    producto.id,
                     nombreProd.text.toString(),
                     precioProducto.text.toString().toDouble(),
-                    spinner.toString()
+                    spinner.selectedItem.toString()
                 )
-                if(switchFav.isChecked){
-                    viewModel.agregarProductoFavorito(idProdCreado)
+                if (switchFav.isChecked) {
+                    viewModel.agregarProductoFavorito(producto.id)
                 }
                 popUp.dismiss()
             }
-        }*/
+        }
         btnBorrar.setOnClickListener {
             viewModel.eliminarProductoPersonalizado(producto)
+            popUp.dismiss()
         }
 
         btnCerrar.setOnClickListener {
