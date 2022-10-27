@@ -61,7 +61,7 @@ class ProductosFragment : Fragment() {
 
         rvProdFavoritos.setHasFixedSize(true)
         rvProdFavoritos.layoutManager =
-            LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+            GridLayoutManager(requireContext(),3)
         viewModel.getFamilia().observe(viewLifecycleOwner) {
             rvProdFavoritos.adapter =
                 ProductoAdapter(viewModel.getProductosFavoritos(), requireContext()) { prod ->
@@ -71,7 +71,7 @@ class ProductosFragment : Fragment() {
 
         rvProdPersonalizados.setHasFixedSize(true)
         rvProdPersonalizados.layoutManager =
-            LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+            GridLayoutManager(requireContext(),3)
         viewModel.getFamilia().observe(viewLifecycleOwner) {
             rvProdPersonalizados.adapter =
                 ProductoAdapter(viewModel.getProductosPersonalizados(), requireContext()) { prod ->
