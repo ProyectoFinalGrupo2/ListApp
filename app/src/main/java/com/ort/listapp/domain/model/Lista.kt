@@ -9,11 +9,11 @@ data class Lista(
 ) {
 
     fun agregarProducto(prod: ProductoListado) {
-        productos.add(prod)
-    }
-
-    fun removerProducto(prod: ProductoListado) {
-        productos.remove(prod)
+        if(productoEstaEnLista(prod.productoId)){
+            modificarCantidadPorId(prod.productoId, prod.cantidad)
+        }else{
+            productos.add(prod)
+        }
     }
 
     fun removerProductoPorId(id: String) {
@@ -23,11 +23,18 @@ data class Lista(
     fun buscarProductoPorId(id: String): ProductoListado? {
         return productos.find { it.productoId == id };
     }
+
+    fun modificarCantidadPorId(id: String, cantidad: Int){
+        var prod = buscarProductoPorId(id)
+        if(prod != null && prod.cantidad + cantidad > 0){
+            prod.cantidad += cantidad
+        }else{
+            removerProductoPorId(id)
+        }
+    }
+
+    fun productoEstaEnLista(id: String): Boolean{
+        return productos.firstOrNull{it.productoId == id} != null
+    }
 }
 
-enum class TipoLista {
-    LISTA_DE_COMPRAS,
-    ALACENA_VIRTUAL,
-    LISTA_FAVORITA,
-    HISTORIAL
-}
