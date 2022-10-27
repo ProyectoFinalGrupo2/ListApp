@@ -93,18 +93,6 @@ class FamilyViewModel : ViewModel() {
             actualizarFamilia(familia!!)
         }
 
-    fun esProductoFav(idProducto:String):Boolean{
-        var existe = false
-        val familia = this.familia.value
-        if (familia != null) {
-            val prod = familia?.productosFavoritos?.find { it == idProducto }
-            if(prod != null){
-                existe = true
-            }
-        }
-        return existe
-    }
-
         fun getProductosPersonalizados(): MutableList<Producto> {
             return this.familia.value?.productosPersonalizados?.toMutableList()!!
         }
