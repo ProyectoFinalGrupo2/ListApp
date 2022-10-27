@@ -31,7 +31,8 @@ class AlacenaAdapter(
 
         fun setNombre(nombre: String) {
             var txtNombre: TextView = view.findViewById(R.id.nombre)
-            txtNombre.text = nombre.split(' ')[0]
+            val nomProd = nombre.split(' ')
+            txtNombre.text = nomProd[0] + " " + nomProd[1] + "..."
         }
 
         fun setCantidad(cantidad: Int) {
