@@ -4,12 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.R
 import com.ort.listapp.data.ProductoRepository
 import com.ort.listapp.domain.model.Producto
@@ -20,20 +18,15 @@ import kotlinx.coroutines.withContext
 
 class AlacenaAdapter(
     var productos: List<ProductoListado>,
-    val context: Context,
-    var onClick: (ProductoListado) -> Unit
+    val context: Context
 ) : RecyclerView.Adapter<AlacenaAdapter.AlacenaHolder>() {
 
     class AlacenaHolder(v: View) : RecyclerView.ViewHolder(v) {
         //Se escriben funciones que quiero que se ejecuten cuando se renderice cada item
         private var view: View
-        val btnAgregar: Button
-        val btnRestar: Button
 
         init {
             this.view = v
-            btnAgregar = view.findViewById(R.id.sumar)
-            btnRestar = view.findViewById(R.id.sacar)
         }
 
         fun setNombre(nombre: String) {
@@ -72,16 +65,6 @@ class AlacenaAdapter(
         holder.setNombre(p!!.nombre)
         holder.setCantidad(productos[position].cantidad)
         holder.loadImg(p!!.imgURL())
-
-        holder.btnAgregar.setOnClickListener {
-            Snackbar.make(
-                it,"Se agrego " + (p?.nombre ?: String), Snackbar.LENGTH_SHORT).show()
-        }
-        holder.btnRestar.setOnClickListener {
-            Snackbar.make(
-                it,"Se saco " + (p?.nombre ?: String), Snackbar.LENGTH_SHORT).show()
-        }
-
     }
 
     override fun getItemCount(): Int {
