@@ -168,8 +168,9 @@ class ProductosFragment : Fragment() {
         val btnCerrar = popUpView.findViewById<ImageButton>(R.id.btn_cerrar_popup)
         val btnAgregar = popUpView.findViewById<Button>(R.id.btn_crear_producto)
         val btnEditar = popUpView.findViewById<Button>(R.id.btn_editar_producto)
+        val corazonFav = popUpView.findViewById<ImageView>(R.id.btn_corazon_fav)
         var cantActual = 1
-
+        var esFavorito = viewModel.esProductoFav(producto.id)
 
         fun actualizarSubtotal() {
             if (cantActual > 0) {
@@ -179,12 +180,22 @@ class ProductosFragment : Fragment() {
                 subtotal.text = ""
             }
         }
+        fun marcarCorazon(){
+            if(esFavorito){
+                corazonFav.setImageResource(R.drawable.corazon_marcado)
+            }else{
+                corazonFav.setImageResource(R.drawable.corazon_desmarcado)
+            }
+        }
+
         popupBuilder.setView(popUpView)
         popUp = popupBuilder.create()
         popUp.show()
         nombreProd.text = producto.nombre
         precioProducto.text = "$${producto.precioMax}"
         Glide.with(popUpView).load(producto.imgURL()).into(imagen)
+        marcarCorazon()
+
         botonAgregar.setOnClickListener {
             cantActual++
             cantidad.text = cantActual.toString()
@@ -215,6 +226,15 @@ class ProductosFragment : Fragment() {
         btnEditar.setOnClickListener {
             popUp.dismiss()
             editarProducto(producto)
+        }
+        corazonFav.setOnClickListener {
+            esFavorito = !esFavorito
+            if(esFavorito){
+                viewModel.agregarProductoFavorito(producto.id)
+            }else{
+                viewModel.eliminarProductoFavorito(producto.id)
+            }
+            marcarCorazon()
         }
     }
 
