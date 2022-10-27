@@ -26,7 +26,7 @@ class ProductoListadoAdapter(
     class ProductoListadoHolder(v: View) : RecyclerView.ViewHolder(v) {
         //Se escriben funciones que quiero que se ejecuten cuando se renderice cada item
         private var view: View
-        public val btnDelete: Button
+        val btnDelete: Button
 
         init {
             this.view = v
@@ -85,9 +85,7 @@ class ProductoListadoAdapter(
             onClick(productos[position])
             Snackbar.make(
                 it,"Se elimino " + (p?.nombre ?: String), Snackbar.LENGTH_SHORT).show()
-
         }
-
     }
 
     override fun getItemCount(): Int {
