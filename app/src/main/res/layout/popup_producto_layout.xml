@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/btn_corazon_fav"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -166,7 +166,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/btn_corazon_fav"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="20dp"
