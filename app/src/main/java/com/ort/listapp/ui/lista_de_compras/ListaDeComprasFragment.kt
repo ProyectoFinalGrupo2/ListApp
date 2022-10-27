@@ -46,19 +46,14 @@ class ListaDeComprasFragment : Fragment() {
             binding.listaCompra.adapter =
                 viewModel.getListaByTipo(TipoLista.LISTA_DE_COMPRAS)?.productos?.let {
                     ProductoListadoAdapter(it, requireContext()){ prod ->
-                        onItemClick(prod)
+                        buttonClick(prod)
                     }
                 }
         })
     }
 
-    fun onItemClick(producto: ProductoListado) {
-        val productoListado = getLayoutInflater().inflate(R.layout.fragment_item_lista, null)
-        val btnDelete = productoListado.findViewById<Button>(R.id.delete)
-        btnDelete.setOnClickListener {
-            Snackbar.make(
-                binding.root,"Eliminar", Snackbar.LENGTH_SHORT).show()
-        }
+    private fun buttonClick(producto: ProductoListado) {
+        viewModel.removerProductoDeLista(TipoLista.LISTA_DE_COMPRAS, producto.productoId)
     }
 
 
