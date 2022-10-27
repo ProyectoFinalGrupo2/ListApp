@@ -51,8 +51,13 @@ class AlacenaFragment : Fragment() {
             }
             binding.alacenaProductos.adapter =
                 viewModel.getListaByTipo(TipoLista.ALACENA_VIRTUAL)?.productos?.let {
-                    AlacenaAdapter(it, requireContext())
+                    AlacenaAdapter(it, requireContext()){prod ->
+                        buttonClick(prod)
+                    }
                 }
         })
+    }
+    private fun buttonClick(producto: ProductoListado) {
+        //viewModel.removerProductoDeLista(TipoLista.LISTA_DE_COMPRAS, producto.productoId)
     }
 }
