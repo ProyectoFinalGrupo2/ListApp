@@ -139,6 +139,15 @@ class FamilyViewModel : ViewModel() {
         }
     }
 
+    fun actualizarProductoEnLista(tipoLista: TipoLista, idProducto: String){
+        this.familia.value?.let { familia ->
+            getListaByTipoEnFamilia(familia, tipoLista).modificarCantidadPorId(
+                idProducto, 1
+            )
+            actualizarFamilia(familia)
+        }
+    }
+
     fun removerProductoDeLista(
         tipoLista: TipoLista,
         idProducto: String,

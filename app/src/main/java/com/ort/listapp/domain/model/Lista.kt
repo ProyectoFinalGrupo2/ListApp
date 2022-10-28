@@ -24,7 +24,7 @@ data class Lista(
         return productos.find { it.id == id };
     }
 
-    private fun modificarCantidadPorId(id: String, cantidad: Int) {
+    fun modificarCantidadPorId(id: String, cantidad: Int) {
         val prod = buscarProductoPorId(id)
         if (prod != null && prod.cantidad + cantidad > 0) {
             prod.cantidad += cantidad

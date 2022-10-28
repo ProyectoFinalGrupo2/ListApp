@@ -70,6 +70,7 @@ class AlacenaAdapter(
             Snackbar.make(
                 it, "Se agrego " + (producto.nombre ?: String), Snackbar.LENGTH_SHORT
             ).show()
+            onClick(producto)
         }
         holder.btnRestar.setOnClickListener {
             Snackbar.make(

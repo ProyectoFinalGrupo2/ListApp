@@ -59,6 +59,6 @@ class AlacenaFragment : Fragment() {
     }
 
     private fun buttonClick(producto: ProductoListado) {
-        //viewModel.removerProductoDeLista(TipoLista.LISTA_DE_COMPRAS, producto.productoId)
+        viewModel.actualizarProductoEnLista(TipoLista.ALACENA_VIRTUAL, producto.id)
     }
 }
