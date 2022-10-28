@@ -1,5 +1,6 @@
 package com.ort.listapp.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -11,18 +12,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.R
-import com.ort.listapp.data.ProductoRepository
-import com.ort.listapp.domain.model.Producto
-import com.ort.listapp.domain.model.ProductoListado
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
+import com.ort.listapp.domain.model.ProductoListadoFull
 
+@SuppressLint("SetTextI18n")
 class AlacenaAdapter(
-    var productos: List<ProductoListado>,
+    var productos: List<ProductoListadoFull>,
     val context: Context,
-    var onClick: (ProductoListado) -> Unit
+    var onClick: (ProductoListadoFull) -> Unit
 ) : RecyclerView.Adapter<AlacenaAdapter.AlacenaHolder>() {
+
+//    private val productoRepository = ProductoRepository()
+//    private val prods = productoRepository.getProductosByListaIds(cargarListaIds())
+//    var p: Producto? = Producto()
 
     class AlacenaHolder(v: View) : RecyclerView.ViewHolder(v) {
         //Se escriben funciones que quiero que se ejecuten cuando se renderice cada item
@@ -37,13 +38,13 @@ class AlacenaAdapter(
         }
 
         fun setNombre(nombre: String) {
-            var txtNombre: TextView = view.findViewById(R.id.nombre)
+            val txtNombre: TextView = view.findViewById(R.id.nombre)
             val nomProd = nombre.split(' ')
-            txtNombre.text = nomProd[0] + " " + nomProd[1] + "..."
+            txtNombre.text = "${nomProd[0]} ${nomProd[1]}..."
         }
 
         fun setCantidad(cantidad: Int) {
-            var txtCantidad: TextView = view.findViewById(R.id.cantidad)
+            val txtCantidad: TextView = view.findViewById(R.id.cantidad)
             txtCantidad.text = cantidad.toString()
         }
 
@@ -55,31 +56,27 @@ class AlacenaAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlacenaHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_producto_alacena, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_producto_alacena, parent, false)
         return (AlacenaHolder(view))
     }
 
-    val repo = ProductoRepository()
-    val prods = runBlocking {
-        withContext(Dispatchers.Default) {
-            repo.getProductosByListaIds(cargarListaIds())
-        }
-    }
-    var p: Producto? = Producto()
 
-    override fun onBindViewHolder(holder: AlacenaHolder, position: Int) {
-        p = prods.find { it.id == prods[position].id }
-        holder.setNombre(p!!.nombre)
+    override fun onBindViewHolder(holder: AlacenaAdapter.AlacenaHolder, position: Int) {
+        val producto = productos[position].producto
+        holder.setNombre(producto.nombre)
         holder.setCantidad(productos[position].cantidad)
-        holder.loadImg(p!!.imgURL())
+        holder.loadImg(producto.imgURL())
 
         holder.btnAgregar.setOnClickListener {
             Snackbar.make(
-                it,"Se agrego " + (p?.nombre ?: String), Snackbar.LENGTH_SHORT).show()
+                it, "Se agrego " + (producto.nombre ?: String), Snackbar.LENGTH_SHORT
+            ).show()
         }
         holder.btnRestar.setOnClickListener {
             Snackbar.make(
-                it,"Se saco " + (p?.nombre ?: String), Snackbar.LENGTH_SHORT).show()
+                it, "Se saco " + (producto.nombre ?: String), Snackbar.LENGTH_SHORT
+            ).show()
         }
 
     }
@@ -88,11 +85,11 @@ class AlacenaAdapter(
         return productos.size
     }
 
-    fun cargarListaIds(): MutableList<String> {
-        val listaIds: MutableList<String> = arrayListOf()
-        productos.forEach {
-            listaIds.add(it.productoId)
-        }
-        return listaIds
-    }
+//    fun cargarListaIds(): MutableList<String> {
+//        val listaIds: MutableList<String> = arrayListOf()
+//        productos.forEach {
+//            listaIds.add(it.productoId)
+//        }
+//        return listaIds
+//    }
 }

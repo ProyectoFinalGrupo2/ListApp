@@ -4,25 +4,16 @@ import android.widget.EditText
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.algolia.search.client.ClientSearch
 import com.algolia.search.helper.deserialize
-import com.algolia.search.model.APIKey
-import com.algolia.search.model.ApplicationID
-import com.algolia.search.model.IndexName
 import com.algolia.search.model.search.Query
 import com.ort.listapp.domain.model.Producto
+import com.ort.listapp.helpers.AlgoliaHelper
 import kotlinx.coroutines.launch
 
 class ProductosViewModel : ViewModel() {
 
     val recStock = MutableLiveData<List<Producto>>()
-
-    private val client = ClientSearch(
-        applicationID = ApplicationID("ENBZ8I8018"),
-        apiKey = APIKey("404abf3f51b527e0cc1f492c64d0b849"),
-    )
-    private val indexName = IndexName("productos")
-    private val index = client.initIndex(indexName)
+    private val index = AlgoliaHelper.getIndex()
 
     fun getProductosByText(searchText: String) {
         val query = Query(searchText)

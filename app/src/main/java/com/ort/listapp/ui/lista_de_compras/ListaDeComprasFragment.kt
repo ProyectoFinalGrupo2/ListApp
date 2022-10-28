@@ -4,17 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
-import com.ort.listapp.R
 import com.ort.listapp.adapters.ProductoListadoAdapter
 import com.ort.listapp.databinding.FragmentListaDeComprasBinding
-import com.ort.listapp.domain.model.ProductoListado
+import com.ort.listapp.domain.model.ProductoListadoFull
 import com.ort.listapp.domain.model.TipoLista
 import com.ort.listapp.ui.FamilyViewModel
 
@@ -44,17 +41,23 @@ class ListaDeComprasFragment : Fragment() {
             binding.listaCompra.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             binding.listaCompra.adapter =
-                viewModel.getListaByTipo(TipoLista.LISTA_DE_COMPRAS)?.productos?.let {
-                    ProductoListadoAdapter(it, requireContext()){ prod ->
-                        buttonClick(prod)
-                    }
+//                viewModel.getListaByTipo(TipoLista.LISTA_DE_COMPRAS)?.productos?.let {
+//                    ProductoListadoAdapter(it, requireContext()){ prod ->
+//                        buttonClick(prod)
+//                    }
+//                }
+                ProductoListadoAdapter(
+                    viewModel.getProductosFullbyTipoLista(TipoLista.LISTA_DE_COMPRAS),
+                    requireContext()
+                ) {
+                    buttonClick(it)
                 }
+
         })
     }
 
-    private fun buttonClick(producto: ProductoListado) {
-        viewModel.removerProductoDeLista(TipoLista.LISTA_DE_COMPRAS, producto.productoId)
+    private fun buttonClick(prodFull: ProductoListadoFull) {
+        viewModel.removerProductoDeLista(TipoLista.LISTA_DE_COMPRAS, prodFull.producto.id)
     }
-
 
 }
