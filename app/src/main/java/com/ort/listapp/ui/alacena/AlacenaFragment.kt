@@ -51,14 +51,17 @@ class AlacenaFragment : Fragment() {
 //                }
                 AlacenaAdapter(
                     viewModel.getProductosByTipoLista(TipoLista.ALACENA_VIRTUAL),
-                    requireContext()
-                ) {
-                    buttonClick(it)
-                }
+                    requireContext(),
+                 {
+                    btnClick(it, 1)
+                } ,
+                {
+                    btnClick(it, -1)
+                })
         })
     }
 
-    private fun buttonClick(producto: ProductoListado) {
-        viewModel.actualizarProductoEnLista(TipoLista.ALACENA_VIRTUAL, producto.id)
+    private fun btnClick(producto: ProductoListado, cantidad: Int) {
+        viewModel.actualizarProductoEnLista(TipoLista.ALACENA_VIRTUAL, producto.id, cantidad)
     }
 }

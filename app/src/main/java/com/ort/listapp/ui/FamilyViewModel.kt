@@ -139,10 +139,10 @@ class FamilyViewModel : ViewModel() {
         }
     }
 
-    fun actualizarProductoEnLista(tipoLista: TipoLista, idProducto: String){
+    fun actualizarProductoEnLista(tipoLista: TipoLista, idProducto: String, cantidad: Int){
         this.familia.value?.let { familia ->
             getListaByTipoEnFamilia(familia, tipoLista).modificarCantidadPorId(
-                idProducto, 1
+                idProducto, cantidad
             )
             actualizarFamilia(familia)
         }

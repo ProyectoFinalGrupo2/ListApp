@@ -35,8 +35,12 @@ class ProductoListadoAdapter(
 
         fun setNombre(nombre: String) {
             val txtNombre: TextView = view.findViewById(R.id.nombre)
-            val nomProd = nombre.split(' ')
-            txtNombre.text = nomProd[0] + " " + nomProd[1] + "..."
+            var nomProd = nombre
+            if(nombre.contains(" ")){
+                val n = nombre.split(" ")
+                nomProd = "${n[0]} ${n[1]}..."
+            }
+            txtNombre.text = nomProd
         }
 
         fun setPrecioMax(precioMax: Double) {

@@ -30,8 +30,12 @@ class ProductoAdapter(
         //Se hace una función por cada cosa que pasa en el item
         fun setNombre(nombre: String) {
             val txtNombre: TextView = view.findViewById(R.id.nombre)
-            //  val nomProd = nombre.split(' ')
-            txtNombre.text = nombre
+            var nomProd = nombre
+            if(nombre.contains(" ")){
+                val n = nombre.split(" ")
+                nomProd = "${n[0]} ${n[1]}..."
+            }
+            txtNombre.text = nomProd
         }
 
         fun setPrecio(precio: Double) {

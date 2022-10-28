@@ -18,7 +18,8 @@ import com.ort.listapp.domain.model.ProductoListado
 class AlacenaAdapter(
     var productos: List<ProductoListado>,
     val context: Context,
-    var onClick: (ProductoListado) -> Unit
+    var onClick: (ProductoListado) -> Unit,
+    var onClick2: (ProductoListado) -> Unit
 ) : RecyclerView.Adapter<AlacenaAdapter.AlacenaHolder>() {
 
 //    private val productoRepository = ProductoRepository()
@@ -39,8 +40,12 @@ class AlacenaAdapter(
 
         fun setNombre(nombre: String) {
             val txtNombre: TextView = view.findViewById(R.id.nombre)
-            val nomProd = nombre.split(' ')
-            txtNombre.text = "${nomProd[0]} ${nomProd[1]}..."
+            var nomProd = nombre
+            if(nombre.contains(" ")){
+                val n = nombre.split(" ")
+                nomProd = "${n[0]} ${n[1]}..."
+            }
+            txtNombre.text = nomProd
         }
 
         fun setCantidad(cantidad: Int) {
@@ -68,14 +73,21 @@ class AlacenaAdapter(
 
         holder.btnAgregar.setOnClickListener {
             Snackbar.make(
-                it, "Se agrego " + (producto.nombre ?: String), Snackbar.LENGTH_SHORT
+                it, "Se agrego un " + (producto.nombre ?: String), Snackbar.LENGTH_SHORT
             ).show()
             onClick(producto)
         }
         holder.btnRestar.setOnClickListener {
-            Snackbar.make(
-                it, "Se saco " + (producto.nombre ?: String), Snackbar.LENGTH_SHORT
-            ).show()
+            if(producto.cantidad > 0){
+                Snackbar.make(
+                    it, "Se saco un " + (producto.nombre ?: String), Snackbar.LENGTH_SHORT
+                ).show()
+                onClick2(producto)
+            } else{
+                Snackbar.make(
+                    it, "Ups... parece que ya no tienes mas", Snackbar.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
