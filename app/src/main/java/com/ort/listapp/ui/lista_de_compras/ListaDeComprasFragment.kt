@@ -50,13 +50,13 @@ class ListaDeComprasFragment : Fragment() {
                     viewModel.getProductosByTipoLista(TipoLista.LISTA_DE_COMPRAS),
                     requireContext()
                 ) {
-                    buttonClick(it)
+                    removerProducto(it)
                 }
 
         })
     }
 
-    private fun buttonClick(producto: ProductoListado) {
+    private fun removerProducto(producto: ProductoListado) {
         viewModel.removerProductoDeLista(TipoLista.LISTA_DE_COMPRAS, producto.id)
     }
 

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.R
 import com.ort.listapp.domain.model.ProductoListado
+import java.text.DecimalFormat
 
 @SuppressLint("SetTextI18n")
 class ProductoListadoAdapter(
@@ -73,7 +74,9 @@ class ProductoListadoAdapter(
     override fun onBindViewHolder(holder: ProductoListadoHolder, position: Int) {
         val producto = productos[position]
         holder.setNombre(producto.nombre)
-        holder.setPrecioMax(producto.precio)
+
+        val precio = DecimalFormat("#.##").format(producto.precio * producto.cantidad).toDouble()
+        holder.setPrecioMax(precio)
         holder.setCantidad(producto.cantidad)
         holder.setUsuario(producto.nombreUsuario)
 
