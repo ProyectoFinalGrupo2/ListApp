@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.R
 import com.ort.listapp.adapters.ProductoAdapter
 import com.ort.listapp.databinding.FragmentProductosBinding
@@ -217,6 +218,9 @@ class ProductosFragment : Fragment() {
                 producto,
                 cantActual,
             )
+            Snackbar.make(
+                it, "Agregaste ${cantActual} ${producto.nombre}/s", Snackbar.LENGTH_SHORT
+            ).show()
         }
 
         btnEditar.setOnClickListener {
