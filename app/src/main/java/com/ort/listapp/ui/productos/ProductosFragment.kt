@@ -12,10 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.ort.listapp.ListaAppApplication.Companion.prefsHelper
 import com.ort.listapp.R
 import com.ort.listapp.adapters.ProductoAdapter
 import com.ort.listapp.databinding.FragmentProductosBinding
@@ -61,7 +58,7 @@ class ProductosFragment : Fragment() {
 
         rvProdFavoritos.setHasFixedSize(true)
         rvProdFavoritos.layoutManager =
-            GridLayoutManager(requireContext(),3)
+            GridLayoutManager(requireContext(), 3)
         viewModel.getFamilia().observe(viewLifecycleOwner) {
             rvProdFavoritos.adapter =
                 ProductoAdapter(viewModel.getProductosFavoritos(), requireContext()) { prod ->
@@ -71,7 +68,7 @@ class ProductosFragment : Fragment() {
 
         rvProdPersonalizados.setHasFixedSize(true)
         rvProdPersonalizados.layoutManager =
-            GridLayoutManager(requireContext(),3)
+            GridLayoutManager(requireContext(), 3)
         viewModel.getFamilia().observe(viewLifecycleOwner) {
             rvProdPersonalizados.adapter =
                 ProductoAdapter(viewModel.getProductosPersonalizados(), requireContext()) { prod ->
@@ -180,10 +177,11 @@ class ProductosFragment : Fragment() {
                 subtotal.text = ""
             }
         }
-        fun marcarCorazon(){
-            if(esFavorito){
+
+        fun marcarCorazon() {
+            if (esFavorito) {
                 corazonFav.setImageResource(R.drawable.corazon_marcado)
-            }else{
+            } else {
                 corazonFav.setImageResource(R.drawable.corazon_desmarcado)
             }
         }
@@ -216,11 +214,9 @@ class ProductosFragment : Fragment() {
         btnAgregar.setOnClickListener {
             viewModel.agregarProductoEnLista(
                 TipoLista.LISTA_DE_COMPRAS,
-                producto.id,
+                producto,
                 cantActual,
-                prefsHelper.getUserName()
             )
-            popUp.dismiss()
         }
 
         btnEditar.setOnClickListener {
@@ -229,9 +225,9 @@ class ProductosFragment : Fragment() {
         }
         corazonFav.setOnClickListener {
             esFavorito = !esFavorito
-            if(esFavorito){
+            if (esFavorito) {
                 viewModel.agregarProductoFavorito(producto.id)
-            }else{
+            } else {
                 viewModel.eliminarProductoFavorito(producto.id)
             }
             marcarCorazon()

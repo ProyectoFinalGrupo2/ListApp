@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ort.listapp.ListaAppApplication.Companion.prefsHelper
 import com.ort.listapp.data.FamiliaRepository
 import com.ort.listapp.data.ProductoRepository
 import com.ort.listapp.domain.model.*
@@ -37,15 +38,10 @@ class FamilyViewModel : ViewModel() {
         return this.familia
     }
 
-    fun getListaByTipo(tipoLista: TipoLista): Lista? {
+    fun getProductosByTipoLista(tipoLista: TipoLista): List<ProductoListado> {
         return this.familia.value?.listas?.filter {
             it.tipoLista == tipoLista
-        }?.get(0)
-    }
-
-    fun getProductosFullbyTipoLista(tipoLista: TipoLista): List<ProductoListadoFull> {
-        val listaProductosListados = getListaByTipo(tipoLista)?.productos
-        return repoProductos.getProductosListadosFull(listaProductosListados!!)
+        }?.get(0)?.productos ?: emptyList()
     }
 
     fun getProductosFavoritos(): List<Producto> {
@@ -125,32 +121,32 @@ class FamilyViewModel : ViewModel() {
 
     fun agregarProductoEnLista(
         tipoLista: TipoLista,
-        idProducto: String,
+        producto: Producto,
         cantidad: Int,
-        idUsuario: String
     ) {
-        val familia = this.familia.value
-        if (familia != null) {
+        this.familia.value?.let { familia ->
             getListaByTipoEnFamilia(familia, tipoLista).agregarProducto(
                 ProductoListado(
-                    cantidad,
-                    idUsuario,
-                    idProducto
+                    id = producto.id,
+                    nombre = producto.nombre,
+                    id_Categoria = producto.id_Categoria,
+                    cantidad = cantidad,
+                    precio = producto.precioMax,
+                    nombreUsuario = prefsHelper.getUserName(),
                 )
             )
+            actualizarFamilia(familia)
         }
-        actualizarFamilia(familia!!)
     }
 
     fun removerProductoDeLista(
         tipoLista: TipoLista,
         idProducto: String,
     ) {
-        val familia = this.familia.value
-        if (familia != null) {
+        this.familia.value?.let { familia ->
             getListaByTipoEnFamilia(familia, tipoLista).removerProductoPorId(idProducto)
+            actualizarFamilia(familia!!)
         }
-        actualizarFamilia(familia!!)
     }
 
     private fun getListaByTipoEnFamilia(familia: Familia, tipoLista: TipoLista): Lista {

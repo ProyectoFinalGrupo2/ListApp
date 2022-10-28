@@ -10,13 +10,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.R
-import com.ort.listapp.domain.model.ProductoListadoFull
+import com.ort.listapp.domain.model.ProductoListado
 
 @SuppressLint("SetTextI18n")
 class ProductoListadoAdapter(
-    var productos: List<ProductoListadoFull>,
+    var productos: List<ProductoListado>,
     val context: Context,
-    var onClick: (ProductoListadoFull) -> Unit
+    var onClick: (ProductoListado) -> Unit
 ) : RecyclerView.Adapter<ProductoListadoAdapter.ProductoListadoHolder>() {
 
 //    private val productoRepository = ProductoRepository()
@@ -67,11 +67,11 @@ class ProductoListadoAdapter(
     }
 
     override fun onBindViewHolder(holder: ProductoListadoHolder, position: Int) {
-        val producto = productos[position].producto
+        val producto = productos[position]
         holder.setNombre(producto.nombre)
-        holder.setPrecioMax(producto.precioMax)
-        holder.setCantidad(productos[position].cantidad)
-        holder.setUsuario(productos[position].usuarioId)
+        holder.setPrecioMax(producto.precio)
+        holder.setCantidad(producto.cantidad)
+        holder.setUsuario(producto.nombreUsuario)
 
         holder.btnDelete.setOnClickListener {
             onClick(productos[position])

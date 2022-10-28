@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.R
-import com.ort.listapp.domain.model.ProductoListadoFull
+import com.ort.listapp.domain.model.ProductoListado
 
 @SuppressLint("SetTextI18n")
 class AlacenaAdapter(
-    var productos: List<ProductoListadoFull>,
+    var productos: List<ProductoListado>,
     val context: Context,
-    var onClick: (ProductoListadoFull) -> Unit
+    var onClick: (ProductoListado) -> Unit
 ) : RecyclerView.Adapter<AlacenaAdapter.AlacenaHolder>() {
 
 //    private val productoRepository = ProductoRepository()
@@ -52,7 +52,6 @@ class AlacenaAdapter(
             val albumCover: ImageView = view.findViewById(R.id.fotoProducto)
             Glide.with(view).load(url).placeholder(R.drawable.placeholder).into(albumCover)
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlacenaHolder {
@@ -61,11 +60,10 @@ class AlacenaAdapter(
         return (AlacenaHolder(view))
     }
 
-
     override fun onBindViewHolder(holder: AlacenaAdapter.AlacenaHolder, position: Int) {
-        val producto = productos[position].producto
+        val producto = productos[position]
         holder.setNombre(producto.nombre)
-        holder.setCantidad(productos[position].cantidad)
+        holder.setCantidad(producto.cantidad)
         holder.loadImg(producto.imgURL())
 
         holder.btnAgregar.setOnClickListener {
@@ -78,7 +76,6 @@ class AlacenaAdapter(
                 it, "Se saco " + (producto.nombre ?: String), Snackbar.LENGTH_SHORT
             ).show()
         }
-
     }
 
     override fun getItemCount(): Int {

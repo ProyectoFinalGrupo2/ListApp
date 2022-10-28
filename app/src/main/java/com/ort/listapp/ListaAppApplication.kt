@@ -12,7 +12,7 @@ class ListaAppApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         prefsHelper = PrefsHelper(applicationContext)
-        prefsHelper.saveFamilyId("familiaId")
+        prefsHelper.saveFamilyId("familia2")
         prefsHelper.saveUserName("Rafael")
     }
 }

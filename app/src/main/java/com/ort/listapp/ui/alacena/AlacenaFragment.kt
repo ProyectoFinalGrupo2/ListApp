@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ort.listapp.adapters.AlacenaAdapter
 import com.ort.listapp.databinding.FragmentAlacenaBinding
-import com.ort.listapp.domain.model.ProductoListadoFull
+import com.ort.listapp.domain.model.ProductoListado
 import com.ort.listapp.domain.model.TipoLista
 import com.ort.listapp.ui.FamilyViewModel
 
@@ -50,7 +50,7 @@ class AlacenaFragment : Fragment() {
 //                    }
 //                }
                 AlacenaAdapter(
-                    viewModel.getProductosFullbyTipoLista(TipoLista.ALACENA_VIRTUAL),
+                    viewModel.getProductosByTipoLista(TipoLista.ALACENA_VIRTUAL),
                     requireContext()
                 ) {
                     buttonClick(it)
@@ -58,7 +58,7 @@ class AlacenaFragment : Fragment() {
         })
     }
 
-    private fun buttonClick(producto: ProductoListadoFull) {
+    private fun buttonClick(producto: ProductoListado) {
         //viewModel.removerProductoDeLista(TipoLista.LISTA_DE_COMPRAS, producto.productoId)
     }
 }

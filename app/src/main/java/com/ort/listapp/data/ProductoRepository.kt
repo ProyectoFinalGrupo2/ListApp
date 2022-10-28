@@ -4,8 +4,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.ort.listapp.domain.model.Producto
-import com.ort.listapp.domain.model.ProductoListado
-import com.ort.listapp.domain.model.ProductoListadoFull
 import com.ort.listapp.helpers.SysConstants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -39,15 +37,5 @@ class ProductoRepository {
         return producto
     }
 
-    fun getProductosListadosFull(lista: List<ProductoListado>): List<ProductoListadoFull> =
-        runBlocking(Dispatchers.IO) {
-            lista.map { productoListado ->
-                ProductoListadoFull(
-                    cantidad = productoListado.cantidad,
-                    usuarioId = productoListado.usuarioId,
-                    producto = getProductoById(productoListado.productoId),
-                )
-            }
-        }
 }
 

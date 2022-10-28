@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ort.listapp.adapters.ProductoListadoAdapter
 import com.ort.listapp.databinding.FragmentListaDeComprasBinding
-import com.ort.listapp.domain.model.ProductoListadoFull
+import com.ort.listapp.domain.model.ProductoListado
 import com.ort.listapp.domain.model.TipoLista
 import com.ort.listapp.ui.FamilyViewModel
 
@@ -47,7 +47,7 @@ class ListaDeComprasFragment : Fragment() {
 //                    }
 //                }
                 ProductoListadoAdapter(
-                    viewModel.getProductosFullbyTipoLista(TipoLista.LISTA_DE_COMPRAS),
+                    viewModel.getProductosByTipoLista(TipoLista.LISTA_DE_COMPRAS),
                     requireContext()
                 ) {
                     buttonClick(it)
@@ -56,8 +56,8 @@ class ListaDeComprasFragment : Fragment() {
         })
     }
 
-    private fun buttonClick(prodFull: ProductoListadoFull) {
-        viewModel.removerProductoDeLista(TipoLista.LISTA_DE_COMPRAS, prodFull.producto.id)
+    private fun buttonClick(producto: ProductoListado) {
+        viewModel.removerProductoDeLista(TipoLista.LISTA_DE_COMPRAS, producto.id)
     }
 
 }
