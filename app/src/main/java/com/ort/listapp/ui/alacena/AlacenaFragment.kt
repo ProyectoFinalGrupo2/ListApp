@@ -62,6 +62,6 @@ class AlacenaFragment : Fragment() {
     }
 
     private fun btnClick(producto: ProductoListado, cantidad: Int) {
-        viewModel.actualizarProductoEnLista(TipoLista.ALACENA_VIRTUAL, producto.id, cantidad)
+        viewModel.actualizarProductoEnListaById(viewModel.getIdAlacenaVirtual(), producto.id, cantidad)
     }
 }

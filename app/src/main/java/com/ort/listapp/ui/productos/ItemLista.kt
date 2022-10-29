@@ -33,7 +33,7 @@ class ItemLista : Fragment() {
         _binding = FragmentItemListaBinding.inflate(inflater, container, false)
         val btnDelete = binding.delete
         btnDelete.setOnClickListener {
-            viewModel.removerProductoDeLista(TipoLista.LISTA_DE_COMPRAS, "0040000017318")
+            viewModel.removerProductoDeListaById(viewModel.getIdListaDeComprasActual(), "0040000017318")
         }
         return binding.root
     }

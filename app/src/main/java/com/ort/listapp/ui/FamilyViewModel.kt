@@ -89,7 +89,7 @@ class FamilyViewModel : ViewModel() {
         viewModelScope.launch {
             familia?.productosPersonalizados?.remove(producto)
             eliminarProductoFavorito(producto.id)
-            removerProductoDeLista(TipoLista.LISTA_DE_COMPRAS, producto.id)
+            //removerProductoDeLista(TipoLista.LISTA_DE_COMPRAS, producto.id)
             actualizarFamilia(familia!!)
         }
     }
@@ -132,7 +132,7 @@ class FamilyViewModel : ViewModel() {
         return producto.id
     }
 
-    fun agregarProductoEnLista(
+    /*fun agregarProductoEnLista(
         tipoLista: TipoLista,
         producto: Producto,
         cantidad: Int,
@@ -169,6 +169,63 @@ class FamilyViewModel : ViewModel() {
             getListaByTipoEnFamilia(familia, tipoLista).removerProductoPorId(idProducto)
             actualizarFamilia(familia)
         }
+    }*/
+
+    fun agregarProductoEnListaById(
+        idLista: String,
+        producto: Producto,
+        cantidad: Int,
+    ) {
+        this.familia.value?.let { familia ->
+            getListaByIdEnFamilia(familia, idLista).agregarProducto(
+                ProductoListado(
+                    id = producto.id,
+                    nombre = producto.nombre,
+                    id_Categoria = producto.id_Categoria,
+                    cantidad = cantidad,
+                    precio = producto.precioMax,
+                    nombreUsuario = prefsHelper.getUserName(),
+                )
+            )
+            actualizarFamilia(familia)
+        }
+    }
+
+    fun actualizarProductoEnListaById(idLista: String, idProducto: String, cantidad: Int){
+        this.familia.value?.let { familia ->
+            getListaByIdEnFamilia(familia, idLista).modificarCantidadPorId(
+                idProducto, cantidad
+            )
+            actualizarFamilia(familia)
+        }
+    }
+
+    fun removerProductoDeListaById(
+        idLista: String,
+        idProducto: String,
+    ) {
+        this.familia.value?.let { familia ->
+            getListaByIdEnFamilia(familia, idLista).removerProductoPorId(idProducto)
+            actualizarFamilia(familia)
+        }
+    }
+
+    //devuelve el id de la lista de compras, si no lo encuentra devuelve string vacío ""
+    fun getIdListaDeComprasActual(): String{
+        var idListaDeCompras: String? = this.familia.value?.listas?.find { it.tipoLista == TipoLista.LISTA_DE_COMPRAS }?.id
+        return idListaDeCompras ?: ""
+    }
+
+    //devuelve el id de la alacena virtual, si no lo encuentra devuelve string vacío ""
+    fun getIdAlacenaVirtual(): String{
+        var idAlacenaVirtual: String? = this.familia.value?.listas?.find { it.tipoLista == TipoLista.ALACENA_VIRTUAL }?.id
+        return idAlacenaVirtual ?: ""
+    }
+
+    private fun getListaByIdEnFamilia(familia: Familia, id: String): Lista{
+        return familia.listas.filter {
+            it.id == id
+        }[0]
     }
 
     private fun getListaByTipoEnFamilia(familia: Familia, tipoLista: TipoLista): Lista {

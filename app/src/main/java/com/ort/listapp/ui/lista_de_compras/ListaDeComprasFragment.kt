@@ -57,7 +57,7 @@ class ListaDeComprasFragment : Fragment() {
     }
 
     private fun removerProducto(producto: ProductoListado) {
-        viewModel.removerProductoDeLista(TipoLista.LISTA_DE_COMPRAS, producto.id)
+        viewModel.removerProductoDeListaById(viewModel.getIdListaDeComprasActual(), producto.id)
     }
 
 }

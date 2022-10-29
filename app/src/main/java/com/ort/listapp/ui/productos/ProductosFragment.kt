@@ -213,8 +213,8 @@ class ProductosFragment : Fragment() {
         }
 
         btnAgregar.setOnClickListener {
-            viewModel.agregarProductoEnLista(
-                TipoLista.LISTA_DE_COMPRAS,
+            viewModel.agregarProductoEnListaById(
+                viewModel.getIdListaDeComprasActual(),
                 producto,
                 cantActual,
             )
