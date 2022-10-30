@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
 
         runBlocking {
             withContext(Dispatchers.Default) {
-                familiaRepository.guardarFamilia(familia)
+//                familiaRepository.guardarFamilia(familia)
             }
         }
 
