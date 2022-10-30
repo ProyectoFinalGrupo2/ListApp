@@ -6,9 +6,12 @@
         <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/drawable/border.xml" value="0.2265" />
         <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/drawable/popup_xml.xml" value="0.2265" />
         <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/fragment_compras_favoritas.xml" value="0.536" />
         <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/fragment_item_lista.xml" value="0.1" />
         <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/fragment_productos.xml" value="0.2961165048543689" />
-        <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/item_producto.xml" value="0.4" />
+        <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/item_compra_favorita.xml" value="0.536" />
+        <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/item_producto.xml" value="0.2" />
+        <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/item_producto_alacena.xml" value="0.234375" />
         <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/piopup_producto_layout.xml" value="0.1" />
         <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/popup_crear_producto.xml" value="0.264" />
         <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/popup_producto_layout.xml" value="0.2" />
@@ -17,7 +20,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
