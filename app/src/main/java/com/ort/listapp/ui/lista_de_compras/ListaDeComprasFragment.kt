@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ort.listapp.adapters.ProductoListadoAdapter
 import com.ort.listapp.databinding.FragmentListaDeComprasBinding
-import com.ort.listapp.domain.model.ProductoListado
+import com.ort.listapp.domain.model.ItemLista
 import com.ort.listapp.domain.model.TipoLista
 import com.ort.listapp.ui.FamilyViewModel
 
@@ -56,8 +56,11 @@ class ListaDeComprasFragment : Fragment() {
         })
     }
 
-    private fun removerProducto(producto: ProductoListado) {
-        viewModel.removerProductoDeListaById(viewModel.getIdListaDeComprasActual(), producto.id)
+    private fun removerProducto(itemLista: ItemLista) {
+        viewModel.removerProductoDeListaById(
+            viewModel.getIdListaDeComprasActual(),
+            itemLista.producto.id
+        )
     }
 
 }

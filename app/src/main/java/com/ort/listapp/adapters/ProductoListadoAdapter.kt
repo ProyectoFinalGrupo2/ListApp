@@ -10,23 +10,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.R
-import com.ort.listapp.domain.model.ProductoListado
-import org.w3c.dom.Text
+import com.ort.listapp.domain.model.ItemLista
 import java.text.DecimalFormat
 
 @SuppressLint("SetTextI18n")
 class ProductoListadoAdapter(
-    var productos: List<ProductoListado>,
+    var productos: List<ItemLista>,
     val context: Context,
-    var onClick: (ProductoListado) -> Unit
+    var onClick: (ItemLista) -> Unit
 ) : RecyclerView.Adapter<ProductoListadoAdapter.ProductoListadoHolder>() {
 
-//    private val productoRepository = ProductoRepository()
-//    private val prods = productoRepository.getProductosByListaIds(cargarListaIds())
-//    var p: Producto? = Producto()
-
     class ProductoListadoHolder(v: View) : RecyclerView.ViewHolder(v) {
-        //Se escriben funciones que quiero que se ejecuten cuando se renderice cada item
         private var view: View
         val btnDelete: Button
 
@@ -38,7 +32,7 @@ class ProductoListadoAdapter(
         fun setNombre(nombre: String) {
             val txtNombre: TextView = view.findViewById(R.id.nombre)
             var nomProd = nombre
-            if(nombre.contains(" ")){
+            if (nombre.contains(" ")) {
                 val n = nombre.split(" ")
                 nomProd = "${n[0]} ${n[1]}..."
             }
@@ -63,7 +57,6 @@ class ProductoListadoAdapter(
         fun getName(): TextView {
             return view.findViewById(R.id.nombre)
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductoListadoHolder {
@@ -73,7 +66,8 @@ class ProductoListadoAdapter(
     }
 
     override fun onBindViewHolder(holder: ProductoListadoHolder, position: Int) {
-        val producto = productos[position]
+        val item = productos[position]
+        val producto = item.producto
         holder.setNombre(producto.nombre)
 
         holder.getName().setOnClickListener {
@@ -82,10 +76,10 @@ class ProductoListadoAdapter(
             ).show()
         }
 
-        val precio = DecimalFormat("#.##").format(producto.precio * producto.cantidad).toDouble()
+        val precio = DecimalFormat("#.##").format(producto.precioMax * item.cantidad).toDouble()
         holder.setPrecioMax(precio)
-        holder.setCantidad(producto.cantidad)
-        holder.setUsuario(producto.nombreUsuario)
+        holder.setCantidad(item.cantidad)
+        holder.setUsuario(item.nombreUsuario)
 
         holder.btnDelete.setOnClickListener {
             onClick(productos[position])
@@ -98,12 +92,4 @@ class ProductoListadoAdapter(
     override fun getItemCount(): Int {
         return productos.size
     }
-
-//    fun cargarListaIds(): MutableList<String> {
-//        val listaIds: MutableList<String> = arrayListOf()
-//        productos.forEach {
-//            listaIds.add(it.productoId)
-//        }
-//        return listaIds
-//    }
 }

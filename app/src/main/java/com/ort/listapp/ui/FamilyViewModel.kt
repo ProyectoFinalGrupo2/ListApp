@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ort.listapp.ListaAppApplication.Companion.prefsHelper
 import com.ort.listapp.data.FamiliaRepository
 import com.ort.listapp.data.ProductoRepository
 import com.ort.listapp.domain.model.*
@@ -40,7 +39,7 @@ class FamilyViewModel : ViewModel() {
         return this.familia
     }
 
-    fun getProductosByTipoLista(tipoLista: TipoLista): List<ProductoListado> {
+    fun getProductosByTipoLista(tipoLista: TipoLista): List<ItemLista> {
         return this.familia.value?.listas?.filter {
             it.tipoLista == tipoLista
         }?.get(0)?.productos ?: emptyList()
@@ -139,7 +138,7 @@ class FamilyViewModel : ViewModel() {
     ) {
         this.familia.value?.let { familia ->
             getListaByTipoEnFamilia(familia, tipoLista).agregarProducto(
-                ProductoListado(
+                ItemLista(
                     id = producto.id,
                     nombre = producto.nombre,
                     id_Categoria = producto.id_Categoria,
@@ -173,25 +172,15 @@ class FamilyViewModel : ViewModel() {
 
     fun agregarProductoEnListaById(
         idLista: String,
-        producto: Producto,
-        cantidad: Int,
+        item: ItemLista
     ) {
         this.familia.value?.let { familia ->
-            getListaByIdEnFamilia(familia, idLista).agregarProducto(
-                ProductoListado(
-                    id = producto.id,
-                    nombre = producto.nombre,
-                    id_Categoria = producto.id_Categoria,
-                    cantidad = cantidad,
-                    precio = producto.precioMax,
-                    nombreUsuario = prefsHelper.getUserName(),
-                )
-            )
+            getListaByIdEnFamilia(familia, idLista).agregarProducto(item)
             actualizarFamilia(familia)
         }
     }
 
-    fun actualizarProductoEnListaById(idLista: String, idProducto: String, cantidad: Int){
+    fun actualizarProductoEnListaById(idLista: String, idProducto: String, cantidad: Int) {
         this.familia.value?.let { familia ->
             getListaByIdEnFamilia(familia, idLista).modificarCantidadPorId(
                 idProducto, cantidad
@@ -211,18 +200,20 @@ class FamilyViewModel : ViewModel() {
     }
 
     //devuelve el id de la lista de compras, si no lo encuentra devuelve string vacío ""
-    fun getIdListaDeComprasActual(): String{
-        var idListaDeCompras: String? = this.familia.value?.listas?.find { it.tipoLista == TipoLista.LISTA_DE_COMPRAS }?.id
+    fun getIdListaDeComprasActual(): String {
+        var idListaDeCompras: String? =
+            this.familia.value?.listas?.find { it.tipoLista == TipoLista.LISTA_DE_COMPRAS }?.id
         return idListaDeCompras ?: ""
     }
 
     //devuelve el id de la alacena virtual, si no lo encuentra devuelve string vacío ""
-    fun getIdAlacenaVirtual(): String{
-        var idAlacenaVirtual: String? = this.familia.value?.listas?.find { it.tipoLista == TipoLista.ALACENA_VIRTUAL }?.id
+    fun getIdAlacenaVirtual(): String {
+        var idAlacenaVirtual: String? =
+            this.familia.value?.listas?.find { it.tipoLista == TipoLista.ALACENA_VIRTUAL }?.id
         return idAlacenaVirtual ?: ""
     }
 
-    private fun getListaByIdEnFamilia(familia: Familia, id: String): Lista{
+    private fun getListaByIdEnFamilia(familia: Familia, id: String): Lista {
         return familia.listas.filter {
             it.id == id
         }[0]
