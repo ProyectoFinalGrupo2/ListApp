@@ -9,7 +9,6 @@ import com.ort.listapp.R
 import com.ort.listapp.data.FamiliaRepository
 import com.ort.listapp.domain.model.Familia
 import com.ort.listapp.domain.model.Lista
-import com.ort.listapp.domain.model.ProductoListado
 import com.ort.listapp.domain.model.TipoLista
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -29,27 +28,23 @@ class MainActivity : AppCompatActivity() {
         val familiaRepository = FamiliaRepository()
 
         val familia = Familia(
-            id = "familiaId",
-            nombre = "Los Argento",
+            id = "familia2",
+            nombre = "Los ORTondo",
             listas = arrayListOf(
                 Lista(
-                    id = "listaDePrueba",
-                    nombre = "Lista 1: Familia García",
+                    id = "listaCompras",
+                    nombre = "listaCompras: Familia ORTondo",
                     fechaCreacion = "hoy",
                     tipoLista = TipoLista.LISTA_DE_COMPRAS,
                     productos = mutableListOf(
-                        ProductoListado(8, "Valentino", "0000075024956"),
-                        ProductoListado(2, "Candela", "7790742656018"),
                     )
                 ),
                 Lista(
-                    id = "listaDePrueba",
-                    nombre = "Lista 1: Familia García",
+                    id = "listaAlacena",
+                    nombre = "Alacena Virtual: Familia ORTondo",
                     fechaCreacion = "hoy",
                     tipoLista = TipoLista.ALACENA_VIRTUAL,
                     productos = mutableListOf(
-                        ProductoListado(1, "Rafael", "7790895007057"),
-                        ProductoListado(3, "Martin", "5410171921991"),
                     )
                 )
             ),

@@ -1,27 +1,29 @@
 package com.ort.listapp.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.R
-import com.ort.listapp.data.ProductoRepository
-import com.ort.listapp.domain.model.Producto
 import com.ort.listapp.domain.model.ProductoListado
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
+import org.w3c.dom.Text
+import java.text.DecimalFormat
 
+@SuppressLint("SetTextI18n")
 class ProductoListadoAdapter(
     var productos: List<ProductoListado>,
     val context: Context,
     var onClick: (ProductoListado) -> Unit
 ) : RecyclerView.Adapter<ProductoListadoAdapter.ProductoListadoHolder>() {
+
+//    private val productoRepository = ProductoRepository()
+//    private val prods = productoRepository.getProductosByListaIds(cargarListaIds())
+//    var p: Producto? = Producto()
 
     class ProductoListadoHolder(v: View) : RecyclerView.ViewHolder(v) {
         //Se escriben funciones que quiero que se ejecuten cuando se renderice cada item
@@ -34,28 +36,32 @@ class ProductoListadoAdapter(
         }
 
         fun setNombre(nombre: String) {
-            var txtNombre: TextView = view.findViewById(R.id.nombre)
-            val nomProd = nombre.split(' ')
-            txtNombre.text = nomProd[0] + " " + nomProd[1] + "..."
+            val txtNombre: TextView = view.findViewById(R.id.nombre)
+            var nomProd = nombre
+            if(nombre.contains(" ")){
+                val n = nombre.split(" ")
+                nomProd = "${n[0]} ${n[1]}..."
+            }
+            txtNombre.text = nomProd
         }
 
         fun setPrecioMax(precioMax: Double) {
-            var txtPrecio: TextView = view.findViewById(R.id.precioItem)
-            txtPrecio.text = ("$" + precioMax.toString())
+            val txtPrecio: TextView = view.findViewById(R.id.precioItem)
+            txtPrecio.text = "$$precioMax"
         }
 
         fun setUsuario(usuario: String) {
-            var txtUsuario: TextView = view.findViewById(R.id.usuarioNombre)
+            val txtUsuario: TextView = view.findViewById(R.id.usuarioNombre)
             txtUsuario.text = usuario
         }
 
         fun setCantidad(cantidad: Int) {
-            var txtCantidad: TextView = view.findViewById(R.id.cantidad)
+            val txtCantidad: TextView = view.findViewById(R.id.cantidad)
             txtCantidad.text = cantidad.toString()
         }
 
-        fun getButton(): Button {
-            return view.findViewById(R.id.delete)
+        fun getName(): TextView {
+            return view.findViewById(R.id.nombre)
         }
 
     }
@@ -66,25 +72,26 @@ class ProductoListadoAdapter(
         return (ProductoListadoHolder(view))
     }
 
-    val repo = ProductoRepository()
-    val prods = runBlocking {
-        withContext(Dispatchers.Default) {
-            repo.getProductosByListaIds(cargarListaIds())
-        }
-    }
-    var p: Producto? = Producto()
-
     override fun onBindViewHolder(holder: ProductoListadoHolder, position: Int) {
-        p = prods.find { it.id == prods[position].id }
-        p?.let { holder.setNombre(it.nombre) }
-        p?.let { holder.setPrecioMax(it.precioMax) }
-        holder.setCantidad(productos[position].cantidad)
-        holder.setUsuario(productos[position].usuarioId)
+        val producto = productos[position]
+        holder.setNombre(producto.nombre)
+
+        holder.getName().setOnClickListener {
+            Snackbar.make(
+                it, "${producto.nombre}", Snackbar.LENGTH_SHORT
+            ).show()
+        }
+
+        val precio = DecimalFormat("#.##").format(producto.precio * producto.cantidad).toDouble()
+        holder.setPrecioMax(precio)
+        holder.setCantidad(producto.cantidad)
+        holder.setUsuario(producto.nombreUsuario)
 
         holder.btnDelete.setOnClickListener {
             onClick(productos[position])
             Snackbar.make(
-                it,"Se elimino " + (p?.nombre ?: String), Snackbar.LENGTH_SHORT).show()
+                it, "Se elimino ${producto.nombre}", Snackbar.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -92,11 +99,11 @@ class ProductoListadoAdapter(
         return productos.size
     }
 
-    fun cargarListaIds(): MutableList<String> {
-        val listaIds: MutableList<String> = arrayListOf()
-        productos.forEach {
-            listaIds.add(it.productoId)
-        }
-        return listaIds
-    }
+//    fun cargarListaIds(): MutableList<String> {
+//        val listaIds: MutableList<String> = arrayListOf()
+//        productos.forEach {
+//            listaIds.add(it.productoId)
+//        }
+//        return listaIds
+//    }
 }
