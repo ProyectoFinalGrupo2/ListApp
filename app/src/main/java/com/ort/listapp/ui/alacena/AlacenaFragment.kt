@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ort.listapp.adapters.AlacenaAdapter
 import com.ort.listapp.databinding.FragmentAlacenaBinding
-import com.ort.listapp.domain.model.ProductoListado
+import com.ort.listapp.domain.model.ItemLista
 import com.ort.listapp.domain.model.TipoLista
 import com.ort.listapp.ui.FamilyViewModel
 
@@ -50,18 +50,22 @@ class AlacenaFragment : Fragment() {
 //                    }
 //                }
                 AlacenaAdapter(
-                    viewModel.getProductosByTipoLista(TipoLista.ALACENA_VIRTUAL),
+                    viewModel.getProductosByIdLista(viewModel.getIdAlacenaVirtual()),
                     requireContext(),
-                 {
-                    btnClick(it, 1)
-                } ,
-                {
-                    btnClick(it, -1)
-                })
+                    {
+                        btnClick(it, 1)
+                    },
+                    {
+                        btnClick(it, -1)
+                    })
         })
     }
 
-    private fun btnClick(producto: ProductoListado, cantidad: Int) {
-        viewModel.actualizarProductoEnListaById(viewModel.getIdAlacenaVirtual(), producto.id, cantidad)
+    private fun btnClick(producto: ItemLista, cantidad: Int) {
+        viewModel.actualizarProductoEnListaById(
+            viewModel.getIdAlacenaVirtual(),
+            producto.producto.id,
+            cantidad
+        )
     }
 }

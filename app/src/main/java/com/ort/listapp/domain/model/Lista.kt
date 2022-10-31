@@ -5,23 +5,24 @@ data class Lista(
     val nombre: String? = null,
     val fechaCreacion: String? = null,
     val tipoLista: TipoLista? = null,
-    val productos: MutableList<ProductoListado> = mutableListOf(),
+    val productos: MutableList<ItemLista> = mutableListOf(),
 ) {
 
-    fun agregarProducto(producto: ProductoListado) {
-        if (productoEstaEnLista(producto.id)) {
-            modificarCantidadPorId(producto.id, producto.cantidad)
+    fun agregarProducto(itemLista: ItemLista) {
+        val id = itemLista.producto.id
+        if (productoEstaEnLista(id)) {
+            modificarCantidadPorId(id, itemLista.cantidad)
         } else {
-            productos.add(producto)
+            productos.add(itemLista)
         }
     }
 
     fun removerProductoPorId(id: String) {
-        productos.remove(productos.find { it.id == id })
+        productos.remove(productos.find { it.producto.id == id })
     }
 
-    private fun buscarProductoPorId(id: String): ProductoListado? {
-        return productos.find { it.id == id };
+    private fun buscarProductoPorId(id: String): ItemLista? {
+        return productos.find { it.producto.id == id };
     }
 
     fun modificarCantidadPorId(id: String, cantidad: Int) {
@@ -34,7 +35,11 @@ data class Lista(
     }
 
     private fun productoEstaEnLista(id: String): Boolean {
-        return productos.firstOrNull { it.id == id } != null
+        return productos.firstOrNull { it.producto.id == id } != null
+    }
+
+    fun vaciarLista(){
+        productos.clear()
     }
 }
 

@@ -12,22 +12,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.R
-import com.ort.listapp.domain.model.ProductoListado
+import com.ort.listapp.domain.model.ItemLista
 
 @SuppressLint("SetTextI18n")
 class AlacenaAdapter(
-    var productos: List<ProductoListado>,
+    var productos: List<ItemLista>,
     val context: Context,
-    var onClick: (ProductoListado) -> Unit,
-    var onClick2: (ProductoListado) -> Unit
+    var onClick: (ItemLista) -> Unit,
+    var onClick2: (ItemLista) -> Unit
 ) : RecyclerView.Adapter<AlacenaAdapter.AlacenaHolder>() {
 
-//    private val productoRepository = ProductoRepository()
-//    private val prods = productoRepository.getProductosByListaIds(cargarListaIds())
-//    var p: Producto? = Producto()
-
     class AlacenaHolder(v: View) : RecyclerView.ViewHolder(v) {
-        //Se escriben funciones que quiero que se ejecuten cuando se renderice cada item
+
         private var view: View
         val btnAgregar: Button
         val btnRestar: Button
@@ -41,7 +37,7 @@ class AlacenaAdapter(
         fun setNombre(nombre: String) {
             val txtNombre: TextView = view.findViewById(R.id.nombre)
             var nomProd = nombre
-            if(nombre.contains(" ")){
+            if (nombre.contains(" ")) {
                 val n = nombre.split(" ")
                 nomProd = "${n[0]} ${n[1]}..."
             }
@@ -66,24 +62,25 @@ class AlacenaAdapter(
     }
 
     override fun onBindViewHolder(holder: AlacenaAdapter.AlacenaHolder, position: Int) {
-        val producto = productos[position]
+        val item = productos[position]
+        val producto = item.producto
         holder.setNombre(producto.nombre)
-        holder.setCantidad(producto.cantidad)
+        holder.setCantidad(item.cantidad)
         holder.loadImg(producto.imgURL())
 
         holder.btnAgregar.setOnClickListener {
             Snackbar.make(
-                it, "Se agrego un " + (producto.nombre ?: String), Snackbar.LENGTH_SHORT
+                it, "Se agrego un " + (producto.nombre), Snackbar.LENGTH_SHORT
             ).show()
-            onClick(producto)
+            onClick(item)
         }
         holder.btnRestar.setOnClickListener {
-            if(producto.cantidad > 0){
+            if (item.cantidad > 0) {
                 Snackbar.make(
-                    it, "Se saco un " + (producto.nombre ?: String), Snackbar.LENGTH_SHORT
+                    it, "Se saco un " + (producto.nombre), Snackbar.LENGTH_SHORT
                 ).show()
-                onClick2(producto)
-            } else{
+                onClick2(item)
+            } else {
                 Snackbar.make(
                     it, "Ups... parece que ya no tienes mas", Snackbar.LENGTH_SHORT
                 ).show()
@@ -94,12 +91,4 @@ class AlacenaAdapter(
     override fun getItemCount(): Int {
         return productos.size
     }
-
-//    fun cargarListaIds(): MutableList<String> {
-//        val listaIds: MutableList<String> = arrayListOf()
-//        productos.forEach {
-//            listaIds.add(it.productoId)
-//        }
-//        return listaIds
-//    }
 }

@@ -14,11 +14,13 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
+import com.ort.listapp.ListaAppApplication.Companion.prefsHelper
 import com.ort.listapp.R
 import com.ort.listapp.adapters.ProductoAdapter
 import com.ort.listapp.databinding.FragmentProductosBinding
+import com.ort.listapp.domain.model.ItemLista
 import com.ort.listapp.domain.model.Producto
-import com.ort.listapp.domain.model.TipoLista
+import com.ort.listapp.helpers.SysConstants
 import com.ort.listapp.ui.FamilyViewModel
 import java.text.DecimalFormat
 
@@ -30,14 +32,14 @@ class ProductosFragment : Fragment() {
     private val viewModel: FamilyViewModel by activityViewModels()
     private val productosViewModel: ProductosViewModel by viewModels()
 
-    lateinit var popUp: AlertDialog
-    lateinit var popupBuilder: AlertDialog.Builder
+    private lateinit var popUp: AlertDialog
+    private lateinit var popupBuilder: AlertDialog.Builder
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentProductosBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -134,13 +136,16 @@ class ProductosFragment : Fragment() {
         btnCrear.setOnClickListener {
             val valido = productosViewModel.validarFormCrearProd(nombreProd, precioProducto)
             if (valido) {
-                val idProdCreado = viewModel.agregarProductoPersonalizado(
-                    nombreProd.text.toString(),
-                    precioProducto.text.toString().toDouble(),
-                    spinner.selectedItem.toString()
-                )
+                val producto =
+                    Producto(
+                        id = "${SysConstants.PREFIJO_PROD_PERS}${System.currentTimeMillis()}",
+                        id_Categoria = spinner.selectedItem.toString(),
+                        nombre = nombreProd.text.toString(),
+                        precio = precioProducto.text.toString().toDouble(),
+                    )
+                viewModel.agregarProductoPersonalizado(producto)
                 if (switchFav.isChecked) {
-                    viewModel.agregarProductoFavorito(idProdCreado)
+                    viewModel.agregarProductoFavorito(producto)
                 }
                 popUp.dismiss()
             }
@@ -168,12 +173,12 @@ class ProductosFragment : Fragment() {
         val btnEditar = popUpView.findViewById<Button>(R.id.btn_editar_producto)
         val corazonFav = popUpView.findViewById<ImageView>(R.id.btn_corazon_fav)
         var cantActual = 1
-        var esFavorito = viewModel.esProductoFav(producto.id)
+        var esFavorito = viewModel.esProductoFav(producto)
 
         fun actualizarSubtotal() {
             if (cantActual > 0) {
                 subtotal.text =
-                    "Subtotal: $${DecimalFormat("#.##").format(producto.precioMax * cantActual)}"
+                    "Subtotal: $${DecimalFormat("#.##").format(producto.precio * cantActual)}"
             } else {
                 subtotal.text = ""
             }
@@ -191,7 +196,7 @@ class ProductosFragment : Fragment() {
         popUp = popupBuilder.create()
         popUp.show()
         nombreProd.text = producto.nombre
-        precioProducto.text = "$${producto.precioMax}"
+        precioProducto.text = "$${producto.precio}"
         Glide.with(popUpView).load(producto.imgURL()).into(imagen)
         marcarCorazon()
 
@@ -215,11 +220,14 @@ class ProductosFragment : Fragment() {
         btnAgregar.setOnClickListener {
             viewModel.agregarProductoEnListaById(
                 viewModel.getIdListaDeComprasActual(),
-                producto,
-                cantActual,
+                ItemLista(
+                    cantidad = cantActual,
+                    producto = producto,
+                    nombreUsuario = prefsHelper.getUserName(),
+                ),
             )
             Snackbar.make(
-                it, "Agregaste ${cantActual} ${producto.nombre}/s", Snackbar.LENGTH_SHORT
+                it, "Agregaste $cantActual ${producto.nombre}/s", Snackbar.LENGTH_SHORT
             ).show()
         }
 
@@ -230,9 +238,9 @@ class ProductosFragment : Fragment() {
         corazonFav.setOnClickListener {
             esFavorito = !esFavorito
             if (esFavorito) {
-                viewModel.agregarProductoFavorito(producto.id)
+                viewModel.agregarProductoFavorito(producto)
             } else {
-                viewModel.eliminarProductoFavorito(producto.id)
+                viewModel.eliminarProductoFavorito(producto)
             }
             marcarCorazon()
         }
@@ -253,7 +261,7 @@ class ProductosFragment : Fragment() {
         btnBorrar.visibility = View.VISIBLE
         btnBorrar.text = "Borrar Producto"
         nombreProd.setText(producto.nombre)
-        precioProducto.setText(producto.precioMax.toString())
+        precioProducto.setText(producto.precio.toString())
         popupBuilder.setView(popUpView)
         popUp = popupBuilder.create()
         val adapter = ArrayAdapter(
@@ -276,7 +284,7 @@ class ProductosFragment : Fragment() {
                     spinner.selectedItem.toString()
                 )
                 if (switchFav.isChecked) {
-                    viewModel.agregarProductoFavorito(producto.id)
+                    viewModel.agregarProductoFavorito(producto)
                 }
                 popUp.dismiss()
             }
