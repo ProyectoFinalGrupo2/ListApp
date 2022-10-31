@@ -49,8 +49,8 @@ class MainActivity : AppCompatActivity() {
                 )
             ),
             productosFavoritos = arrayListOf(
-                "0080432400432",
-                "7790895007057",
+//                "0080432400432",
+//                "7790895007057",
 //                "7790742656018",
 //                "0000077900319"
             ),

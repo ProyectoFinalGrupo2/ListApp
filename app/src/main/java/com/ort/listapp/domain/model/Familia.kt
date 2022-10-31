@@ -6,6 +6,6 @@ data class Familia(
     val password: String = "",
     val usuarios: List<String> = listOf(),
     val productosPersonalizados: ArrayList<Producto> = arrayListOf(),
-    var productosFavoritos: ArrayList<String> = arrayListOf(),
+    var productosFavoritos: ArrayList<Producto> = arrayListOf(),
     val listas: ArrayList<Lista> = arrayListOf(),
 )
