@@ -68,8 +68,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listaCompra"
-        android:layout_width="320dp"
+        android:layout_width="0dp"
         android:layout_height="372dp"
+        android:layout_margin="10dp"
         android:layout_marginTop="80dp"
         android:layout_marginBottom="92dp"
         android:background="#FFFCE3"

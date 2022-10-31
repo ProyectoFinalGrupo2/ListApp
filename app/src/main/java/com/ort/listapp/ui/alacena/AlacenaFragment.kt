@@ -20,7 +20,6 @@ class AlacenaFragment : Fragment() {
 
     private var _binding: FragmentAlacenaBinding? = null
     private val binding get() = _binding!!
-    private val alacenaViewModel: AlacenaViewModel by viewModels()
     private val viewModel: FamilyViewModel by activityViewModels()
 
 
