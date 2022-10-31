@@ -128,6 +128,16 @@ class FamilyViewModel : ViewModel() {
         actualizarFamilia(familia!!)
     }
 
+    fun precioTotalListaById(id: String): Double{
+        val familia = this.familia.value
+        val lista = getListaByIdEnFamilia(familia!!, id)
+        var precioTotal : Double = 0.0
+        for (item: ItemLista in lista.productos){
+            precioTotal+=(item.producto.precio * item.cantidad)
+        }
+        return precioTotal
+    }
+
     /*fun agregarProductoEnLista(
         tipoLista: TipoLista,
         producto: Producto,

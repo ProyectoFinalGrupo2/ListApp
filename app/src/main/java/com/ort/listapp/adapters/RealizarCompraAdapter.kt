@@ -27,6 +27,16 @@ class RealizarCompraAdapter (var listaProductos : List<ItemLista>) : RecyclerVie
             }
             txtNombre.text = nomProd
         }
+
+        fun setCantidad(cant:Int){
+            val txtCantidad: TextView = view.findViewById(R.id.txtCantidadRC)
+            txtCantidad.text= cant.toString()
+        }
+
+        fun setPrecio(precio: Double){
+            val txtPrecio: TextView = view.findViewById(R.id.txtPrecioRC)
+            txtPrecio.text = "$" + precio.toString()
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RealizarCompraHolder {
@@ -37,6 +47,8 @@ class RealizarCompraAdapter (var listaProductos : List<ItemLista>) : RecyclerVie
 
     override fun onBindViewHolder(holder: RealizarCompraHolder, position: Int) {
         holder.setNombre(listaProductos[position].producto.nombre)
+        holder.setCantidad(listaProductos[position].cantidad)
+        holder.setPrecio(listaProductos[position].producto.precio)
     }
 
     override fun getItemCount(): Int {

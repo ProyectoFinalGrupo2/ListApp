@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -48,6 +49,7 @@ class ListaDeComprasFragment : Fragment() {
         val btnRealizarCompra = binding.btnRealizarCompra
 
         viewModel.getFamilia().observe(this, Observer {
+            binding.txtPrecioTotalLista.text = "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual()).toString()
             binding.listaCompra.setHasFixedSize(true)
             binding.listaCompra.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
@@ -60,15 +62,10 @@ class ListaDeComprasFragment : Fragment() {
                 ProductoListadoAdapter(
                     viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()),
                     requireContext(),
-                    {
-                        removerProducto(it)
-                    },
-                    {
-                        actualizarCantidad(it, 1)
-                    },
-                    {
-                        actualizarCantidad(it, -1)
-                    })
+                    {removerProducto(it)},
+                    {clickSumaYResta(it, 1)},
+                    {clickSumaYResta(it, -1)}
+                )
         })
 
         btnRealizarCompra.setOnClickListener{
@@ -83,7 +80,7 @@ class ListaDeComprasFragment : Fragment() {
         )
     }
 
-    private fun actualizarCantidad(producto: ItemLista, cantidad: Int) {
+    private fun clickSumaYResta(producto: ItemLista, cantidad: Int) {
         viewModel.actualizarProductoEnListaById(
             viewModel.getIdListaDeComprasActual(),
             producto.producto.id,
@@ -97,6 +94,9 @@ class ListaDeComprasFragment : Fragment() {
         val reciclerView = popupView.findViewById<RecyclerView>(R.id.rvListaRC)
         val btnConfirmar = popupView.findViewById<Button>(R.id.btnConfirmarCompra)
         val btnEditarLista = popupView.findViewById<Button>(R.id.btnEditarLista)
+        val txtPrecioTotal = popupView.findViewById<TextView>(R.id.precioTotalCompra)
+
+        txtPrecioTotal.text = "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual()).toString()
 
         reciclerView.setHasFixedSize(true)
         reciclerView.layoutManager = LinearLayoutManager(requireContext())

@@ -82,7 +82,7 @@
         app:layout_constraintVertical_bias="0.416" />
 
     <TextView
-        android:id="@+id/total"
+        android:id="@+id/txtPrecioTotalLista"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Total = $14542"
