@@ -98,6 +98,7 @@ class ListaDeComprasFragment : Fragment() {
 
         btnConfirmar.setOnClickListener{
             viewModel.realizarCompra()
+            popup.dismiss()
         }
 
         btnEditarLista.setOnClickListener {
