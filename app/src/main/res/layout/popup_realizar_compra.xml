@@ -9,28 +9,28 @@
         android:id="@+id/rvListaRC"
         android:layout_width="wrap_content"
         android:layout_height="450dp"
-        app:layout_constraintBottom_toTopOf="@+id/BtnConfirmarCompra"
+        app:layout_constraintBottom_toTopOf="@+id/btnConfirmarCompra"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/BtnConfirmarCompra"
+        android:id="@+id/btnConfirmarCompra"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Confirmar"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/BtnEditarLista"
+        app:layout_constraintEnd_toStartOf="@+id/btnEditarLista"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvListaRC" />
 
     <Button
-        android:id="@+id/BtnEditarLista"
+        android:id="@+id/btnEditarLista"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Editar lista"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/BtnConfirmarCompra"
+        app:layout_constraintStart_toEndOf="@+id/btnConfirmarCompra"
         app:layout_constraintTop_toBottomOf="@+id/rvListaRC" />
 </androidx.constraintlayout.widget.ConstraintLayout>

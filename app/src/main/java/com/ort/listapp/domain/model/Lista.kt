@@ -37,5 +37,9 @@ data class Lista(
     private fun productoEstaEnLista(id: String): Boolean {
         return productos.firstOrNull { it.producto.id == id } != null
     }
+
+    fun vaciarLista(){
+        productos.clear()
+    }
 }
 

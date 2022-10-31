@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -83,6 +84,8 @@ class ListaDeComprasFragment : Fragment() {
         popupBuilder = AlertDialog.Builder(context)
         val popupView = layoutInflater.inflate(R.layout.popup_realizar_compra, null)
         val reciclerView = popupView.findViewById<RecyclerView>(R.id.rvListaRC)
+        val btnConfirmar = popupView.findViewById<Button>(R.id.btnConfirmarCompra)
+        val btnEditarLista = popupView.findViewById<Button>(R.id.btnEditarLista)
 
         reciclerView.setHasFixedSize(true)
         reciclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -92,6 +95,14 @@ class ListaDeComprasFragment : Fragment() {
 
         popupBuilder.setView(popupView)
         popup = popupBuilder.create()
+
+        btnConfirmar.setOnClickListener{
+            viewModel.realizarCompra()
+        }
+
+        btnEditarLista.setOnClickListener {
+            popup.dismiss()
+        }
 
         popup.show()
     }

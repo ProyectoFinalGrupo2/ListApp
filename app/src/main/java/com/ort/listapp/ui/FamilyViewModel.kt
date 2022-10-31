@@ -11,6 +11,7 @@ import com.ort.listapp.helpers.SysConstants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.time.LocalDate
 
 class FamilyViewModel : ViewModel() {
 
@@ -135,6 +136,25 @@ class FamilyViewModel : ViewModel() {
             actualizarFamilia(familia)
         }
         return producto.id
+    }
+
+    fun realizarCompra(){
+        val familia = this.familia.value
+
+        //paso los items de la lista de compras a la alacena virtual y creo la lista de tipo historial
+        val listaDeCompras = getListaByIdEnFamilia(familia!!, getIdListaDeComprasActual())
+        val alacenaVirtual = getListaByIdEnFamilia(familia!!, getIdAlacenaVirtual())
+        val nuevoHistorial : Lista = Lista("pruebaHistorial", "Compra " + LocalDate.now().toString(), LocalDate.now().toString())
+        for (item: ItemLista in listaDeCompras.productos){
+            alacenaVirtual.agregarProducto(item)
+            nuevoHistorial.agregarProducto(item)
+        }
+
+        //vacío la lista de compras
+        listaDeCompras.vaciarLista()
+
+        //actualizo la familia
+        actualizarFamilia(familia!!)
     }
 
     /*fun agregarProductoEnLista(
