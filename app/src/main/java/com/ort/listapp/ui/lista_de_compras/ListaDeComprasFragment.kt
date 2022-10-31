@@ -59,11 +59,16 @@ class ListaDeComprasFragment : Fragment() {
 //                }
                 ProductoListadoAdapter(
                     viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()),
-                    requireContext()
-                ) {
-                    removerProducto(it)
-                }
-
+                    requireContext(),
+                    {
+                        removerProducto(it)
+                    },
+                    {
+                        actualizarCantidad(it, 1)
+                    },
+                    {
+                        actualizarCantidad(it, -1)
+                    })
         })
 
         btnRealizarCompra.setOnClickListener{
@@ -78,7 +83,13 @@ class ListaDeComprasFragment : Fragment() {
         )
     }
 
-
+    private fun actualizarCantidad(producto: ItemLista, cantidad: Int) {
+        viewModel.actualizarProductoEnListaById(
+            viewModel.getIdListaDeComprasActual(),
+            producto.producto.id,
+            cantidad
+        )
+    }
 
     private fun realizarCompra(){
         popupBuilder = AlertDialog.Builder(context)
