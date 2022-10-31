@@ -35,7 +35,7 @@ class RealizarCompraAdapter (var listaProductos : List<ItemLista>) : RecyclerVie
 
         fun setPrecio(precio: Double){
             val txtPrecio: TextView = view.findViewById(R.id.txtPrecioRC)
-            txtPrecio.text = precio.toString()
+            txtPrecio.text = "$" + precio.toString()
         }
     }
 

@@ -49,7 +49,7 @@ class ListaDeComprasFragment : Fragment() {
         val btnRealizarCompra = binding.btnRealizarCompra
 
         viewModel.getFamilia().observe(this, Observer {
-            binding.txtPrecioTotalLista.text = "Precio total: " + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual()).toString()
+            binding.txtPrecioTotalLista.text = "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual()).toString()
             binding.listaCompra.setHasFixedSize(true)
             binding.listaCompra.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
@@ -96,7 +96,7 @@ class ListaDeComprasFragment : Fragment() {
         val btnEditarLista = popupView.findViewById<Button>(R.id.btnEditarLista)
         val txtPrecioTotal = popupView.findViewById<TextView>(R.id.precioTotalCompra)
 
-        txtPrecioTotal.text = "Precio total: " + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual()).toString()
+        txtPrecioTotal.text = "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual()).toString()
 
         reciclerView.setHasFixedSize(true)
         reciclerView.layoutManager = LinearLayoutManager(requireContext())
