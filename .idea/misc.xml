@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/fragment_lista_de_compras.xml" value="0.36666666666666664" />
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/item_producto_realizar_compra.xml" value="0.365625" />
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/popup_producto_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/popup_realizar_compra.xml" value="0.36666666666666664" />
         <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/drawable/border.xml" value="0.2265" />
         <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/drawable/popup_xml.xml" value="0.2265" />
         <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/activity_main.xml" value="0.25" />

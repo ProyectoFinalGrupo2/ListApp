@@ -38,7 +38,7 @@
         tools:ignore="TextContrastCheck" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/btnRealizarCompra"
         android:layout_width="223dp"
         android:layout_height="41dp"
         android:layout_marginTop="20dp"
@@ -88,7 +88,7 @@
         android:text="Total = $14542"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         app:emojiCompatEnabled="true"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintBottom_toTopOf="@+id/btnRealizarCompra"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"

@@ -39,9 +39,15 @@ class FamilyViewModel : ViewModel() {
         return this.familia
     }
 
-    fun getProductosByTipoLista(tipoLista: TipoLista): List<ItemLista> {
+    /*fun getProductosByTipoLista(tipoLista: TipoLista): List<ItemLista> {
         return this.familia.value?.listas?.filter {
             it.tipoLista == tipoLista
+        }?.get(0)?.productos ?: emptyList()
+    }*/
+
+    fun getProductosByIdLista(idLista: String): List<ItemLista> {
+        return this.familia.value?.listas?.filter {
+            it.id == idLista
         }?.get(0)?.productos ?: emptyList()
     }
 

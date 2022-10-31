@@ -50,7 +50,7 @@ class AlacenaFragment : Fragment() {
 //                    }
 //                }
                 AlacenaAdapter(
-                    viewModel.getProductosByTipoLista(TipoLista.ALACENA_VIRTUAL),
+                    viewModel.getProductosByIdLista(viewModel.getIdAlacenaVirtual()),
                     requireContext(),
                     {
                         btnClick(it, 1)

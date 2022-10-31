@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvListaRC"
+        android:layout_width="wrap_content"
+        android:layout_height="450dp"
+        app:layout_constraintBottom_toTopOf="@+id/BtnConfirmarCompra"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/BtnConfirmarCompra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirmar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/BtnEditarLista"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvListaRC" />
+
+    <Button
+        android:id="@+id/BtnEditarLista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Editar lista"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/BtnConfirmarCompra"
+        app:layout_constraintTop_toBottomOf="@+id/rvListaRC" />
+</androidx.constraintlayout.widget.ConstraintLayout>
