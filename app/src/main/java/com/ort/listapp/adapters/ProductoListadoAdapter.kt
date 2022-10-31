@@ -76,7 +76,7 @@ class ProductoListadoAdapter(
             ).show()
         }
 
-        val precio = DecimalFormat("#.##").format(producto.precioMax * item.cantidad).toDouble()
+        val precio = DecimalFormat("#.##").format(producto.precio * item.cantidad).toDouble()
         holder.setPrecioMax(precio)
         holder.setCantidad(item.cantidad)
         holder.setUsuario(item.nombreUsuario)
