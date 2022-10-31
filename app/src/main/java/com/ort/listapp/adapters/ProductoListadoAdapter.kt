@@ -67,7 +67,7 @@ class ProductoListadoAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductoListadoHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.fragment_item_lista, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_producto_lista_de_compras, parent, false)
         return (ProductoListadoHolder(view))
     }
 
