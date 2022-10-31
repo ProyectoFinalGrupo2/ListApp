@@ -70,14 +70,14 @@ class AlacenaAdapter(
 
         holder.btnAgregar.setOnClickListener {
             Snackbar.make(
-                it, "Se agrego un " + (producto.nombre ?: String), Snackbar.LENGTH_SHORT
+                it, "Se agrego un " + (producto.nombre), Snackbar.LENGTH_SHORT
             ).show()
             onClick(item)
         }
         holder.btnRestar.setOnClickListener {
             if (item.cantidad > 0) {
                 Snackbar.make(
-                    it, "Se saco un " + (producto.nombre ?: String), Snackbar.LENGTH_SHORT
+                    it, "Se saco un " + (producto.nombre), Snackbar.LENGTH_SHORT
                 ).show()
                 onClick2(item)
             } else {

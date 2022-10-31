@@ -37,7 +37,8 @@ class FamilyViewModel : ViewModel() {
     }
 
     fun getProductosFavoritos(): List<Producto> =
-        this.familia.value?.productosFavoritos!!
+        this.familia.value?.productosFavoritos ?: emptyList()
+
 
     fun agregarProductoFavorito(producto: Producto) {
         this.familia.value?.let { familia ->
@@ -53,9 +54,9 @@ class FamilyViewModel : ViewModel() {
         }
     }
 
-    fun esProductoFav(producto: Producto): Boolean {
-        return this.familia.value?.productosFavoritos?.find { it == producto } != null
-    }
+    fun esProductoFav(producto: Producto): Boolean =
+        this.familia.value?.productosFavoritos?.find { it == producto } != null
+
 
     fun actualizarProductoPersonalizado(
         idProducto: String,
@@ -63,13 +64,16 @@ class FamilyViewModel : ViewModel() {
         precio: Double,
         id_categoria: String
     ) {
-        val familia = this.familia.value
-        val prod = familia?.productosPersonalizados?.find { it.id == idProducto }
-        prod?.id = idProducto
-        prod?.nombre = nombre
-        prod?.precioMax = precio
-        prod?.id_Categoria = id_categoria
-        actualizarFamilia(familia!!)
+        this.familia.value?.let { familia ->
+            val producto = familia.productosPersonalizados.find { it.id == idProducto }
+            producto?.let {
+                it.id = idProducto
+                it.nombre = nombre
+                it.precio = precio
+                it.id_Categoria = id_categoria
+                actualizarFamilia(familia)
+            }
+        }
     }
 
     fun eliminarProductoPersonalizado(producto: Producto) {
@@ -81,9 +85,9 @@ class FamilyViewModel : ViewModel() {
         }
     }
 
-    fun getProductosPersonalizados(): MutableList<Producto> {
-        return this.familia.value?.productosPersonalizados?.toMutableList()!!
-    }
+    fun getProductosPersonalizados(): MutableList<Producto> =
+        this.familia.value?.productosPersonalizados?.toMutableList()!!
+
 
     fun agregarProductoPersonalizado(producto: Producto) {
         this.familia.value?.let { familia ->
@@ -199,4 +203,5 @@ class FamilyViewModel : ViewModel() {
         }
     }
 }
+
 

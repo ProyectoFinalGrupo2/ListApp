@@ -141,7 +141,7 @@ class ProductosFragment : Fragment() {
                         id = "${SysConstants.PREFIJO_PROD_PERS}${System.currentTimeMillis()}",
                         id_Categoria = spinner.selectedItem.toString(),
                         nombre = nombreProd.text.toString(),
-                        precioMax = precioProducto.text.toString().toDouble(),
+                        precio = precioProducto.text.toString().toDouble(),
                     )
                 viewModel.agregarProductoPersonalizado(producto)
                 if (switchFav.isChecked) {
@@ -178,7 +178,7 @@ class ProductosFragment : Fragment() {
         fun actualizarSubtotal() {
             if (cantActual > 0) {
                 subtotal.text =
-                    "Subtotal: $${DecimalFormat("#.##").format(producto.precioMax * cantActual)}"
+                    "Subtotal: $${DecimalFormat("#.##").format(producto.precio * cantActual)}"
             } else {
                 subtotal.text = ""
             }
@@ -196,7 +196,7 @@ class ProductosFragment : Fragment() {
         popUp = popupBuilder.create()
         popUp.show()
         nombreProd.text = producto.nombre
-        precioProducto.text = "$${producto.precioMax}"
+        precioProducto.text = "$${producto.precio}"
         Glide.with(popUpView).load(producto.imgURL()).into(imagen)
         marcarCorazon()
 
@@ -261,7 +261,7 @@ class ProductosFragment : Fragment() {
         btnBorrar.visibility = View.VISIBLE
         btnBorrar.text = "Borrar Producto"
         nombreProd.setText(producto.nombre)
-        precioProducto.setText(producto.precioMax.toString())
+        precioProducto.setText(producto.precio.toString())
         popupBuilder.setView(popUpView)
         popUp = popupBuilder.create()
         val adapter = ArrayAdapter(

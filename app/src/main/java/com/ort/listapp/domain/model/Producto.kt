@@ -10,8 +10,7 @@ data class Producto(
     var id_subCategoria: String = "",
     var marca: String = "",
     var nombre: String = "",
-    var precioMin: Double = 0.0,
-    var precioMax: Double = 0.0,
+    @SerialName("precioMax") var precio: Double = 0.0,
     var presentacion: String = "",
 ) {
     fun imgURL(): String = "https://imagenes.preciosclaros.gob.ar/productos/${id}.jpg"

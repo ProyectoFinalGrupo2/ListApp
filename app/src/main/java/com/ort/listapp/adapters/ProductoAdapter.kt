@@ -31,7 +31,7 @@ class ProductoAdapter(
         fun setNombre(nombre: String) {
             val txtNombre: TextView = view.findViewById(R.id.nombre)
             var nomProd = nombre
-            if(nombre.contains(" ")){
+            if (nombre.contains(" ")) {
                 val n = nombre.split(" ")
                 nomProd = "${n[0]} ${n[1]}..."
             }
@@ -67,7 +67,7 @@ class ProductoAdapter(
         //Iteración de la lista y va  usando las funciones set
         //Solamente itera sobre los elementos en pantalla e itera a medida que se scrollea
         holder.setNombre(productos[position].nombre)
-        holder.setPrecio(productos[position].precioMax)
+        holder.setPrecio(productos[position].precio)
         holder.loadImg(productos[position].imgURL())
 
 
