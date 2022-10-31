@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ort.listapp.adapters.ProductoListadoAdapter
@@ -24,7 +27,6 @@ class ListaDeComprasFragment : Fragment() {
     private lateinit var binding: FragmentListaDeComprasBinding
 
     private val viewModel: FamilyViewModel by activityViewModels()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,6 +56,12 @@ class ListaDeComprasFragment : Fragment() {
                 }
 
         })
+
+        binding.btnComprasFavoritas.setOnClickListener {
+            val action = ListaDeComprasFragmentDirections.actionListaDeComprasFragmentToComprasFavoritasFragment()
+            //view?.findNavController()?.navigate(action)
+            this.findNavController().navigate(action)
+        }
     }
 
     private fun removerProducto(producto: ProductoListado) {
