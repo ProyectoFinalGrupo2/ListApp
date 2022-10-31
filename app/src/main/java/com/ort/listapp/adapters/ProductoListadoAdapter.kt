@@ -17,16 +17,22 @@ import java.text.DecimalFormat
 class ProductoListadoAdapter(
     var productos: List<ItemLista>,
     val context: Context,
-    var onClick: (ItemLista) -> Unit
+    var clickEliminar: (ItemLista) -> Unit,
+    var clickSumar: (ItemLista) -> Unit,
+    var clickRestar: (ItemLista) -> Unit
 ) : RecyclerView.Adapter<ProductoListadoAdapter.ProductoListadoHolder>() {
 
     class ProductoListadoHolder(v: View) : RecyclerView.ViewHolder(v) {
         private var view: View
         val btnDelete: Button
+        val btnSumar: Button
+        val btnRestar: Button
 
         init {
             this.view = v
             btnDelete = view.findViewById(R.id.delete)
+            btnSumar = view.findViewById(R.id.btnSumarLista)
+            btnRestar = view.findViewById(R.id.btnRestarLista)
         }
 
         fun setNombre(nombre: String) {
@@ -82,10 +88,20 @@ class ProductoListadoAdapter(
         holder.setUsuario(item.nombreUsuario)
 
         holder.btnDelete.setOnClickListener {
-            onClick(productos[position])
+            clickEliminar(productos[position])
             Snackbar.make(
                 it, "Se elimino ${producto.nombre}", Snackbar.LENGTH_SHORT
             ).show()
+        }
+
+        holder.btnSumar.setOnClickListener {
+            clickSumar(item)
+        }
+
+        holder.btnRestar.setOnClickListener {
+            if(item.cantidad > 0){
+                clickRestar(item)
+            }
         }
     }
 

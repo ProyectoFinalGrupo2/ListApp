@@ -18,8 +18,8 @@ import com.ort.listapp.domain.model.ItemLista
 class AlacenaAdapter(
     var productos: List<ItemLista>,
     val context: Context,
-    var onClick: (ItemLista) -> Unit,
-    var onClick2: (ItemLista) -> Unit
+    var clickSuma: (ItemLista) -> Unit,
+    var clickResta: (ItemLista) -> Unit
 ) : RecyclerView.Adapter<AlacenaAdapter.AlacenaHolder>() {
 
     class AlacenaHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -72,14 +72,14 @@ class AlacenaAdapter(
             Snackbar.make(
                 it, "Se agrego un " + (producto.nombre), Snackbar.LENGTH_SHORT
             ).show()
-            onClick(item)
+            clickSuma(item)
         }
         holder.btnRestar.setOnClickListener {
             if (item.cantidad > 0) {
                 Snackbar.make(
                     it, "Se saco un " + (producto.nombre), Snackbar.LENGTH_SHORT
                 ).show()
-                onClick2(item)
+                clickResta(item)
             } else {
                 Snackbar.make(
                     it, "Ups... parece que ya no tienes mas", Snackbar.LENGTH_SHORT
