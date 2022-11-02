@@ -1,4 +1,4 @@
-package com.ort.listapp.adapters
+package com.ort.listapp.ui.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -61,7 +61,7 @@ class AlacenaAdapter(
         return (AlacenaHolder(view))
     }
 
-    override fun onBindViewHolder(holder: AlacenaAdapter.AlacenaHolder, position: Int) {
+    override fun onBindViewHolder(holder: AlacenaHolder, position: Int) {
         val item = productos[position]
         val producto = item.producto
         holder.setNombre(producto.nombre)

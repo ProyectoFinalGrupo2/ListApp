@@ -1,17 +1,17 @@
-package com.ort.listapp.adapters
+package com.ort.listapp.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ort.listapp.R
 import com.ort.listapp.domain.model.ItemLista
 
-class RealizarCompraAdapter (var listaProductos : List<ItemLista>) : RecyclerView.Adapter<RealizarCompraAdapter.RealizarCompraHolder>(){
+class RealizarCompraAdapter(var listaProductos: List<ItemLista>) :
+    RecyclerView.Adapter<RealizarCompraAdapter.RealizarCompraHolder>() {
 
-    class RealizarCompraHolder(v: View) : RecyclerView.ViewHolder(v){
+    class RealizarCompraHolder(v: View) : RecyclerView.ViewHolder(v) {
         private var view: View
 
         init {
@@ -31,7 +31,8 @@ class RealizarCompraAdapter (var listaProductos : List<ItemLista>) : RecyclerVie
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RealizarCompraHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_producto_realizar_compra, parent, false)
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_producto_realizar_compra, parent, false)
         return (RealizarCompraHolder(view))
     }
 

@@ -8,7 +8,6 @@ import com.ort.listapp.data.FamiliaRepository
 import com.ort.listapp.data.ProductoRepository
 import com.ort.listapp.domain.model.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.time.LocalDate
 
 class FamilyViewModel : ViewModel() {
@@ -49,6 +48,7 @@ class FamilyViewModel : ViewModel() {
             it.id == idLista
         }?.get(0)?.productos ?: emptyList()
     }
+
     fun getProductosFavoritos(): List<Producto> =
         this.familia.value?.productosFavoritos ?: emptyList()
 
@@ -109,69 +109,36 @@ class FamilyViewModel : ViewModel() {
         }
     }
 
-    fun realizarCompra(){
-        val familia = this.familia.value
-
-        //paso los items de la lista de compras a la alacena virtual y creo la lista de tipo historial
-        val listaDeCompras = getListaByIdEnFamilia(familia!!, getIdListaDeComprasActual())
-        val alacenaVirtual = getListaByIdEnFamilia(familia!!, getIdAlacenaVirtual())
-        val nuevoHistorial : Lista = Lista("pruebaHistorial", "Compra " + LocalDate.now().toString(), LocalDate.now().toString())
-        for (item: ItemLista in listaDeCompras.productos){
-            alacenaVirtual.agregarProducto(item)
-            nuevoHistorial.agregarProducto(item)
-        }
-
-        //vacío la lista de compras
-        listaDeCompras.vaciarLista()
-
-        //actualizo la familia
-        actualizarFamilia(familia!!)
-    }
-
-    /*fun agregarProductoEnLista(
-        tipoLista: TipoLista,
-        producto: Producto,
-        cantidad: Int,
-    ) {
+    fun realizarCompra() {
         this.familia.value?.let { familia ->
-            getListaByTipoEnFamilia(familia, tipoLista).agregarProducto(
-                ItemLista(
-                    id = producto.id,
-                    nombre = producto.nombre,
-                    id_Categoria = producto.id_Categoria,
-                    cantidad = cantidad,
-                    precio = producto.precioMax,
-                    nombreUsuario = prefsHelper.getUserName(),
-                )
+
+            //paso los items de la lista de compras a la alacena virtual y creo la lista de tipo historial
+            val listaDeCompras = getListaByIdEnFamilia(familia, getIdListaDeComprasActual())
+            val alacenaVirtual = getListaByIdEnFamilia(familia, getIdAlacenaVirtual())
+            val nuevoHistorial: Lista = Lista(
+                "pruebaHistorial",
+                "Compra " + LocalDate.now().toString(),
+                LocalDate.now().toString()
             )
+            for (item: ItemLista in listaDeCompras.productos) {
+                alacenaVirtual.agregarProducto(item)
+                nuevoHistorial.agregarProducto(item)
+            }
+
+            //vacío la lista de compras
+            listaDeCompras.vaciarLista()
+
+            //actualizo la familia
             actualizarFamilia(familia)
         }
     }
 
-    fun actualizarProductoEnLista(tipoLista: TipoLista, idProducto: String, cantidad: Int){
-        this.familia.value?.let { familia ->
-            getListaByTipoEnFamilia(familia, tipoLista).modificarCantidadPorId(
-                idProducto, cantidad
-            )
-            actualizarFamilia(familia)
-        }
-    }
 
-    fun removerProductoDeLista(
-        tipoLista: TipoLista,
-        idProducto: String,
-    ) {
-        this.familia.value?.let { familia ->
-            getListaByTipoEnFamilia(familia, tipoLista).removerProductoPorId(idProducto)
-            actualizarFamilia(familia)
-        }
-    }*/
-
-    fun getProductosByTipoLista(tipoLista: TipoLista): List<ItemLista> {
-        return this.familia.value?.listas?.filter {
+    fun getProductosByTipoLista(tipoLista: TipoLista): List<ItemLista> =
+        this.familia.value?.listas?.filter {
             it.tipoLista == tipoLista
         }?.get(0)?.productos ?: emptyList()
-    }
+
 
     fun agregarProductoEnListaById(
         idLista: String,
@@ -216,11 +183,11 @@ class FamilyViewModel : ViewModel() {
         return idAlacenaVirtual ?: ""
     }
 
-    private fun getListaByIdEnFamilia(familia: Familia, id: String): Lista {
-        return familia.listas.filter {
+    private fun getListaByIdEnFamilia(familia: Familia, id: String): Lista =
+        familia.listas.filter {
             it.id == id
         }[0]
-    }
+
 
     private fun getListaByTipoEnFamilia(familia: Familia, tipoLista: TipoLista): Lista {
         return familia.listas.filter {

@@ -1,4 +1,4 @@
-package com.ort.listapp.activities
+package com.ort.listapp.ui.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

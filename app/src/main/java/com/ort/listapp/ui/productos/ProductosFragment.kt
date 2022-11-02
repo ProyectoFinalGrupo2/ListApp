@@ -16,12 +16,12 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.ListaAppApplication.Companion.prefsHelper
 import com.ort.listapp.R
-import com.ort.listapp.adapters.ProductoAdapter
 import com.ort.listapp.databinding.FragmentProductosBinding
 import com.ort.listapp.domain.model.ItemLista
 import com.ort.listapp.domain.model.Producto
 import com.ort.listapp.helpers.SysConstants
 import com.ort.listapp.ui.FamilyViewModel
+import com.ort.listapp.ui.adapters.ProductoAdapter
 import java.text.DecimalFormat
 
 class ProductosFragment : Fragment() {

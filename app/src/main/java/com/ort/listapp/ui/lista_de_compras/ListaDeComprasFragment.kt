@@ -6,19 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ort.listapp.R
-import com.ort.listapp.adapters.ProductoListadoAdapter
-import com.ort.listapp.adapters.RealizarCompraAdapter
 import com.ort.listapp.databinding.FragmentListaDeComprasBinding
 import com.ort.listapp.domain.model.ItemLista
-import com.ort.listapp.domain.model.TipoLista
 import com.ort.listapp.ui.FamilyViewModel
+import com.ort.listapp.ui.adapters.ProductoListadoAdapter
+import com.ort.listapp.ui.adapters.RealizarCompraAdapter
 
 class ListaDeComprasFragment : Fragment() {
 
@@ -52,11 +50,6 @@ class ListaDeComprasFragment : Fragment() {
             binding.listaCompra.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             binding.listaCompra.adapter =
-//                viewModel.getListaByTipo(TipoLista.LISTA_DE_COMPRAS)?.productos?.let {
-//                    ProductoListadoAdapter(it, requireContext()){ prod ->
-//                        buttonClick(prod)
-//                    }
-//                }
                 ProductoListadoAdapter(
                     viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()),
                     requireContext()
@@ -66,7 +59,7 @@ class ListaDeComprasFragment : Fragment() {
 
         })
 
-        btnRealizarCompra.setOnClickListener{
+        btnRealizarCompra.setOnClickListener {
             realizarCompra()
         }
     }
@@ -79,8 +72,7 @@ class ListaDeComprasFragment : Fragment() {
     }
 
 
-
-    private fun realizarCompra(){
+    private fun realizarCompra() {
         popupBuilder = AlertDialog.Builder(context)
         val popupView = layoutInflater.inflate(R.layout.popup_realizar_compra, null)
         val reciclerView = popupView.findViewById<RecyclerView>(R.id.rvListaRC)
@@ -90,13 +82,14 @@ class ListaDeComprasFragment : Fragment() {
         reciclerView.setHasFixedSize(true)
         reciclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        adapterRC = RealizarCompraAdapter(viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()))
+        adapterRC =
+            RealizarCompraAdapter(viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()))
         reciclerView.adapter = adapterRC
 
         popupBuilder.setView(popupView)
         popup = popupBuilder.create()
 
-        btnConfirmar.setOnClickListener{
+        btnConfirmar.setOnClickListener {
             viewModel.realizarCompra()
             popup.dismiss()
         }

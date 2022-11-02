@@ -1,4 +1,4 @@
-package com.ort.listapp.adapters
+package com.ort.listapp.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
