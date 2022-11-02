@@ -44,15 +44,15 @@ class AlacenaFragment : Fragment() {
                     viewModel.getProductosByIdLista(viewModel.getIdAlacenaVirtual()),
                     requireContext(),
                     {
-                        btnClick(it, 1)
+                        clickSumaYResta(it, 1)
                     },
                     {
-                        btnClick(it, -1)
+                        clickSumaYResta(it, -1)
                     })
         })
     }
 
-    private fun btnClick(producto: ItemLista, cantidad: Int) {
+    private fun clickSumaYResta(producto: ItemLista, cantidad: Int) {
         viewModel.actualizarProductoEnListaById(
             viewModel.getIdAlacenaVirtual(),
             producto.producto.id,

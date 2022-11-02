@@ -49,8 +49,8 @@
             android:textColor="#000000"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/cantidad"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/sumar"
+            app:layout_constraintStart_toEndOf="@+id/sacar"
             app:layout_constraintTop_toBottomOf="@+id/fotoProducto" />
 
         <Button
@@ -58,7 +58,7 @@
             android:layout_width="37dp"
             android:layout_height="45dp"
             android:layout_margin="0dp"
-            android:layout_marginTop="1dp"
+            android:layout_marginStart="5dp"
             android:padding="0dp"
             android:text="-"
             app:backgroundTint="#FF0000"
@@ -66,9 +66,7 @@
             app:circularflow_radiusInDP="0dp"
             app:cornerRadius="120dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/nombre"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fotoProducto"
             tools:ignore="TouchTargetSizeCheck" />
 
         <Button
@@ -76,7 +74,7 @@
             android:layout_width="40dp"
             android:layout_height="46dp"
             android:layout_margin="0dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
             android:insetLeft="0dp"
             android:padding="2dp"
             android:text="+"
@@ -84,8 +82,6 @@
             app:cornerRadius="120dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/nombre"
-            app:layout_constraintTop_toBottomOf="@+id/fotoProducto"
             tools:ignore="TouchTargetSizeCheck" />
 
         <TextView
@@ -95,8 +91,8 @@
             android:text="TextView"
             android:textColor="#FF0000"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/sumar"
+            app:layout_constraintStart_toEndOf="@+id/sacar"
             app:layout_constraintTop_toBottomOf="@+id/nombre" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

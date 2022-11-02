@@ -8,6 +8,8 @@ import com.ort.listapp.data.FamiliaRepository
 import com.ort.listapp.data.ProductoRepository
 import com.ort.listapp.domain.model.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import java.text.DecimalFormat
 import java.time.LocalDate
 
 class FamilyViewModel : ViewModel() {
@@ -129,9 +131,40 @@ class FamilyViewModel : ViewModel() {
             listaDeCompras.vaciarLista()
 
             //actualizo la familia
-            actualizarFamilia(familia)
+            //actualizo la familia
+            actualizarFamilia(familia!!)
         }
     }
+
+    fun precioTotalListaById(id: String): Double{
+        val familia = this.familia.value
+        val lista = getListaByIdEnFamilia(familia!!, id)
+        var precioTotal : Double = 0.0
+        for (item: ItemLista in lista.productos){
+            precioTotal+=(item.producto.precio * item.cantidad)
+        }
+        return DecimalFormat("#.##").format(precioTotal).toDouble()
+    }
+
+    /*fun agregarProductoEnLista(
+        tipoLista: TipoLista,
+        producto: Producto,
+        cantidad: Int,
+    ) {
+        this.familia.value?.let { familia ->
+            getListaByTipoEnFamilia(familia, tipoLista).agregarProducto(
+                ItemLista(
+                    id = producto.id,
+                    nombre = producto.nombre,
+                    id_Categoria = producto.id_Categoria,
+                    cantidad = cantidad,
+                    precio = producto.precioMax,
+                    nombreUsuario = prefsHelper.getUserName(),
+                )
+            )
+            actualizarFamilia(familia)
+        }
+    }*/
 
 
     fun getProductosByTipoLista(tipoLista: TipoLista): List<ItemLista> =

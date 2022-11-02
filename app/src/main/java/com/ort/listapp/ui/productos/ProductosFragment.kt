@@ -229,6 +229,7 @@ class ProductosFragment : Fragment() {
             Snackbar.make(
                 it, "Agregaste $cantActual ${producto.nombre}/s", Snackbar.LENGTH_SHORT
             ).show()
+            popUp.dismiss()
         }
 
         btnEditar.setOnClickListener {
