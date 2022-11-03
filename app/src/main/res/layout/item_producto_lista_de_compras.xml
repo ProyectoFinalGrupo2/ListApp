@@ -34,8 +34,8 @@
             android:padding="0dp"
             android:text="Nombre del producto"
             android:textColor="#000000"
-            android:textSize="14sp"
-            app:fontFamily="@font/pompiere"
+            android:textSize="10sp"
+            app:fontFamily="@font/poppins"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -52,7 +52,7 @@
             android:text="$350"
             android:textColor="#000000"
             android:textSize="14sp"
-            app:fontFamily="@font/pompiere"
+            app:fontFamily="@font/poppins"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -69,7 +69,7 @@
             android:text="Juan Garcia"
             android:textColor="#000000"
             android:textSize="14sp"
-            app:fontFamily="@font/pompiere"
+            app:fontFamily="@font/poppins"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.425"
@@ -110,7 +110,7 @@
             app:layout_constraintVertical_bias="0.666" />
 
         <Button
-            android:id="@+id/btnRemove"
+            android:id="@+id/btnRestarLista"
             android:layout_width="16dp"
             android:layout_height="31dp"
             android:padding="0dp"
@@ -124,7 +124,7 @@
             app:layout_constraintVertical_bias="1.0" />
 
         <Button
-            android:id="@+id/btnAdd"
+            android:id="@+id/btnSumarLista"
             android:layout_width="16dp"
             android:layout_height="31dp"
             android:padding="0dp"

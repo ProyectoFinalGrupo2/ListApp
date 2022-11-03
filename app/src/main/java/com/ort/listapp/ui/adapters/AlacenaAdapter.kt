@@ -1,4 +1,4 @@
-package com.ort.listapp.adapters
+package com.ort.listapp.ui.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -18,8 +18,8 @@ import com.ort.listapp.domain.model.ItemLista
 class AlacenaAdapter(
     var productos: List<ItemLista>,
     val context: Context,
-    var onClick: (ItemLista) -> Unit,
-    var onClick2: (ItemLista) -> Unit
+    var clickSuma: (ItemLista) -> Unit,
+    var clickResta: (ItemLista) -> Unit
 ) : RecyclerView.Adapter<AlacenaAdapter.AlacenaHolder>() {
 
     class AlacenaHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -61,7 +61,7 @@ class AlacenaAdapter(
         return (AlacenaHolder(view))
     }
 
-    override fun onBindViewHolder(holder: AlacenaAdapter.AlacenaHolder, position: Int) {
+    override fun onBindViewHolder(holder: AlacenaHolder, position: Int) {
         val item = productos[position]
         val producto = item.producto
         holder.setNombre(producto.nombre)
@@ -72,14 +72,14 @@ class AlacenaAdapter(
             Snackbar.make(
                 it, "Se agrego un " + (producto.nombre), Snackbar.LENGTH_SHORT
             ).show()
-            onClick(item)
+            clickSuma(item)
         }
         holder.btnRestar.setOnClickListener {
             if (item.cantidad > 0) {
                 Snackbar.make(
                     it, "Se saco un " + (producto.nombre), Snackbar.LENGTH_SHORT
                 ).show()
-                onClick2(item)
+                clickResta(item)
             } else {
                 Snackbar.make(
                     it, "Ups... parece que ya no tienes mas", Snackbar.LENGTH_SHORT

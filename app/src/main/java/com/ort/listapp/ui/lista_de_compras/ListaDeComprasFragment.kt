@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -14,12 +15,11 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ort.listapp.R
-import com.ort.listapp.adapters.ProductoListadoAdapter
-import com.ort.listapp.adapters.RealizarCompraAdapter
 import com.ort.listapp.databinding.FragmentListaDeComprasBinding
 import com.ort.listapp.domain.model.ItemLista
-import com.ort.listapp.domain.model.TipoLista
 import com.ort.listapp.ui.FamilyViewModel
+import com.ort.listapp.ui.adapters.ProductoListadoAdapter
+import com.ort.listapp.ui.adapters.RealizarCompraAdapter
 
 class ListaDeComprasFragment : Fragment() {
 
@@ -50,22 +50,18 @@ class ListaDeComprasFragment : Fragment() {
         val btnComprasFavoritas = binding.btnComprasFavoritas
 
         viewModel.getFamilia().observe(this, Observer {
+            binding.txtPrecioTotalLista.text = "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual()).toString()
             binding.listaCompra.setHasFixedSize(true)
             binding.listaCompra.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             binding.listaCompra.adapter =
-//                viewModel.getListaByTipo(TipoLista.LISTA_DE_COMPRAS)?.productos?.let {
-//                    ProductoListadoAdapter(it, requireContext()){ prod ->
-//                        buttonClick(prod)
-//                    }
-//                }
                 ProductoListadoAdapter(
                     viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()),
-                    requireContext()
-                ) {
-                    removerProducto(it)
-                }
-
+                    requireContext(),
+                    {removerProducto(it)},
+                    {clickSumaYResta(it, 1)},
+                    {clickSumaYResta(it, -1)}
+                )
         })
 
         btnRealizarCompra.setOnClickListener{
@@ -86,14 +82,23 @@ class ListaDeComprasFragment : Fragment() {
         )
     }
 
+    private fun clickSumaYResta(producto: ItemLista, cantidad: Int) {
+        viewModel.actualizarProductoEnListaById(
+            viewModel.getIdListaDeComprasActual(),
+            producto.producto.id,
+            cantidad
+        )
+    }
 
-
-    private fun realizarCompra(){
+    private fun realizarCompra() {
         popupBuilder = AlertDialog.Builder(context)
         val popupView = layoutInflater.inflate(R.layout.popup_realizar_compra, null)
         val reciclerView = popupView.findViewById<RecyclerView>(R.id.rvListaRC)
         val btnConfirmar = popupView.findViewById<Button>(R.id.btnConfirmarCompra)
         val btnEditarLista = popupView.findViewById<Button>(R.id.btnEditarLista)
+        val txtPrecioTotal = popupView.findViewById<TextView>(R.id.precioTotalCompra)
+
+        txtPrecioTotal.text = "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual()).toString()
 
         reciclerView.setHasFixedSize(true)
         reciclerView.layoutManager = LinearLayoutManager(requireContext())
