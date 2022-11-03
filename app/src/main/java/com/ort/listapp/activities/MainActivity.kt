@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
         val familiaRepository = FamiliaRepository()
 
-        val familia = Familia(
+       val familia = Familia(
             id = "familia4",
             nombre = "Los pORTofino",
             listas = arrayListOf(
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
         runBlocking {
             withContext(Dispatchers.Default) {
-                familiaRepository.guardarFamilia(familia)
+             //   familiaRepository.guardarFamilia(familia)
             }
         }
 

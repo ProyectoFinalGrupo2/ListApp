@@ -10,6 +10,7 @@ import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ort.listapp.R
@@ -46,6 +47,7 @@ class ListaDeComprasFragment : Fragment() {
         super.onStart()
 
         val btnRealizarCompra = binding.btnRealizarCompra
+        val btnComprasFavoritas = binding.btnComprasFavoritas
 
         viewModel.getFamilia().observe(this, Observer {
             binding.listaCompra.setHasFixedSize(true)
@@ -68,6 +70,12 @@ class ListaDeComprasFragment : Fragment() {
 
         btnRealizarCompra.setOnClickListener{
             realizarCompra()
+        }
+        btnComprasFavoritas.setOnClickListener {
+            val action =
+                ListaDeComprasFragmentDirections.actionListaDeComprasFragmentToComprasFavoritasFragment()
+            view?.findNavController()?.navigate(action)
+            //this.findNavController().navigate(action)
         }
     }
 

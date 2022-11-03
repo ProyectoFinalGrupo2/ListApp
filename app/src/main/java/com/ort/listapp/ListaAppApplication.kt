@@ -13,6 +13,6 @@ class ListaAppApplication : Application() {
         super.onCreate()
         prefsHelper = PrefsHelper(applicationContext)
         prefsHelper.saveFamilyId("familia4")
-        prefsHelper.saveUserName("Rafael")
+        prefsHelper.saveUserName("Martín")
     }
 }
