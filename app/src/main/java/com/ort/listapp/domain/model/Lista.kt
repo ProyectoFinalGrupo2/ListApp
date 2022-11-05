@@ -1,9 +1,11 @@
 package com.ort.listapp.domain.model
 
+import java.time.LocalDate
+
 data class Lista(
     val id: String? = null,
     val nombre: String? = null,
-    val fechaCreacion: String? = null,
+    val fechaCreacion: LocalDate = LocalDate.now(),
     val tipoLista: TipoLista? = null,
     val productos: MutableList<ItemLista> = mutableListOf(),
 ) {
@@ -38,7 +40,7 @@ data class Lista(
         return productos.firstOrNull { it.producto.id == id } != null
     }
 
-    fun vaciarLista(){
+    fun vaciarLista() {
         productos.clear()
     }
 }

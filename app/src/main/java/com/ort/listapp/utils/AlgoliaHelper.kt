@@ -1,4 +1,4 @@
-package com.ort.listapp.helpers
+package com.ort.listapp.utils
 
 import com.algolia.search.client.ClientSearch
 import com.algolia.search.client.Index

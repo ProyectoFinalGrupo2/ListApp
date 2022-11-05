@@ -6,7 +6,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFEEE4"
-    tools:context=".ui.login.LoginFragment">
+    tools:context=".ui.auth.LoginFragment">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="223dp"
+        android:layout_height="277dp"
+        android:layout_margin="0dp"
+        android:layout_marginTop="28dp"
+        android:padding="0dp"
+        android:src="@drawable/listapp_logo"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textView"
@@ -26,10 +40,9 @@
         app:layout_constraintVertical_bias="0.425" />
 
     <EditText
-        android:id="@+id/etBuscar"
+        android:id="@+id/inputEmail"
         android:layout_width="279dp"
         android:layout_height="48dp"
-        android:layout_marginTop="48dp"
         android:background="#C9AEEC"
         android:bottomLeftRadius="15dp"
         android:bottomRightRadius="15dp"
@@ -41,14 +54,13 @@
         android:topLeftRadius="15dp"
         android:topRightRadius="15dp"
         app:circularflow_defaultRadius="21dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/inputPass"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.003" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/inputPass"
         android:layout_width="279dp"
         android:layout_height="48dp"
         android:background="#C9AEEC"
@@ -56,36 +68,31 @@
         android:hint="Contraseña"
         android:inputType="textPersonName"
         android:padding="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etBuscar"
-        app:layout_constraintVertical_bias="0.099" />
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="223dp"
-        android:layout_height="277dp"
-        android:layout_margin="0dp"
-        android:layout_marginTop="28dp"
-        android:padding="0dp"
-        android:src="@drawable/listapp_logo"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@id/inputEmail" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnLogin"
         android:layout_width="231dp"
         android:layout_height="79dp"
         android:text="Ingresar"
+        android:enabled="false"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegister"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/inputPass" />
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="231dp"
+        android:layout_height="79dp"
+        android:text="Registro"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2"
-        app:layout_constraintVertical_bias="0.363" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
     <androidx.constraintlayout.helper.widget.Layer
         android:id="@+id/layer"
