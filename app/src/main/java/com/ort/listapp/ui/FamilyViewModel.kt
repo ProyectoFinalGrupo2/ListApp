@@ -222,10 +222,10 @@ class FamilyViewModel : ViewModel() {
         }[0]
 
 
-    private fun getListaByTipoEnFamilia(familia: Familia, tipoLista: TipoLista): Lista {
+    fun getListaByTipoEnFamilia(familia: Familia, tipoLista: TipoLista): List<Lista> {
         return familia.listas.filter {
             it.tipoLista == tipoLista
-        }[0]
+        }
     }
 
     private fun actualizarFamilia(familia: Familia) {

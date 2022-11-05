@@ -48,8 +48,8 @@ class ProductoAdapter(
         }
 
         fun loadImg(url: String?) {
-            val albumCover: ImageView = view.findViewById(R.id.fotoProducto)
-            Glide.with(view).load(url).placeholder(R.drawable.placeholder).into(albumCover)
+            val fotoProducto: ImageView = view.findViewById(R.id.fotoProducto)
+            Glide.with(view).load(url).placeholder(R.drawable.placeholder).into(fotoProducto)
         }
 
         /*  fun setLista(productos: MutableList<Producto>) {
