@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.algolia.search.helper.deserialize
 import com.algolia.search.model.search.Query
 import com.ort.listapp.domain.model.Producto
-import com.ort.listapp.helpers.AlgoliaHelper
+import com.ort.listapp.utils.AlgoliaHelper
 import kotlinx.coroutines.launch
 
 class ProductosViewModel : ViewModel() {

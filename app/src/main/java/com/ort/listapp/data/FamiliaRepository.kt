@@ -8,11 +8,12 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.ort.listapp.ListaAppApplication.Companion.prefsHelper
 import com.ort.listapp.domain.model.Familia
+import com.ort.listapp.utils.SysConstants.DB_FAMILIAS
 import kotlinx.coroutines.tasks.await
 
 class FamiliaRepository {
-    val db = Firebase.firestore
-    val familiassRef = db.collection("familias")
+    private val db = Firebase.firestore
+    private val familiassRef = db.collection(DB_FAMILIAS)
 
 
 //    suspend fun getFamiliaById(id: String): Familia {
@@ -45,5 +46,54 @@ class FamiliaRepository {
     suspend fun guardarFamilia(familia: Familia) {
         familiassRef.document(familia.id).set(familia).await()
     }
+
+//    fun existeUsuarioEnAlgunaFamilia(email: String): Boolean =
+//        getFamiliaByEmailUsuario(email) != null
+//
+//    fun getFamiliaByEmailUsuario(email: String): Familia? =
+//        runBlocking {
+//            withContext(Dispatchers.Default) {
+//                var resp: Familia? = null
+//                val querySnapshot = familiassRef.whereArrayContains("usuarios", email)
+//                    .get()
+//                    .await()
+//                if (!querySnapshot.isEmpty) {
+//                    resp = querySnapshot.toList()[0].toObject<Familia>()
+//                }
+//                return@withContext resp
+//            }
+//        }
+
+    suspend fun crearFamilia(nombre: String, id: String, password: String) {
+        val familia = Familia(
+            id = id,
+            nombre = nombre,
+            password = password,
+        )
+        familiassRef.document(id).set(familia).await()
+
+    }
+
+    suspend fun checkIdPassEnFamilia(idFamilia: String, passFamilia: String): Boolean {
+        var resp = false
+        val familia = obtenerFamiliaPorId(idFamilia)
+        if ((familia != null) && (familia.password == passFamilia)) {
+            resp = true
+        }
+        return resp
+    }
+
+    suspend fun existeFamilia(id: String): Boolean =
+        obtenerFamiliaPorId(id) != null
+
+    private suspend fun obtenerFamiliaPorId(id: String): Familia? {
+        var familia: Familia? = null
+        val documentSnapshot = familiassRef.document(id).get().await()
+        if (documentSnapshot.exists()) {
+            familia = documentSnapshot.toObject<Familia>()
+        }
+        return familia
+    }
+
 
 }

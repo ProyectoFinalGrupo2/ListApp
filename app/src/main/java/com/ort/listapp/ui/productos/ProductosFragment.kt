@@ -19,9 +19,9 @@ import com.ort.listapp.R
 import com.ort.listapp.databinding.FragmentProductosBinding
 import com.ort.listapp.domain.model.ItemLista
 import com.ort.listapp.domain.model.Producto
-import com.ort.listapp.helpers.SysConstants
 import com.ort.listapp.ui.FamilyViewModel
 import com.ort.listapp.ui.adapters.ProductoAdapter
+import com.ort.listapp.utils.SysConstants.PREFIJO_PROD_PERS
 import java.text.DecimalFormat
 
 class ProductosFragment : Fragment() {
@@ -138,7 +138,7 @@ class ProductosFragment : Fragment() {
             if (valido) {
                 val producto =
                     Producto(
-                        id = "${SysConstants.PREFIJO_PROD_PERS}${System.currentTimeMillis()}",
+                        id = "${PREFIJO_PROD_PERS}${System.currentTimeMillis()}",
                         id_Categoria = spinner.selectedItem.toString(),
                         nombre = nombreProd.text.toString(),
                         precio = precioProducto.text.toString().toDouble(),
