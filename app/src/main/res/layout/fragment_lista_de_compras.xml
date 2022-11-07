@@ -73,13 +73,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnListasFavoritas"
+        android:id="@+id/btn_compras_favoritas"
         android:layout_width="136dp"
         android:layout_height="49dp"
         android:backgroundTint="#C9AEEC"
         android:text="Listas Favoritas"
         android:textSize="10sp"
-        app:layout_constraintBottom_toTopOf="@+id/listaCompra"
+        app:layout_constraintBottom_toTopOf="@+id/lista_compra"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.133"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,22 +103,37 @@
         tools:ignore="TouchTargetSizeCheck" />
 
     <Button
-        android:id="@+id/btn_crear_producto"
+        android:id="@+id/btn_crear_lista"
         android:layout_width="136dp"
         android:layout_height="49dp"
         android:backgroundTint="#C9AEEC"
         android:text="Historial"
         android:textSize="10sp"
-        app:layout_constraintBottom_toTopOf="@+id/listaCompra"
+        app:layout_constraintBottom_toTopOf="@+id/lista_compra"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.448"
-        app:layout_constraintStart_toEndOf="@+id/btnListasFavoritas"
+        app:layout_constraintStart_toEndOf="@+id/btn_compras_favoritas"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.788"
         tools:ignore="TextContrastCheck" />
 
     <Button
-        android:id="@+id/btnCrearListaFavorita"
+        android:id="@+id/btnRealizarCompra"
+        android:layout_width="223dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#7CC8A2"
+        android:text="Realizar Compra"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_agregar_lista_fav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lista_compra"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <Button
+        android:id="@+id/btn_agregar_lista_fav"
         android:layout_width="223dp"
         android:layout_height="41dp"
         android:backgroundTint="#C9AEEC"
@@ -127,12 +142,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listaCompra"
+        app:layout_constraintTop_toBottomOf="@+id/lista_compra"
         app:layout_constraintVertical_bias="0.637"
         tools:ignore="TouchTargetSizeCheck" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listaCompra"
+        android:id="@+id/lista_compra"
         android:layout_width="0dp"
         android:layout_height="372dp"
         android:layout_margin="10dp"
@@ -158,6 +173,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listaCompra" />
+        app:layout_constraintTop_toBottomOf="@+id/lista_compra" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

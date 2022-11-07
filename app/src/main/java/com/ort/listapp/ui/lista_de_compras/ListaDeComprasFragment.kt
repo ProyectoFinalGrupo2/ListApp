@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ort.listapp.R
@@ -46,6 +46,8 @@ class ListaDeComprasFragment : Fragment() {
 
         val btnRealizarCompra = binding.btnRealizarCompra
         val btnEditarLista = binding.btnEditarLista
+        val btnComprasFavoritas = binding.btnComprasFavoritas
+        val btnAgregarListaFav = binding.btnAgregarListaFav
 
         viewModel.getFamilia().observe(this, Observer {
             binding.txtPrecioTotalLista.text = "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual()).toString()
@@ -68,6 +70,39 @@ class ListaDeComprasFragment : Fragment() {
 
         btnEditarLista.setOnClickListener {
             editarLista()
+        btnComprasFavoritas.setOnClickListener {
+            val action =
+                ListaDeComprasFragmentDirections.actionListaDeComprasFragmentToComprasFavoritasFragment()
+            view?.findNavController()?.navigate(action)
+            //this.findNavController().navigate(action)
+        }
+
+        btnAgregarListaFav.setOnClickListener {
+            popupBuilder = AlertDialog.Builder(context)
+            val popupView = layoutInflater.inflate(R.layout.popup_crear_compra_fav, null)
+            val nombreLista = popupView.findViewById<EditText>(R.id.txt_nombre_compra_fav)
+            val btnCrear = popupView.findViewById<Button>(R.id.btn_crear_lista)
+            val btnCerrar = popupView.findViewById<ImageView>(R.id.btn_cerrar_popup)
+
+            btnCerrar.setOnClickListener{
+                popup.dismiss()
+            }
+
+            btnCrear.setOnClickListener {
+                val nombre = nombreLista.text.toString()
+                if(nombre.isNotEmpty()){
+                    viewModel.crearListaFavorita(nombre)
+                    popup.dismiss()
+                }else{
+                    nombreLista.error = "El nombre de la lista no puede estar vacío."
+                }
+            }
+
+            popupBuilder.setView(popupView)
+            popup = popupBuilder.create()
+            popup.show()
+
+
         }
     }
 

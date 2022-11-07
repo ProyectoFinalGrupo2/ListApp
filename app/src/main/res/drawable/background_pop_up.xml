@@ -4,10 +4,15 @@
     android:layout_width="wrap_content">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#FFFCE3"/>
+            <solid android:color="#FFFAF6"/>
             <stroke
-                android:width="1px"
-                android:color="#FF000000" />
+                android:width="5px"
+                android:color="#7A4323"
+                android:dashGap="30px"
+                android:dashWidth="30px"
+
+                />
+            <corners android:radius="15dp"/>
 
         </shape>
     </item>
