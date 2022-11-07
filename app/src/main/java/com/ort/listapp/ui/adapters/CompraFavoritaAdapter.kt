@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ort.listapp.R
@@ -18,7 +19,7 @@ import com.ort.listapp.domain.model.Producto
 class CompraFavoritaAdapter(
     var comprasFavoritas: List<Lista>,
     val context: Context,
-   // var onClick: (Producto) -> Unit
+    var onClickLista: (Lista) -> Unit
 ) : RecyclerView.Adapter<CompraFavoritaAdapter.CompraFavoritaHolder>() {
 
 
@@ -34,16 +35,13 @@ class CompraFavoritaAdapter(
         fun setNombre(nombre: String) {
             val txtNombre: TextView = view.findViewById(R.id.nombreCompraFavorita)
             var nomCompra = nombre
-            if (nombre.contains(" ")) {
+            /*if (nombre.contains(" ")) {
                 val n = nombre.split(" ")
                 nomCompra = "${n[0]} ${n[1]}..."
-            }
+            }*/
             txtNombre.text = nomCompra
         }
 
-        fun getCard(): CardView {
-            return view.findViewById(R.id.card)
-        }
 
         fun loadImg(position:Int) {
             val fotoCompra: ImageView = view.findViewById(R.id.fotoCompraFavorita)
@@ -52,6 +50,10 @@ class CompraFavoritaAdapter(
             }else{
                 fotoCompra.setImageResource(R.drawable.cart_icon_2)
             }
+        }
+
+        fun getLista(): CardView {
+            return view.findViewById(R.id.card_compra_fav)
         }
 
         /*  fun setLista(productos: MutableList<Producto>) {
@@ -73,9 +75,9 @@ class CompraFavoritaAdapter(
 
 
         //Se le settea un click listener a las cards
-        /*holder.getCard().setOnClickListener() {
-            onClick(comprasFavoritas[position])
-        }*/
+        holder.getLista().setOnClickListener() {
+            onClickLista(comprasFavoritas[position])
+        }
     }
 
     override fun getItemCount(): Int {

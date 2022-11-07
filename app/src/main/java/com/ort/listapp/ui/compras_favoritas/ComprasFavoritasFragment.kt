@@ -1,6 +1,6 @@
 package com.ort.listapp.ui.compras_favoritas
 
-import androidx.lifecycle.ViewModelProvider
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,14 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ort.listapp.R
 import com.ort.listapp.databinding.FragmentComprasFavoritasBinding
-import com.ort.listapp.databinding.FragmentListaDeComprasBinding
+import com.ort.listapp.domain.model.ItemLista
+import com.ort.listapp.domain.model.Lista
 import com.ort.listapp.domain.model.TipoLista
 import com.ort.listapp.ui.FamilyViewModel
 import com.ort.listapp.ui.adapters.CompraFavoritaAdapter
+import com.ort.listapp.ui.adapters.ProductoAdapter
 import com.ort.listapp.ui.adapters.ProductoListadoAdapter
 
 class ComprasFavoritasFragment : Fragment() {
@@ -26,6 +28,7 @@ class ComprasFavoritasFragment : Fragment() {
     private lateinit var binding: FragmentComprasFavoritasBinding
 
     private val viewModel: FamilyViewModel by activityViewModels()
+    private lateinit var idListaActual: String
 //    private lateinit var viewModel: ComprasFavoritasViewModel
 
     override fun onCreateView(
@@ -41,10 +44,10 @@ class ComprasFavoritasFragment : Fragment() {
         viewModel.getFamilia().observe(this, Observer {
             binding.rvComprasFavoritas.setHasFixedSize(true)
             binding.rvComprasFavoritas.layoutManager =
-                LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+                GridLayoutManager(requireContext(), 2)
             binding.rvComprasFavoritas.adapter =
-                viewModel.getFamilia().value?.let { it1 ->
-                    viewModel.getListaByTipoEnFamilia(
+                /*viewModel.getFamilia().value?.let { it1 ->
+                    viewModel.getListasByTipoEnFamilia(
                         it1,
                         TipoLista.LISTA_FAVORITA
                     )
@@ -52,13 +55,64 @@ class ComprasFavoritasFragment : Fragment() {
                     context?.let { it1 ->
                         CompraFavoritaAdapter(
                             it2,
-                            it1
+                            it1,
+                            onClickLista(lista)
+                        )
+                    }
+                }*/
+                viewModel.getFamilia().value?.let { it1 ->
+                    viewModel.getListasByTipoEnFamilia(
+                        it1,TipoLista.LISTA_FAVORITA)
+                }?.let { it2 ->
+                    CompraFavoritaAdapter(it2,requireContext()) { lista ->
+                        onClickLista(
+                            lista
                         )
                     }
                 }
+            /*rvProdFiltrados.adapter = ProductoAdapter(it, requireContext()) { prod ->
+                onItemClick(prod)
+            }*/
         })
     }
 
+    @SuppressLint("SetTextI18n")
+    fun onClickLista(lista:Lista){
+        idListaActual = lista.id.toString()
+        binding.listaFavCompleta.visibility = View.VISIBLE
+        binding.txtTotalListaFav.text = "Precio total: $" + idListaActual?.let {
+            viewModel.precioTotalListaById(
+                it
+            )
+        }
+        binding.rvComprasFavoritas.setHasFixedSize(true)
+        binding.rvComprasFavoritas.layoutManager =
+            LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+        binding.rvComprasFavoritas.adapter =
+            idListaActual?.let { viewModel.getProductosByIdLista(it) }?.let {
+                ProductoListadoAdapter(
+                    it,
+                    requireContext(),
+                    {removerProducto(it)},
+                    {clickSumaYResta(it, 1)},
+                    {clickSumaYResta(it, -1)}
+                )
+            }
+    }
+    private fun removerProducto(itemLista: ItemLista) {
+        viewModel.removerProductoDeListaById(
+            idListaActual,
+            itemLista.producto.id
+        )
+    }
+
+    private fun clickSumaYResta(producto: ItemLista, cantidad: Int) {
+        viewModel.actualizarProductoEnListaById(
+            idListaActual,
+            producto.producto.id,
+            cantidad
+        )
+    }
     /*override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(ComprasFavoritasViewModel::class.java)

@@ -6,6 +6,7 @@
     <string name="borrar_prod">Borrar Producto</string>
     <string name="crear_lista_fav">Crear Lista Favorita</string>
     <string name="txtview_crear_lista_fav">Indique el nombre de su nueva lista favorita.</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

@@ -44,7 +44,7 @@ class ProductoAdapter(
         }
 
         fun getCard(): CardView {
-            return view.findViewById(R.id.card)
+            return view.findViewById(R.id.card_compra_fav)
         }
 
         fun loadImg(url: String?) {

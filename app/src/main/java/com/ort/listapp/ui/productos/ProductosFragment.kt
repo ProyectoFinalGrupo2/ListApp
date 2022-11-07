@@ -175,7 +175,7 @@ class ProductosFragment : Fragment() {
         var cantActual = 1
         var esFavorito = viewModel.esProductoFav(producto)
 
-        if(producto.id.contains(SysConstants.PREFIJO_PROD_PERS)){
+        if(producto.id.contains(PREFIJO_PROD_PERS)){
             btnEditar.visibility = View.VISIBLE
         }
 

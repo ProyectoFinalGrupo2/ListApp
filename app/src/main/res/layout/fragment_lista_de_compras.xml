@@ -14,7 +14,7 @@
         android:backgroundTint="#C9AEEC"
         android:text="Listas Favoritas"
         android:textSize="10sp"
-        app:layout_constraintBottom_toTopOf="@+id/listaCompra"
+        app:layout_constraintBottom_toTopOf="@+id/lista_compra"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.133"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +29,7 @@
         android:backgroundTint="#C9AEEC"
         android:text="Historial"
         android:textSize="10sp"
-        app:layout_constraintBottom_toTopOf="@+id/listaCompra"
+        app:layout_constraintBottom_toTopOf="@+id/lista_compra"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.448"
         app:layout_constraintStart_toEndOf="@+id/btn_compras_favoritas"
@@ -48,7 +48,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btn_agregar_lista_fav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listaCompra"
+        app:layout_constraintTop_toBottomOf="@+id/lista_compra"
         app:layout_constraintVertical_bias="1.0"
         tools:ignore="TouchTargetSizeCheck" />
 
@@ -62,12 +62,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listaCompra"
+        app:layout_constraintTop_toBottomOf="@+id/lista_compra"
         app:layout_constraintVertical_bias="0.637"
         tools:ignore="TouchTargetSizeCheck" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listaCompra"
+        android:id="@+id/lista_compra"
         android:layout_width="0dp"
         android:layout_height="372dp"
         android:layout_margin="10dp"
@@ -93,6 +93,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listaCompra" />
+        app:layout_constraintTop_toBottomOf="@+id/lista_compra" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,10 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.Timestamp
 import com.ort.listapp.data.FamiliaRepository
 import com.ort.listapp.data.ProductoRepository
 import com.ort.listapp.domain.model.*
-import com.ort.listapp.helpers.SysConstants
+//import com.ort.listapp.helpers.SysConstants
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.text.DecimalFormat
@@ -121,7 +122,7 @@ class FamilyViewModel : ViewModel() {
             val nuevoHistorial: Lista = Lista(
                 "pruebaHistorial",
                 "Compra " + LocalDate.now().toString(),
-                LocalDate.now().toString()
+                Timestamp.now(),
             )
             for (item: ItemLista in listaDeCompras.productos) {
                 alacenaVirtual.agregarProducto(item)
@@ -223,7 +224,7 @@ class FamilyViewModel : ViewModel() {
         }[0]
 
 
-    fun getListaByTipoEnFamilia(familia: Familia, tipoLista: TipoLista): List<Lista> {
+    fun getListasByTipoEnFamilia(familia: Familia, tipoLista: TipoLista): List<Lista> {
         return familia.listas.filter {
             it.tipoLista == tipoLista
         }
@@ -235,7 +236,7 @@ class FamilyViewModel : ViewModel() {
             val nuevaLista = Lista(
                 "ListaFav${System.currentTimeMillis()}",
                 nombre,
-                LocalDate.now().toString(),
+                Timestamp.now(),
                 TipoLista.LISTA_FAVORITA
             )
             for (prod in listaDeCompras.productos){
@@ -245,6 +246,23 @@ class FamilyViewModel : ViewModel() {
             actualizarFamilia(familia)
         }
     }
+
+/*    fun crearListaFavorita(nombre:String, tipoLista: TipoLista){
+        this.familia.value?.let { familia ->
+            val listaDeCompras = getListaByIdEnFamilia(familia, getIdListaDeComprasActual())
+            val nuevaLista = Lista(
+                "ListaFav${System.currentTimeMillis()}",
+                nombre,
+                Timestamp.now(),
+                tipoLista
+            )
+            for (prod in listaDeCompras.productos){
+                nuevaLista.agregarProducto(prod)
+            }
+            familia.listas.add(nuevaLista)
+            actualizarFamilia(familia)
+        }
+    }*/
 
     private fun actualizarFamilia(familia: Familia) {
 //        this.familia.postValue(familia)
