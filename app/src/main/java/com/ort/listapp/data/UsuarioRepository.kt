@@ -9,8 +9,8 @@ import kotlinx.coroutines.tasks.await
 
 class UsuarioRepository {
 
-    val db = Firebase.firestore
-    val usuariosRef = db.collection(DB_USUARIOS)
+    private val db = Firebase.firestore
+    private val usuariosRef = db.collection(DB_USUARIOS)
 
     suspend fun crearUsuario(usuario: Usuario) {
         usuariosRef.document(usuario.uid).set(usuario).await()

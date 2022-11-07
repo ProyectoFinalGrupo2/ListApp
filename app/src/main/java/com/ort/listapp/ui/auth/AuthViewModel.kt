@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
 
-    var authState = MutableLiveData<AuthState>()
+    val authState = MutableLiveData<AuthState>()
     private val authRepository = AuthRepository()
     private val familiaRepository = FamiliaRepository()
     private val usuarioRepository = UsuarioRepository()
@@ -20,13 +20,13 @@ class AuthViewModel : ViewModel() {
     fun registrarUsuario(nombre: String, email: String, pass: String) {
         viewModelScope.launch {
             val authResponse = authRepository.createUserWithEmailAndPassword(nombre, email, pass)
-            if (!authResponse.error) {
+            if (authResponse.errorMessage.isBlank()) {
                 val usuarioNuevo = authResponse.usuario
                 prefsHelper.saveUserName(usuarioNuevo.nombre)
                 prefsHelper.saveUserId(usuarioNuevo.uid)
                 authState.postValue(AuthState(loggedSinFamilia = true))
             } else {
-                authState.postValue(AuthState(error = true))
+                authState.postValue(AuthState(errorMessage = authResponse.errorMessage))
             }
         }
     }
@@ -40,7 +40,7 @@ class AuthViewModel : ViewModel() {
     fun login(email: String, pass: String) {
         viewModelScope.launch {
             val authResponse = authRepository.signInWithEmailAndPassword(email, pass)
-            if (!authResponse.error) {
+            if (authResponse.errorMessage.isBlank()) {
                 val usuario = authResponse.usuario
                 prefsHelper.saveUserName(usuario.nombre)
                 prefsHelper.saveUserId(usuario.uid)
@@ -51,7 +51,7 @@ class AuthViewModel : ViewModel() {
                     prefsHelper.saveFamilyId(usuario.familia)
                 }
             } else {
-                authState.postValue(AuthState(error = true))
+                authState.postValue(AuthState(errorMessage = authResponse.errorMessage))
             }
         }
     }
@@ -82,8 +82,7 @@ class AuthViewModel : ViewModel() {
                 prefsHelper.saveFamilyId(idFamilia)
                 authState.postValue(AuthState(loggedConFamilia = true))
             } else {
-                authState.postValue(AuthState(toastMessage = "Ese código de familia ya está en uso."))
-//                authState.postValue(AuthState(error = true))
+                authState.postValue(AuthState(errorMessage = "Ese código de familia ya está en uso."))
             }
         }
     }
@@ -95,7 +94,7 @@ class AuthViewModel : ViewModel() {
                 prefsHelper.saveFamilyId(idFamilia)
                 authState.postValue(AuthState(loggedConFamilia = true))
             } else {
-                authState.postValue(AuthState(toastMessage = "Datos incorrectos."))
+                authState.postValue(AuthState(errorMessage = "Datos incorrectos."))
             }
         }
     }
@@ -105,4 +104,6 @@ class AuthViewModel : ViewModel() {
             authState.postValue(AuthState(isDataValid = true))
         else authState.postValue(AuthState(isDataValid = false))
     }
+
+    fun logout() = authRepository.logout()
 }

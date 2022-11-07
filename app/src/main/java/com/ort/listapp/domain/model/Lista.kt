@@ -24,7 +24,7 @@ data class Lista(
     }
 
     private fun buscarProductoPorId(id: String): ItemLista? {
-        return productos.find { it.producto.id == id };
+        return productos.find { it.producto.id == id }
     }
 
     fun modificarCantidadPorId(id: String, cantidad: Int) {

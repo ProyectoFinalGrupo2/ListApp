@@ -27,7 +27,7 @@ class AuthRepository {
             AuthResponse(usuario = usuarioNuevo)
         } catch (e: Exception) {
             logErrorMessage(e.message)
-            AuthResponse(error = true)
+            AuthResponse(errorMessage = "Se produjo un error creando el usuario")
         }
     }
 
@@ -41,9 +41,11 @@ class AuthRepository {
             AuthResponse(usuario = usuario)
         } catch (e: Exception) {
             logErrorMessage(e.message)
-            AuthResponse(error = true)
+            AuthResponse(errorMessage = "Se produjo un error iniciando sesión ")
         }
     }
 
     fun checkIfUserIsAuthenticated(): Boolean = firebaseAuth.currentUser != null
+
+    fun logout() = firebaseAuth.signOut()
 }

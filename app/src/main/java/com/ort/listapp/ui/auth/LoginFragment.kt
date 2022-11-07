@@ -9,8 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.ort.listapp.databinding.FragmentLoginBinding
-import com.ort.listapp.utils.HelperClass.showAlert
-
+import com.ort.listapp.utils.HelperClass.showToast
 
 class LoginFragment : Fragment() {
 
@@ -52,11 +51,10 @@ class LoginFragment : Fragment() {
             authViewModel.authState.observe(this@LoginFragment) {
                 if (it.loggedSinFamilia) goToFamilyFragment()
                 if (it.loggedConFamilia) goToMainActivity()
-                if (it.error) showAlert(
-                    requireContext(),
-                    "Error",
-                    "Se ha producido un error en la autenticación"
-                )
+                if (it.errorMessage.isNotBlank()) {
+                    showToast(requireContext(), it.errorMessage)
+                    authViewModel.authState.postValue(AuthState())
+                }
                 btnLogin.isEnabled = it.isDataValid
             }
 
@@ -73,7 +71,6 @@ class LoginFragment : Fragment() {
                     inputPass.text.toString()
                 )
             }
-
         }
     }
 
@@ -89,6 +86,4 @@ class LoginFragment : Fragment() {
         val action = LoginFragmentDirections.actionLoginFragmentToFamiliaFragment()
         binding.root.findNavController().navigate(action)
     }
-
-
 }

@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.ort.listapp.databinding.FragmentRegisterBinding
-import com.ort.listapp.utils.HelperClass.showAlert
+import com.ort.listapp.utils.HelperClass
 
 class RegisterFragment : Fragment() {
 
@@ -23,7 +23,7 @@ class RegisterFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentRegisterBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -45,43 +45,40 @@ class RegisterFragment : Fragment() {
 
         authViewModel.authState.observe(this) {
             if (it.loggedSinFamilia) goToFamilyFragment()
-            if (it.error) showAlert(
+            if (it.errorMessage.isNotBlank()) HelperClass.showToast(
                 requireContext(),
-                "Error",
-                "Se ha producido un error en la autenticación"
+                it.errorMessage
             )
-            btnRegister.isEnabled = it.isDataValid
-        }
 
-        inputNombre.doAfterTextChanged {
-            authViewModel.registerDataChanged(
-                inputNombre.text.toString(),
-                inputEmail.text.toString(),
-                inputPass.text.toString()
-            )
-        }
+            inputNombre.doAfterTextChanged {
+                authViewModel.registerDataChanged(
+                    inputNombre.text.toString(),
+                    inputEmail.text.toString(),
+                    inputPass.text.toString()
+                )
+            }
 
-        inputEmail.doAfterTextChanged {
-            authViewModel.registerDataChanged(
-                inputNombre.text.toString(),
-                inputEmail.text.toString(),
-                inputPass.text.toString()
-            )
-        }
+            inputEmail.doAfterTextChanged {
+                authViewModel.registerDataChanged(
+                    inputNombre.text.toString(),
+                    inputEmail.text.toString(),
+                    inputPass.text.toString()
+                )
+            }
 
-        inputPass.doAfterTextChanged {
-            authViewModel.registerDataChanged(
-                inputNombre.text.toString(),
-                inputEmail.text.toString(),
-                inputPass.text.toString()
-            )
+            inputPass.doAfterTextChanged {
+                authViewModel.registerDataChanged(
+                    inputNombre.text.toString(),
+                    inputEmail.text.toString(),
+                    inputPass.text.toString()
+                )
+            }
         }
-
     }
 
     private fun goToFamilyFragment() {
         val action = RegisterFragmentDirections.actionRegisterFragmentToFamiliaFragment()
         binding.root.findNavController().navigate(action)
     }
-
 }
+

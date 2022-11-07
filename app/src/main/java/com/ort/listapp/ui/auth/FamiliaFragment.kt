@@ -10,7 +10,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.ort.listapp.databinding.FragmentFamiliaBinding
 import com.ort.listapp.utils.HelperClass
-import com.ort.listapp.utils.HelperClass.showAlert
 
 class FamiliaFragment : Fragment() {
 
@@ -54,15 +53,15 @@ class FamiliaFragment : Fragment() {
 
         authViewModel.authState.observe(this) {
             if (it.loggedConFamilia) goToMainActivity()
-            if (it.toastMessage.isNotBlank()) HelperClass.showToast(
+            if (it.errorMessage.isNotBlank()) HelperClass.showToast(
                 requireContext(),
-                it.toastMessage
+                it.errorMessage
             )
-            if (it.error) showAlert(
+            if (it.errorMessage.isNotBlank()) HelperClass.showToast(
                 requireContext(),
-                "Error",
-                "Se ha producido un error en la autenticación"
+                it.errorMessage
             )
+
             btnRegister.isEnabled = it.isDataValid
             btnAdd.isEnabled = it.isDataValid
         }
