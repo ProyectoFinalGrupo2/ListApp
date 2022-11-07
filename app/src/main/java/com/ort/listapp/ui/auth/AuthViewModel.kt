@@ -8,6 +8,7 @@ import com.ort.listapp.ListaAppApplication.Companion.prefsHelper
 import com.ort.listapp.data.AuthRepository
 import com.ort.listapp.data.FamiliaRepository
 import com.ort.listapp.data.UsuarioRepository
+import com.ort.listapp.utils.HelperClass.getRandomCode
 import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
@@ -56,34 +57,20 @@ class AuthViewModel : ViewModel() {
         }
     }
 
-    fun loginDataChanged(email: String, pass: String) {
-        if (isEmailValid(email) && isPasswordValid(pass))
-            authState.postValue(AuthState(isDataValid = true))
-        else authState.postValue(AuthState(isDataValid = false))
-    }
-
-    private fun isNombreValid(nombre: String): Boolean =
-        nombre.length in 3..10
-
-    private fun isEmailValid(email: String): Boolean =
-        Patterns.EMAIL_ADDRESS.matcher(email).matches()
-
-    private fun isPasswordValid(pass: String): Boolean =
-        pass.length > 5
-
     fun checkIfUserIsAuthenticated(): Boolean = authRepository.checkIfUserIsAuthenticated()
 
+    fun logout() = authRepository.logout()
 
-    fun registrarFamilia(nombre: String, idFamilia: String, passFamilia: String) {
+    fun registrarFamilia(nombre: String, passFamilia: String) {
         viewModelScope.launch {
-            if (!familiaRepository.existeFamilia(idFamilia)) {
-                familiaRepository.crearFamilia(nombre, idFamilia, passFamilia)
-                usuarioRepository.agregarFamiliaEnUsuario(prefsHelper.getUserId(), idFamilia)
-                prefsHelper.saveFamilyId(idFamilia)
-                authState.postValue(AuthState(loggedConFamilia = true))
-            } else {
-                authState.postValue(AuthState(errorMessage = "Ese código de familia ya está en uso."))
-            }
+            var idFamilia = ""
+            do {
+                idFamilia = getRandomCode(6)
+            } while (familiaRepository.existeFamilia(idFamilia))
+            familiaRepository.crearFamilia(nombre, idFamilia, passFamilia)
+            usuarioRepository.agregarFamiliaEnUsuario(prefsHelper.getUserId(), idFamilia)
+            prefsHelper.saveFamilyId(idFamilia)
+            authState.postValue(AuthState(loggedConFamilia = true))
         }
     }
 
@@ -105,5 +92,19 @@ class AuthViewModel : ViewModel() {
         else authState.postValue(AuthState(isDataValid = false))
     }
 
-    fun logout() = authRepository.logout()
+    fun loginDataChanged(email: String, pass: String) {
+        if (isEmailValid(email) && isPasswordValid(pass))
+            authState.postValue(AuthState(isDataValid = true))
+        else authState.postValue(AuthState(isDataValid = false))
+    }
+
+    private fun isNombreValid(nombre: String): Boolean =
+        nombre.length > 3
+
+    private fun isEmailValid(email: String): Boolean =
+        Patterns.EMAIL_ADDRESS.matcher(email).matches()
+
+    private fun isPasswordValid(pass: String): Boolean =
+        pass.length > 5
+
 }
