@@ -60,50 +60,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-<!--            <EditText-->
-<!--                android:id="@+id/etBuscar"-->
-<!--                android:layout_width="208dp"-->
-<!--                android:layout_height="45dp"-->
-<!--                android:layout_marginStart="6dp"-->
-<!--                android:layout_marginTop="40dp"-->
-<!--                android:background="@drawable/border"-->
-<!--                android:ems="10"-->
-<!--                android:hint="Buscar"-->
-<!--                android:inputType="textPersonName"-->
-<!--                android:shadowColor="#8A8A8A"-->
-<!--                android:textColor="#5C5C5C"-->
-<!--                android:textColorHint="#BFBFBF"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                tools:ignore="TouchTargetSizeCheck" />-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/imageView"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="45dp"-->
-<!--                android:layout_marginTop="40dp"-->
-<!--                android:background="@drawable/border"-->
-<!--                android:src="@android:drawable/ic_menu_search"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintHorizontal_bias="0.0"-->
-<!--                app:layout_constraintStart_toEndOf="@+id/etBuscar"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
-
-            <Button
-                android:id="@+id/btnFiltrarProductos"
-                android:layout_width="110dp"
-                android:layout_height="44dp"
-                android:layout_marginTop="40dp"
-                android:background="#C9AEEC"
-                android:text="Filtrar"
-                android:textColor="#FFFFFF"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.283"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
-
             <TextView
                 android:id="@+id/tvProdFavoritos"
                 android:layout_width="wrap_content"
