@@ -23,7 +23,7 @@
         tools:ignore="TextContrastCheck" />
 
     <Button
-        android:id="@+id/btn_crear_producto"
+        android:id="@+id/btn_crear_lista"
         android:layout_width="136dp"
         android:layout_height="49dp"
         android:backgroundTint="#C9AEEC"
@@ -45,7 +45,7 @@
         android:backgroundTint="#7CC8A2"
         android:text="Realizar Compra"
         android:textSize="10sp"
-        app:layout_constraintBottom_toTopOf="@+id/button5"
+        app:layout_constraintBottom_toTopOf="@+id/btn_agregar_lista_fav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/listaCompra"
@@ -53,7 +53,7 @@
         tools:ignore="TouchTargetSizeCheck" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/btn_agregar_lista_fav"
         android:layout_width="223dp"
         android:layout_height="41dp"
         android:backgroundTint="#C9AEEC"

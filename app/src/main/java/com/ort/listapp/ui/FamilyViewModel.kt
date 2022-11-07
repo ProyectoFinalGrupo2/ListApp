@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.ort.listapp.data.FamiliaRepository
 import com.ort.listapp.data.ProductoRepository
 import com.ort.listapp.domain.model.*
+import com.ort.listapp.helpers.SysConstants
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.text.DecimalFormat
@@ -225,6 +226,23 @@ class FamilyViewModel : ViewModel() {
     fun getListaByTipoEnFamilia(familia: Familia, tipoLista: TipoLista): List<Lista> {
         return familia.listas.filter {
             it.tipoLista == tipoLista
+        }
+    }
+
+    fun crearListaFavorita(nombre:String){
+        this.familia.value?.let { familia ->
+            val listaDeCompras = getListaByIdEnFamilia(familia, getIdListaDeComprasActual())
+            val nuevaLista = Lista(
+                "ListaFav${System.currentTimeMillis()}",
+                nombre,
+                LocalDate.now().toString(),
+                TipoLista.LISTA_FAVORITA
+            )
+            for (prod in listaDeCompras.productos){
+                nuevaLista.agregarProducto(prod)
+            }
+            familia.listas.add(nuevaLista)
+            actualizarFamilia(familia)
         }
     }
 

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">ListApp</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="crear_prod">Crear Producto</string>
+    <string name="borrar_prod">Borrar Producto</string>
+    <string name="crear_lista_fav">Crear Lista Favorita</string>
+    <string name="txtview_crear_lista_fav">Indique el nombre de su nueva lista favorita.</string>
+
+
 </resources>

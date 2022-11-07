@@ -115,7 +115,7 @@ class ProductosFragment : Fragment() {
         popupBuilder = AlertDialog.Builder(context)
         val popUpView = layoutInflater.inflate(R.layout.popup_crear_producto, null)
         val btnCerrar = popUpView.findViewById<ImageButton>(R.id.btn_cerrar_popup)
-        val btnCrear = popUpView.findViewById<Button>(R.id.btn_crear_producto)
+        val btnCrear = popUpView.findViewById<Button>(R.id.btn_crear_lista)
         val nombreProd = popUpView.findViewById<EditText>(R.id.txt_producto_pers_nombre)
         val precioProducto = popUpView.findViewById<EditText>(R.id.txt_producto_pers_precio)
         val spinner = popUpView.findViewById<Spinner>(R.id.txt_producto_pers_categoria)
@@ -169,7 +169,7 @@ class ProductosFragment : Fragment() {
         val precioProducto = popUpView.findViewById<TextView>(R.id.txt_precio_prod_popup)
         val subtotal = popUpView.findViewById<TextView>(R.id.txt_subtotal_popup)
         val btnCerrar = popUpView.findViewById<ImageButton>(R.id.btn_cerrar_popup)
-        val btnAgregar = popUpView.findViewById<Button>(R.id.btn_crear_producto)
+        val btnAgregar = popUpView.findViewById<Button>(R.id.btn_crear_lista)
         val btnEditar = popUpView.findViewById<Button>(R.id.btn_editar_producto)
         val corazonFav = popUpView.findViewById<ImageView>(R.id.btn_corazon_fav)
         var cantActual = 1
@@ -201,7 +201,7 @@ class ProductosFragment : Fragment() {
         popUp.show()
         nombreProd.text = producto.nombre
         precioProducto.text = "$${producto.precio}"
-        Glide.with(popUpView).load(producto.imgURL()).into(imagen)
+        Glide.with(popUpView).load(producto.imgURL()).placeholder(R.drawable.productos_icon).into(imagen)
         marcarCorazon()
 
         botonAgregar.setOnClickListener {
@@ -256,7 +256,7 @@ class ProductosFragment : Fragment() {
         val popUpView = layoutInflater.inflate(R.layout.popup_crear_producto, null)
         val btnCerrar = popUpView.findViewById<ImageButton>(R.id.btn_cerrar_popup)
         val btnBorrar = popUpView.findViewById<Button>(R.id.btn_borrar_producto)
-        val btnEditar = popUpView.findViewById<Button>(R.id.btn_crear_producto)
+        val btnEditar = popUpView.findViewById<Button>(R.id.btn_crear_lista)
         val nombreProd = popUpView.findViewById<EditText>(R.id.txt_producto_pers_nombre)
         val precioProducto = popUpView.findViewById<EditText>(R.id.txt_producto_pers_precio)
         val spinner = popUpView.findViewById<Spinner>(R.id.txt_producto_pers_categoria)
