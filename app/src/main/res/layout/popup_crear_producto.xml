@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_pop_up">
 
 
 
@@ -55,6 +55,8 @@
             android:ems="10"
             android:hint="Nombre"
             android:textColor="#222221"
+            android:backgroundTint="#222221"
+            android:textColorHint="#222221"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -68,6 +70,8 @@
             android:ems="10"
             android:hint="Precio"
             android:textColor="#222221"
+            android:backgroundTint="#222221"
+            android:textColorHint="#222221"
             android:inputType="numberDecimal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -100,8 +104,8 @@
                     android:layout_height="wrap_content"
                     android:hint="Categoría"
                     android:textColor="#222221"
-
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:backgroundTint="#222221"
+                    android:textColorHint="#222221"                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_producto_pers_presentacion" />
 
