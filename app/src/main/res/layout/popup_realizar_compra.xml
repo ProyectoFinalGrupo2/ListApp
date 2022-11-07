@@ -5,51 +5,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvListaRC"
-        android:layout_width="wrap_content"
-        android:layout_height="450dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnConfirmarCompra"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/rvListaRCOld"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="450dp"-->
+<!--        android:layout_marginStart="5dp"-->
+<!--        android:layout_marginEnd="5dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/btnConfirmarCompraOld"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-    <Button
-        android:id="@+id/btnConfirmarCompra"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Confirmar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnEditarLista"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvListaRC" />
+<!--    <Button-->
+<!--        android:id="@+id/btnConfirmarCompraOld"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Confirmar"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/btnEditarListaOld"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/rvListaRCOld" />-->
 
-    <Button
-        android:id="@+id/btnEditarLista"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Editar lista"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnConfirmarCompra"
-        app:layout_constraintTop_toBottomOf="@+id/rvListaRC" />
+<!--    <Button-->
+<!--        android:id="@+id/btnEditarListaOld"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Editar lista"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/btnConfirmarCompraOld"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/rvListaRCOld" />-->
 
-    <TextView
-        android:id="@+id/precioTotalCompra"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/rvListaRC"
-        app:layout_constraintStart_toStartOf="parent" />
+<!--    <TextView-->
+<!--        android:id="@+id/precioTotalCompraOld"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:text="TextView"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/rvListaRCOld"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
 
-    <TextView
-        android:id="@+id/txtConfirmarCompra"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Confirmar compra"
-        app:layout_constraintBottom_toTopOf="@+id/precioTotalCompra"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <TextView-->
+<!--        android:id="@+id/txtConfirmarCompraOld"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Confirmar compra"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/precioTotalCompraOld"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->/
 </androidx.constraintlayout.widget.ConstraintLayout>

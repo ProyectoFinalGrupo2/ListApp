@@ -23,10 +23,10 @@ class RealizarCompraAdapter(var listaProductos: List<ItemLista>) :
         fun setNombre(nombre: String) {
             val cbNombre: TextView = view.findViewById(R.id.tvNombreProducto)
             var nomProd = nombre
-            if (nombre.contains(" ")) {
+            /*if (nombre.contains(" ")) {
                 val n = nombre.split(" ")
                 nomProd = "${n[0]} ${n[1]}..."
-            }
+            }*/
             cbNombre.text = nomProd
         }
 
