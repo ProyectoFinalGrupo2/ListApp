@@ -1,9 +1,11 @@
 package com.ort.listapp.domain.model
 
+import com.google.firebase.Timestamp
+
 data class Lista(
     val id: String? = null,
     val nombre: String? = null,
-    val fechaCreacion: String? = null,
+    val fechaCreacion: Timestamp? = Timestamp.now(),
     val tipoLista: TipoLista? = null,
     val productos: MutableList<ItemLista> = mutableListOf(),
 ) {
@@ -22,7 +24,7 @@ data class Lista(
     }
 
     private fun buscarProductoPorId(id: String): ItemLista? {
-        return productos.find { it.producto.id == id };
+        return productos.find { it.producto.id == id }
     }
 
     fun modificarCantidadPorId(id: String, cantidad: Int) {
@@ -38,7 +40,7 @@ data class Lista(
         return productos.firstOrNull { it.producto.id == id } != null
     }
 
-    fun vaciarLista(){
+    fun vaciarLista() {
         productos.clear()
     }
 }
