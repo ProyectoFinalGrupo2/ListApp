@@ -1,11 +1,11 @@
 package com.ort.listapp.domain.model
 
-import java.time.LocalDate
+import com.google.firebase.Timestamp
 
 data class Lista(
     val id: String? = null,
     val nombre: String? = null,
-    val fechaCreacion: LocalDate = LocalDate.now(),
+    val fechaCreacion: Timestamp? = Timestamp.now(),
     val tipoLista: TipoLista? = null,
     val productos: MutableList<ItemLista> = mutableListOf(),
 ) {

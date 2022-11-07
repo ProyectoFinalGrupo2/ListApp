@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.ort.listapp.databinding.FragmentRegisterBinding
-import com.ort.listapp.utils.HelperClass
+import com.ort.listapp.utils.HelperClass.showToast
 
 class RegisterFragment : Fragment() {
 
@@ -45,36 +45,38 @@ class RegisterFragment : Fragment() {
 
         authViewModel.authState.observe(this) {
             if (it.loggedSinFamilia) goToFamilyFragment()
-            if (it.errorMessage.isNotBlank()) HelperClass.showToast(
+            if (it.errorMessage.isNotBlank()) showToast(
                 requireContext(),
                 it.errorMessage
             )
+            btnRegister.isEnabled = it.isDataValid
+        }
 
-            inputNombre.doAfterTextChanged {
-                authViewModel.registerDataChanged(
-                    inputNombre.text.toString(),
-                    inputEmail.text.toString(),
-                    inputPass.text.toString()
-                )
-            }
+        inputNombre.doAfterTextChanged {
+            authViewModel.registerDataChanged(
+                inputNombre.text.toString(),
+                inputEmail.text.toString(),
+                inputPass.text.toString()
+            )
+        }
 
-            inputEmail.doAfterTextChanged {
-                authViewModel.registerDataChanged(
-                    inputNombre.text.toString(),
-                    inputEmail.text.toString(),
-                    inputPass.text.toString()
-                )
-            }
+        inputEmail.doAfterTextChanged {
+            authViewModel.registerDataChanged(
+                inputNombre.text.toString(),
+                inputEmail.text.toString(),
+                inputPass.text.toString()
+            )
+        }
 
-            inputPass.doAfterTextChanged {
-                authViewModel.registerDataChanged(
-                    inputNombre.text.toString(),
-                    inputEmail.text.toString(),
-                    inputPass.text.toString()
-                )
-            }
+        inputPass.doAfterTextChanged {
+            authViewModel.registerDataChanged(
+                inputNombre.text.toString(),
+                inputEmail.text.toString(),
+                inputPass.text.toString()
+            )
         }
     }
+
 
     private fun goToFamilyFragment() {
         val action = RegisterFragmentDirections.actionRegisterFragmentToFamiliaFragment()

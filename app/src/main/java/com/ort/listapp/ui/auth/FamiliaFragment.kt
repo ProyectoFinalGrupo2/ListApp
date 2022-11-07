@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.ort.listapp.databinding.FragmentFamiliaBinding
-import com.ort.listapp.utils.HelperClass
+import com.ort.listapp.utils.HelperClass.showToast
 
 class FamiliaFragment : Fragment() {
 
@@ -32,36 +32,31 @@ class FamiliaFragment : Fragment() {
         super.onStart()
         val inputNombre = binding.inputNombre
         val inputCodigo = binding.inputCodigo
-        val inputPass = binding.inputPass
+        val inputRegPass = binding.inputRegPass
+        val inputAddPass = binding.inputAddPass
         val btnRegister = binding.btnRegister
         val btnAdd = binding.btnAdd
 
         btnRegister.setOnClickListener {
             authViewModel.registrarFamilia(
                 inputNombre.text.toString(),
-                inputCodigo.text.toString(),
-                inputPass.text.toString(),
+                inputRegPass.text.toString(),
             )
         }
 
         btnAdd.setOnClickListener {
             authViewModel.sumarseEnFamilia(
                 inputCodigo.text.toString(),
-                inputPass.text.toString(),
+                inputAddPass.text.toString(),
             )
         }
 
         authViewModel.authState.observe(this) {
             if (it.loggedConFamilia) goToMainActivity()
-            if (it.errorMessage.isNotBlank()) HelperClass.showToast(
+            if (it.errorMessage.isNotBlank()) showToast(
                 requireContext(),
                 it.errorMessage
             )
-            if (it.errorMessage.isNotBlank()) HelperClass.showToast(
-                requireContext(),
-                it.errorMessage
-            )
-
             btnRegister.isEnabled = it.isDataValid
             btnAdd.isEnabled = it.isDataValid
         }
@@ -69,14 +64,28 @@ class FamiliaFragment : Fragment() {
         inputNombre.doAfterTextChanged {
             authViewModel.familiaDataChanged(
                 inputNombre.text.toString(),
-                inputPass.text.toString()
+                inputRegPass.text.toString()
             )
         }
 
-        inputPass.doAfterTextChanged {
+        inputRegPass.doAfterTextChanged {
             authViewModel.familiaDataChanged(
                 inputNombre.text.toString(),
-                inputPass.text.toString()
+                inputRegPass.text.toString()
+            )
+        }
+
+        inputCodigo.doAfterTextChanged {
+            authViewModel.familiaDataChanged(
+                inputCodigo.text.toString(),
+                inputAddPass.text.toString()
+            )
+        }
+
+        inputAddPass.doAfterTextChanged {
+            authViewModel.familiaDataChanged(
+                inputCodigo.text.toString(),
+                inputAddPass.text.toString()
             )
         }
 

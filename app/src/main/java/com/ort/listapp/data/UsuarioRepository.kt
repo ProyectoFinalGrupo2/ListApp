@@ -1,5 +1,6 @@
 package com.ort.listapp.data
 
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -17,11 +18,11 @@ class UsuarioRepository {
     }
 
     suspend fun obtenerUsuario(uid: String): Usuario {
-        val documentSnapshot = usuariosRef.document(uid).get().await()
+        val documentSnapshot: DocumentSnapshot = usuariosRef.document(uid).get().await()
         if (documentSnapshot.exists()) {
             return documentSnapshot.toObject<Usuario>()!!
         } else {
-            throw Exception("Documento no encontrado")
+            throw Exception("Error en obtenerUsuario()")
         }
     }
 

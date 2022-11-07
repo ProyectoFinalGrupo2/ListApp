@@ -71,7 +71,6 @@ class FamiliaRepository {
             password = password,
         )
         familiassRef.document(id).set(familia).await()
-
     }
 
     suspend fun checkIdPassEnFamilia(idFamilia: String, passFamilia: String): Boolean {
