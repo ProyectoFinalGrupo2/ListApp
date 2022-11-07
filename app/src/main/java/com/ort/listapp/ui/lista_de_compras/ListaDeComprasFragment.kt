@@ -14,12 +14,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ort.listapp.R
-import com.ort.listapp.adapters.ProductoListadoAdapter
-import com.ort.listapp.adapters.RealizarCompraAdapter
 import com.ort.listapp.databinding.FragmentListaDeComprasBinding
 import com.ort.listapp.domain.model.ItemLista
-import com.ort.listapp.domain.model.TipoLista
 import com.ort.listapp.ui.FamilyViewModel
+import com.ort.listapp.ui.adapters.ProductoListadoAdapter
+import com.ort.listapp.ui.adapters.RealizarCompraAdapter
 
 class ListaDeComprasFragment : Fragment() {
 
@@ -54,11 +53,6 @@ class ListaDeComprasFragment : Fragment() {
             binding.listaCompra.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             binding.listaCompra.adapter =
-//                viewModel.getListaByTipo(TipoLista.LISTA_DE_COMPRAS)?.productos?.let {
-//                    ProductoListadoAdapter(it, requireContext()){ prod ->
-//                        buttonClick(prod)
-//                    }
-//                }
                 ProductoListadoAdapter(
                     viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()),
                     requireContext(),
@@ -88,7 +82,7 @@ class ListaDeComprasFragment : Fragment() {
         )
     }
 
-    private fun realizarCompra(){
+    private fun realizarCompra() {
         popupBuilder = AlertDialog.Builder(context)
         val popupView = layoutInflater.inflate(R.layout.popup_realizar_compra, null)
         val reciclerView = popupView.findViewById<RecyclerView>(R.id.rvListaRC)
