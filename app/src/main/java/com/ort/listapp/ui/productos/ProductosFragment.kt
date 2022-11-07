@@ -52,7 +52,7 @@ class ProductosFragment : Fragment() {
         val rvProdFiltrados = binding.rvProdFiltrados
 
         val btnCrearProducto = binding.btnNuevoProducto
-        val etBuscar = binding.etBuscar
+        val etBuscar = binding.editTextBuscar.editText!!
 
         val tvProdFavoritos = binding.tvProdFavoritos
         val tvProdPersonalizados = binding.tvProdPersonalizados

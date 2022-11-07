@@ -92,4 +92,7 @@ dependencies {
     // Algolia
     implementation "com.algolia:instantsearch-android:3.1.4"
     //
+
+    //material design
+    implementation 'com.google.android.material:material:<1.7.0>'
 }

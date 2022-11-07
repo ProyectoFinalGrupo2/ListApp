@@ -37,34 +37,57 @@
             android:layout_height="match_parent"
             tools:context=".fragments.ProductosFragment">
 
-            <EditText
-                android:id="@+id/etBuscar"
-                android:layout_width="208dp"
-                android:layout_height="45dp"
-                android:layout_marginStart="6dp"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/border"
-                android:ems="10"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editTextBuscar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="6dp"
                 android:hint="Buscar"
-                android:inputType="textPersonName"
-                android:shadowColor="#8A8A8A"
-                android:textColor="#5C5C5C"
-                android:textColorHint="#BFBFBF"
+                app:endIconMode="clear_text"
+                app:layout_constraintBottom_toTopOf="@id/tvProdFavoritos"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="TouchTargetSizeCheck" />
+                app:startIconContentDescription="Buscar"
+                app:startIconDrawable="@drawable/ic_search_24">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/border"
-                android:src="@android:drawable/ic_menu_search"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/etBuscar"
-                app:layout_constraintTop_toTopOf="parent" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+<!--            <EditText-->
+<!--                android:id="@+id/etBuscar"-->
+<!--                android:layout_width="208dp"-->
+<!--                android:layout_height="45dp"-->
+<!--                android:layout_marginStart="6dp"-->
+<!--                android:layout_marginTop="40dp"-->
+<!--                android:background="@drawable/border"-->
+<!--                android:ems="10"-->
+<!--                android:hint="Buscar"-->
+<!--                android:inputType="textPersonName"-->
+<!--                android:shadowColor="#8A8A8A"-->
+<!--                android:textColor="#5C5C5C"-->
+<!--                android:textColorHint="#BFBFBF"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                tools:ignore="TouchTargetSizeCheck" />-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/imageView"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="45dp"-->
+<!--                android:layout_marginTop="40dp"-->
+<!--                android:background="@drawable/border"-->
+<!--                android:src="@android:drawable/ic_menu_search"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.0"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/etBuscar"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
 
             <Button
                 android:id="@+id/btnFiltrarProductos"
@@ -97,7 +120,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.055"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etBuscar" />
+                app:layout_constraintTop_toBottomOf="@id/editTextBuscar" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvProdFavoritos"
