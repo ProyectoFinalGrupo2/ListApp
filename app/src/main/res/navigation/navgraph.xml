@@ -27,5 +27,9 @@
         android:id="@+id/comprasFavoritasFragment"
         android:name="com.ort.listapp.ui.compras_favoritas.ComprasFavoritasFragment"
         android:label="fragment_compras_favoritas"
-        tools:layout="@layout/fragment_compras_favoritas" />
+        tools:layout="@layout/fragment_compras_favoritas" >
+        <action
+            android:id="@+id/action_comprasFavoritasFragment_to_lista_de_comprasFragment"
+            app:destination="@id/lista_de_comprasFragment" />
+    </fragment>
 </navigation>
