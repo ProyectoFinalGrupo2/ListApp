@@ -28,7 +28,7 @@
 
         android:layout_width="182dp"
         android:layout_height="match_parent"
-        android:background="@drawable/border">
+        android:background="@drawable/border_producto_alacena">
 
 
         <ImageView
