@@ -50,7 +50,9 @@ class ListaDeComprasFragment : Fragment() {
         val btnAgregarListaFav = binding.btnAgregarListaFav
 
         viewModel.getFamilia().observe(this, Observer {
-            binding.txtPrecioTotalLista.text = "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual()).toString()
+            binding.txtPrecioTotalLista.text =
+                "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual())
+                    .toString()
             binding.listaCompra.setHasFixedSize(true)
             binding.listaCompra.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
@@ -58,18 +60,20 @@ class ListaDeComprasFragment : Fragment() {
                 ProductoListadoAdapter(
                     viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()),
                     requireContext(),
-                    {removerProducto(it)},
-                    {clickSumaYResta(it, 1)},
-                    {clickSumaYResta(it, -1)}
+                    { removerProducto(it) },
+                    { clickSumaYResta(it, 1) },
+                    { clickSumaYResta(it, -1) }
                 )
         })
 
-        btnRealizarCompra.setOnClickListener{
+        btnRealizarCompra.setOnClickListener {
             realizarCompra()
         }
 
         btnEditarLista.setOnClickListener {
             editarLista()
+        }
+
         btnComprasFavoritas.setOnClickListener {
             val action =
                 ListaDeComprasFragmentDirections.actionListaDeComprasFragmentToComprasFavoritasFragment()
@@ -84,16 +88,16 @@ class ListaDeComprasFragment : Fragment() {
             val btnCrear = popupView.findViewById<Button>(R.id.btn_crear_lista)
             val btnCerrar = popupView.findViewById<ImageView>(R.id.btn_cerrar_popup)
 
-            btnCerrar.setOnClickListener{
+            btnCerrar.setOnClickListener {
                 popup.dismiss()
             }
 
             btnCrear.setOnClickListener {
                 val nombre = nombreLista.text.toString()
-                if(nombre.isNotEmpty()){
+                if (nombre.isNotEmpty()) {
                     viewModel.crearListaFavorita(nombre)
                     popup.dismiss()
-                }else{
+                } else {
                     nombreLista.error = "El nombre de la lista no puede estar vacío."
                 }
             }
@@ -101,10 +105,9 @@ class ListaDeComprasFragment : Fragment() {
             popupBuilder.setView(popupView)
             popup = popupBuilder.create()
             popup.show()
-
-
         }
     }
+
 
     private fun removerProducto(itemLista: ItemLista) {
         viewModel.removerProductoDeListaById(
@@ -123,10 +126,10 @@ class ListaDeComprasFragment : Fragment() {
 
     private fun realizarCompra() {
         //oculto los componentes de la lista de compras
-        binding.btnListasFavoritas.visibility = View.GONE
-        binding.btnCrearProducto.visibility = View.GONE
+        binding.btnComprasFavoritas.visibility = View.GONE
+        binding.btnAgregarListaFav.visibility = View.GONE
         binding.btnRealizarCompra.visibility = View.GONE
-        binding.btnCrearListaFavorita.visibility = View.GONE
+        binding.btnCrearLista.visibility = View.GONE
         binding.listaCompra.visibility = View.GONE
         binding.txtPrecioTotalLista.visibility = View.GONE
 
@@ -137,49 +140,52 @@ class ListaDeComprasFragment : Fragment() {
         binding.precioTotalCompra.visibility = View.VISIBLE
         binding.txtConfirmarCompra.visibility = View.VISIBLE
 
-        binding.precioTotalCompra.text = "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual()).toString()
+        binding.precioTotalCompra.text =
+            "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual())
+                .toString()
 
         binding.rvListaRC.setHasFixedSize(true)
         binding.rvListaRC.layoutManager = LinearLayoutManager(requireContext())
 
-        adapterRC = RealizarCompraAdapter(viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()))
+        adapterRC =
+            RealizarCompraAdapter(viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()))
         binding.rvListaRC.adapter = adapterRC
 
-        binding.btnConfirmarCompra.setOnClickListener{
+        binding.btnConfirmarCompra.setOnClickListener {
             viewModel.realizarCompra()
         }
 
         /*popupBuilder = AlertDialog.Builder(context)
-        val popupView = layoutInflater.inflate(R.layout.popup_realizar_compra, null)
-        val reciclerView = popupView.findViewById<RecyclerView>(R.id.rvListaRCOld)
-        val btnConfirmar = popupView.findViewById<Button>(R.id.btnConfirmarCompraOld)
-        val btnEditarLista = popupView.findViewById<Button>(R.id.btnEditarListaOld)
-        val txtPrecioTotal = popupView.findViewById<TextView>(R.id.precioTotalCompraOld)
+    val popupView = layoutInflater.inflate(R.layout.popup_realizar_compra, null)
+    val reciclerView = popupView.findViewById<RecyclerView>(R.id.rvListaRCOld)
+    val btnConfirmar = popupView.findViewById<Button>(R.id.btnConfirmarCompraOld)
+    val btnEditarLista = popupView.findViewById<Button>(R.id.btnEditarListaOld)
+    val txtPrecioTotal = popupView.findViewById<TextView>(R.id.precioTotalCompraOld)
 
-        txtPrecioTotal.text = "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual()).toString()
+    txtPrecioTotal.text = "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual()).toString()
 
-        reciclerView.setHasFixedSize(true)
-        reciclerView.layoutManager = LinearLayoutManager(requireContext())
+    reciclerView.setHasFixedSize(true)
+    reciclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        adapterRC = RealizarCompraAdapter(viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()))
-        reciclerView.adapter = adapterRC
+    adapterRC = RealizarCompraAdapter(viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()))
+    reciclerView.adapter = adapterRC
 
-        popupBuilder.setView(popupView)
-        popup = popupBuilder.create()
+    popupBuilder.setView(popupView)
+    popup = popupBuilder.create()
 
-        btnConfirmar.setOnClickListener{
-            viewModel.realizarCompra()
-            popup.dismiss()
-        }
-
-        btnEditarLista.setOnClickListener {
-            popup.dismiss()
-        }
-
-        popup.show()*/
+    btnConfirmar.setOnClickListener{
+        viewModel.realizarCompra()
+        popup.dismiss()
     }
 
-    private fun editarLista(){
+    btnEditarLista.setOnClickListener {
+        popup.dismiss()
+    }
+
+    popup.show()*/
+    }
+
+    private fun editarLista() {
         //oculto los componentes de realizar compra con la checklist
         binding.rvListaRC.visibility = View.GONE
         binding.btnConfirmarCompra.visibility = View.GONE
@@ -188,10 +194,10 @@ class ListaDeComprasFragment : Fragment() {
         binding.txtConfirmarCompra.visibility = View.GONE
 
         //muestro los componentes de la lista de compras
-        binding.btnListasFavoritas.visibility = View.VISIBLE
-        binding.btnCrearProducto.visibility = View.VISIBLE
+        binding.btnComprasFavoritas.visibility = View.VISIBLE
+        binding.btnAgregarListaFav.visibility = View.VISIBLE
         binding.btnRealizarCompra.visibility = View.VISIBLE
-        binding.btnCrearListaFavorita.visibility = View.VISIBLE
+        binding.btnCrearLista.visibility = View.VISIBLE
         binding.listaCompra.visibility = View.VISIBLE
         binding.txtPrecioTotalLista.visibility = View.VISIBLE
 

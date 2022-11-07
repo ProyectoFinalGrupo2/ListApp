@@ -85,10 +85,11 @@ class ComprasFavoritasFragment : Fragment() {
                 it
             )
         }
-        binding.rvComprasFavoritas.setHasFixedSize(true)
-        binding.rvComprasFavoritas.layoutManager =
+        binding.nombreListaCF.text = lista.nombre
+        binding.rvListaComprasFavoritas.setHasFixedSize(true)
+        binding.rvListaComprasFavoritas.layoutManager =
             LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-        binding.rvComprasFavoritas.adapter =
+        binding.rvListaComprasFavoritas.adapter =
             idListaActual?.let { viewModel.getProductosByIdLista(it) }?.let {
                 ProductoListadoAdapter(
                     it,
