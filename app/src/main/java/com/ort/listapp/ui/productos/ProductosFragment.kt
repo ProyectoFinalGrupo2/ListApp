@@ -201,7 +201,7 @@ class ProductosFragment : Fragment() {
         popUp.show()
         nombreProd.text = producto.nombre
         precioProducto.text = "$${producto.precio}"
-        Glide.with(popUpView).load(producto.imgURL()).placeholder(R.drawable.productos_icon).into(imagen)
+        Glide.with(popUpView).load(producto.imgURL()).placeholder(R.drawable.productos_icon_placeholder).into(imagen)
         marcarCorazon()
 
         botonAgregar.setOnClickListener {
