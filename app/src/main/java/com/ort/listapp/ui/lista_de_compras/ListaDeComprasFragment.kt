@@ -126,12 +126,12 @@ class ListaDeComprasFragment : Fragment() {
 
     private fun realizarCompra() {
         //oculto los componentes de la lista de compras
-        binding.btnComprasFavoritas.visibility = View.GONE
-        binding.btnAgregarListaFav.visibility = View.GONE
-        binding.btnRealizarCompra.visibility = View.GONE
-        binding.btnCrearLista.visibility = View.GONE
-        binding.listaCompra.visibility = View.GONE
-        binding.txtPrecioTotalLista.visibility = View.GONE
+        binding.btnComprasFavoritas.visibility = View.INVISIBLE
+        binding.btnAgregarListaFav.visibility = View.INVISIBLE
+        binding.btnRealizarCompra.visibility = View.INVISIBLE
+        binding.btnCrearLista.visibility = View.INVISIBLE
+        binding.listaCompra.visibility = View.INVISIBLE
+        binding.txtPrecioTotalLista.visibility = View.INVISIBLE
 
         //muestro los componentes de realizar compra con la checklist
         binding.rvListaRC.visibility = View.VISIBLE
@@ -153,6 +153,7 @@ class ListaDeComprasFragment : Fragment() {
 
         binding.btnConfirmarCompra.setOnClickListener {
             viewModel.realizarCompra()
+            editarLista()
         }
 
         /*popupBuilder = AlertDialog.Builder(context)
@@ -187,11 +188,11 @@ class ListaDeComprasFragment : Fragment() {
 
     private fun editarLista() {
         //oculto los componentes de realizar compra con la checklist
-        binding.rvListaRC.visibility = View.GONE
-        binding.btnConfirmarCompra.visibility = View.GONE
-        binding.btnEditarLista.visibility = View.GONE
-        binding.precioTotalCompra.visibility = View.GONE
-        binding.txtConfirmarCompra.visibility = View.GONE
+        binding.rvListaRC.visibility = View.INVISIBLE
+        binding.btnConfirmarCompra.visibility = View.INVISIBLE
+        binding.btnEditarLista.visibility = View.INVISIBLE
+        binding.precioTotalCompra.visibility = View.INVISIBLE
+        binding.txtConfirmarCompra.visibility = View.INVISIBLE
 
         //muestro los componentes de la lista de compras
         binding.btnComprasFavoritas.visibility = View.VISIBLE
