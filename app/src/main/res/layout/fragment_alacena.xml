@@ -7,48 +7,28 @@
     android:layout_height="match_parent"
     tools:context=".ui.alacena.AlacenaFragment" >
 
-    <EditText
-        android:id="@+id/etBuscar2"
-        android:layout_width="208dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/border"
-        android:ems="10"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editTextBuscarAV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:hint="Buscar"
-        android:inputType="textPersonName"
-        android:shadowColor="#8A8A8A"
-        android:textColor="#5C5C5C"
-        android:textColorHint="#BFBFBF"
+        app:endIconMode="clear_text"
+        app:layout_constraintBottom_toTopOf="@+id/tvProdFavoritos2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TouchTargetSizeCheck" />
+        app:startIconContentDescription="Buscar"
+        app:startIconDrawable="@drawable/ic_search_24">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/border"
-        android:src="@android:drawable/ic_menu_search"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/etBuscar2"
-        app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/btnFiltrarProductos2"
-        android:layout_width="110dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="40dp"
-        android:background="#C9AEEC"
-        android:text="Filtrar"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.283"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/tvProdFavoritos2"
@@ -66,7 +46,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etBuscar2" />
+        app:layout_constraintTop_toBottomOf="@id/editTextBuscarAV" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/alacenaProductos"

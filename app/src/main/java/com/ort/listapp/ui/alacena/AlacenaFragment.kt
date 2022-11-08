@@ -14,6 +14,7 @@ import com.ort.listapp.databinding.FragmentAlacenaBinding
 import com.ort.listapp.domain.model.ItemLista
 import com.ort.listapp.ui.FamilyViewModel
 import com.ort.listapp.ui.adapters.AlacenaAdapter
+import com.ort.listapp.utils.HelperClass.showToast
 
 class AlacenaFragment : Fragment() {
 
@@ -58,5 +59,10 @@ class AlacenaFragment : Fragment() {
             producto.producto.id,
             cantidad
         )
+        if(cantidad>0){
+            showToast(requireContext(),"Se ha agregado el producto")
+        }else{
+            showToast(requireContext(),"Se ha quitado el producto")
+        }
     }
 }

@@ -3,8 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_pop_up">
 
-    android:layout_height="wrap_content">
+
 
         <ImageButton
             android:id="@+id/btn_cerrar_popup"
@@ -19,12 +21,11 @@
             app:srcCompat="?attr/actionModeCloseDrawable" />
 
         <Button
-            android:id="@+id/btn_crear_producto"
+            android:id="@+id/btn_crear_lista"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_marginTop="35dp"
-            android:text="Crear producto"
+            android:text="@string/crear_prod"
             android:textColor="#222221"
             app:backgroundTint="#AAF8C6"
             app:layout_constraintBottom_toTopOf="@+id/btn_borrar_producto"
@@ -37,15 +38,14 @@
             android:id="@+id/btn_borrar_producto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:text="Borrar producto"
+            android:text="@string/borrar_prod"
             android:textColor="#222221"
             android:visibility="invisible"
             app:backgroundTint="#F8AAAA"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_crear_producto" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_crear_lista" />
 
         <EditText
             android:id="@+id/txt_producto_pers_nombre"
@@ -54,6 +54,9 @@
             android:layout_marginTop="25dp"
             android:ems="10"
             android:hint="Nombre"
+            android:textColor="#222221"
+            android:backgroundTint="#222221"
+            android:textColorHint="#222221"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,6 +69,9 @@
             android:layout_marginTop="35dp"
             android:ems="10"
             android:hint="Precio"
+            android:textColor="#222221"
+            android:backgroundTint="#222221"
+            android:textColorHint="#222221"
             android:inputType="numberDecimal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +86,7 @@
             android:orientation="vertical"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_crear_producto"
+            app:layout_constraintBottom_toTopOf="@+id/btn_crear_lista"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"
@@ -89,6 +95,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="#222221"
                     android:text="Categoría" />
 
                 <Spinner
@@ -96,7 +103,9 @@
                     android:layout_width="270dp"
                     android:layout_height="wrap_content"
                     android:hint="Categoría"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:textColor="#222221"
+                    android:backgroundTint="#222221"
+                    android:textColorHint="#222221"                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_producto_pers_presentacion" />
 
@@ -104,6 +113,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="35dp"
+                    android:textColor="#222221"
+
                     android:text="Producto favorito" />
 
                 <Switch

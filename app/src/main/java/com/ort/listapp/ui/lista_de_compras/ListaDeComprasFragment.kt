@@ -5,12 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ort.listapp.R
@@ -46,9 +45,14 @@ class ListaDeComprasFragment : Fragment() {
         super.onStart()
 
         val btnRealizarCompra = binding.btnRealizarCompra
+        val btnEditarLista = binding.btnEditarLista
+        val btnComprasFavoritas = binding.btnComprasFavoritas
+        val btnAgregarListaFav = binding.btnAgregarListaFav
 
         viewModel.getFamilia().observe(this, Observer {
-            binding.txtPrecioTotalLista.text = "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual()).toString()
+            binding.txtPrecioTotalLista.text =
+                "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual())
+                    .toString()
             binding.listaCompra.setHasFixedSize(true)
             binding.listaCompra.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
@@ -56,16 +60,54 @@ class ListaDeComprasFragment : Fragment() {
                 ProductoListadoAdapter(
                     viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()),
                     requireContext(),
-                    {removerProducto(it)},
-                    {clickSumaYResta(it, 1)},
-                    {clickSumaYResta(it, -1)}
+                    { removerProducto(it) },
+                    { clickSumaYResta(it, 1) },
+                    { clickSumaYResta(it, -1) }
                 )
         })
 
-        btnRealizarCompra.setOnClickListener{
+        btnRealizarCompra.setOnClickListener {
             realizarCompra()
         }
+
+        btnEditarLista.setOnClickListener {
+            editarLista()
+        }
+
+        btnComprasFavoritas.setOnClickListener {
+            val action =
+                ListaDeComprasFragmentDirections.actionListaDeComprasFragmentToComprasFavoritasFragment()
+            view?.findNavController()?.navigate(action)
+            //this.findNavController().navigate(action)
+        }
+
+        btnAgregarListaFav.setOnClickListener {
+            popupBuilder = AlertDialog.Builder(context)
+            val popupView = layoutInflater.inflate(R.layout.popup_crear_compra_fav, null)
+            val nombreLista = popupView.findViewById<EditText>(R.id.txt_nombre_compra_fav)
+            val btnCrear = popupView.findViewById<Button>(R.id.btn_crear_lista)
+            val btnCerrar = popupView.findViewById<ImageView>(R.id.btn_cerrar_popup)
+
+            btnCerrar.setOnClickListener {
+                popup.dismiss()
+            }
+
+            btnCrear.setOnClickListener {
+                val nombre = nombreLista.text.toString()
+                if (nombre.isNotEmpty()) {
+                    viewModel.crearListaFavorita(nombre)
+                    popup.dismiss()
+                } else {
+                    nombreLista.error = "El nombre de la lista no puede estar vacío."
+                }
+            }
+
+            popupBuilder.setView(popupView)
+            popup = popupBuilder.create()
+            popup.show()
+        }
     }
+
 
     private fun removerProducto(itemLista: ItemLista) {
         viewModel.removerProductoDeListaById(
@@ -83,34 +125,83 @@ class ListaDeComprasFragment : Fragment() {
     }
 
     private fun realizarCompra() {
-        popupBuilder = AlertDialog.Builder(context)
-        val popupView = layoutInflater.inflate(R.layout.popup_realizar_compra, null)
-        val reciclerView = popupView.findViewById<RecyclerView>(R.id.rvListaRC)
-        val btnConfirmar = popupView.findViewById<Button>(R.id.btnConfirmarCompra)
-        val btnEditarLista = popupView.findViewById<Button>(R.id.btnEditarLista)
-        val txtPrecioTotal = popupView.findViewById<TextView>(R.id.precioTotalCompra)
+        //oculto los componentes de la lista de compras
+        binding.btnComprasFavoritas.visibility = View.GONE
+        binding.btnAgregarListaFav.visibility = View.GONE
+        binding.btnRealizarCompra.visibility = View.GONE
+        binding.btnCrearLista.visibility = View.GONE
+        binding.listaCompra.visibility = View.GONE
+        binding.txtPrecioTotalLista.visibility = View.GONE
 
-        txtPrecioTotal.text = "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual()).toString()
+        //muestro los componentes de realizar compra con la checklist
+        binding.rvListaRC.visibility = View.VISIBLE
+        binding.btnConfirmarCompra.visibility = View.VISIBLE
+        binding.btnEditarLista.visibility = View.VISIBLE
+        binding.precioTotalCompra.visibility = View.VISIBLE
+        binding.txtConfirmarCompra.visibility = View.VISIBLE
 
-        reciclerView.setHasFixedSize(true)
-        reciclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.precioTotalCompra.text =
+            "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual())
+                .toString()
 
-        adapterRC = RealizarCompraAdapter(viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()))
-        reciclerView.adapter = adapterRC
+        binding.rvListaRC.setHasFixedSize(true)
+        binding.rvListaRC.layoutManager = LinearLayoutManager(requireContext())
 
-        popupBuilder.setView(popupView)
-        popup = popupBuilder.create()
+        adapterRC =
+            RealizarCompraAdapter(viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()))
+        binding.rvListaRC.adapter = adapterRC
 
-        btnConfirmar.setOnClickListener{
+        binding.btnConfirmarCompra.setOnClickListener {
             viewModel.realizarCompra()
-            popup.dismiss()
         }
 
-        btnEditarLista.setOnClickListener {
-            popup.dismiss()
-        }
+        /*popupBuilder = AlertDialog.Builder(context)
+    val popupView = layoutInflater.inflate(R.layout.popup_realizar_compra, null)
+    val reciclerView = popupView.findViewById<RecyclerView>(R.id.rvListaRCOld)
+    val btnConfirmar = popupView.findViewById<Button>(R.id.btnConfirmarCompraOld)
+    val btnEditarLista = popupView.findViewById<Button>(R.id.btnEditarListaOld)
+    val txtPrecioTotal = popupView.findViewById<TextView>(R.id.precioTotalCompraOld)
 
-        popup.show()
+    txtPrecioTotal.text = "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual()).toString()
+
+    reciclerView.setHasFixedSize(true)
+    reciclerView.layoutManager = LinearLayoutManager(requireContext())
+
+    adapterRC = RealizarCompraAdapter(viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()))
+    reciclerView.adapter = adapterRC
+
+    popupBuilder.setView(popupView)
+    popup = popupBuilder.create()
+
+    btnConfirmar.setOnClickListener{
+        viewModel.realizarCompra()
+        popup.dismiss()
+    }
+
+    btnEditarLista.setOnClickListener {
+        popup.dismiss()
+    }
+
+    popup.show()*/
+    }
+
+    private fun editarLista() {
+        //oculto los componentes de realizar compra con la checklist
+        binding.rvListaRC.visibility = View.GONE
+        binding.btnConfirmarCompra.visibility = View.GONE
+        binding.btnEditarLista.visibility = View.GONE
+        binding.precioTotalCompra.visibility = View.GONE
+        binding.txtConfirmarCompra.visibility = View.GONE
+
+        //muestro los componentes de la lista de compras
+        binding.btnComprasFavoritas.visibility = View.VISIBLE
+        binding.btnAgregarListaFav.visibility = View.VISIBLE
+        binding.btnRealizarCompra.visibility = View.VISIBLE
+        binding.btnCrearLista.visibility = View.VISIBLE
+        binding.listaCompra.visibility = View.VISIBLE
+        binding.txtPrecioTotalLista.visibility = View.VISIBLE
+
+
     }
 
 }

@@ -9,7 +9,11 @@
         android:id="@+id/lista_de_comprasFragment"
         android:name="com.ort.listapp.ui.lista_de_compras.ListaDeComprasFragment"
         android:label="fragment_lista_de_compras"
-        tools:layout="@layout/fragment_lista_de_compras" />
+        tools:layout="@layout/fragment_lista_de_compras" >
+        <action
+            android:id="@+id/action_lista_de_comprasFragment_to_comprasFavoritasFragment"
+            app:destination="@id/comprasFavoritasFragment" />
+    </fragment>
     <fragment
         android:id="@+id/alacenaFragment"
         android:name="com.ort.listapp.ui.alacena.AlacenaFragment"
@@ -19,4 +23,13 @@
         android:id="@+id/productosFragment"
         android:name="com.ort.listapp.ui.productos.ProductosFragment"
         android:label="ProductosFragment" />
+    <fragment
+        android:id="@+id/comprasFavoritasFragment"
+        android:name="com.ort.listapp.ui.compras_favoritas.ComprasFavoritasFragment"
+        android:label="fragment_compras_favoritas"
+        tools:layout="@layout/fragment_compras_favoritas" >
+        <action
+            android:id="@+id/action_comprasFavoritasFragment_to_lista_de_comprasFragment"
+            app:destination="@id/lista_de_comprasFragment" />
+    </fragment>
 </navigation>

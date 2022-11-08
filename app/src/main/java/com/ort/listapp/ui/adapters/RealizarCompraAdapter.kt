@@ -3,6 +3,8 @@ package com.ort.listapp.ui.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import android.widget.CheckedTextView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ort.listapp.R
@@ -19,18 +21,18 @@ class RealizarCompraAdapter(var listaProductos: List<ItemLista>) :
         }
 
         fun setNombre(nombre: String) {
-            val txtNombre: TextView = view.findViewById(R.id.txtNombreProductoRC)
+            val cbNombre: TextView = view.findViewById(R.id.tvNombreProducto)
             var nomProd = nombre
-            if (nombre.contains(" ")) {
+            /*if (nombre.contains(" ")) {
                 val n = nombre.split(" ")
                 nomProd = "${n[0]} ${n[1]}..."
-            }
-            txtNombre.text = nomProd
+            }*/
+            cbNombre.text = nomProd
         }
 
         fun setCantidad(cant:Int){
             val txtCantidad: TextView = view.findViewById(R.id.txtCantidadRC)
-            txtCantidad.text= cant.toString()
+            txtCantidad.text= "x" + cant.toString()
         }
 
         fun setPrecio(precio: Double){

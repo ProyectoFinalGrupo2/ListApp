@@ -69,21 +69,11 @@ class AlacenaAdapter(
         holder.loadImg(producto.imgURL())
 
         holder.btnAgregar.setOnClickListener {
-            Snackbar.make(
-                it, "Se agrego un " + (producto.nombre), Snackbar.LENGTH_SHORT
-            ).show()
             clickSuma(item)
         }
         holder.btnRestar.setOnClickListener {
             if (item.cantidad > 0) {
-                Snackbar.make(
-                    it, "Se saco un " + (producto.nombre), Snackbar.LENGTH_SHORT
-                ).show()
                 clickResta(item)
-            } else {
-                Snackbar.make(
-                    it, "Ups... parece que ya no tienes mas", Snackbar.LENGTH_SHORT
-                ).show()
             }
         }
     }
