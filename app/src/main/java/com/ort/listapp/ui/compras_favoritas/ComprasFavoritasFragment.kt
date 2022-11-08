@@ -46,21 +46,8 @@ class ComprasFavoritasFragment : Fragment() {
             binding.rvComprasFavoritas.setHasFixedSize(true)
             binding.rvComprasFavoritas.layoutManager =
                 GridLayoutManager(requireContext(), 2)
+
             binding.rvComprasFavoritas.adapter =
-                /*viewModel.getFamilia().value?.let { it1 ->
-                    viewModel.getListasByTipoEnFamilia(
-                        it1,
-                        TipoLista.LISTA_FAVORITA
-                    )
-                }?.let { it2 ->
-                    context?.let { it1 ->
-                        CompraFavoritaAdapter(
-                            it2,
-                            it1,
-                            onClickLista(lista)
-                        )
-                    }
-                }*/
                 viewModel.getFamilia().value?.let { it1 ->
                     viewModel.getListasByTipoEnFamilia(
                         it1,TipoLista.LISTA_FAVORITA)
@@ -74,7 +61,6 @@ class ComprasFavoritasFragment : Fragment() {
            binding.btnVolverListaCompra.setOnClickListener {
                val action = ComprasFavoritasFragmentDirections.actionComprasFavoritasFragmentToListaDeComprasFragment()
                view?.findNavController()?.navigate(action)
-
            }
         })
     }
@@ -103,6 +89,7 @@ class ComprasFavoritasFragment : Fragment() {
                 )
             }
     }
+
     private fun removerProducto(itemLista: ItemLista) {
         viewModel.removerProductoDeListaById(
             idListaActual,
