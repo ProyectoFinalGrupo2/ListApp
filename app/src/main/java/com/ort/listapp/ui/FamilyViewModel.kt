@@ -120,9 +120,10 @@ class FamilyViewModel : ViewModel() {
             val listaDeCompras = getListaByIdEnFamilia(familia, getIdListaDeComprasActual())
             val alacenaVirtual = getListaByIdEnFamilia(familia, getIdAlacenaVirtual())
             val nuevoHistorial: Lista = Lista(
-                "pruebaHistorial",
+                LocalDate.now().toString(),
                 "Compra " + LocalDate.now().toString(),
                 Timestamp.now(),
+                TipoLista.HISTORIAL
             )
             for (item: ItemLista in listaDeCompras.productos) {
                 alacenaVirtual.agregarProducto(item)
@@ -131,7 +132,7 @@ class FamilyViewModel : ViewModel() {
 
             //vacío la lista de compras
             listaDeCompras.vaciarLista()
-
+            familia.listas.add(nuevoHistorial)
             //actualizo la familia
             //actualizo la familia
             actualizarFamilia(familia!!)
