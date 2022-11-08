@@ -134,7 +134,6 @@ class FamilyViewModel : ViewModel() {
             listaDeCompras.vaciarLista()
             familia.listas.add(nuevoHistorial)
             //actualizo la familia
-            //actualizo la familia
             actualizarFamilia(familia!!)
         }
     }
