@@ -24,21 +24,14 @@ class CompraFavoritaAdapter(
 
 
     class CompraFavoritaHolder(v: View) : RecyclerView.ViewHolder(v) {
-        //Se escriben funciones que quiero que se ejecuten cuando se renderice cada item
         private var view: View
 
         init {
             this.view = v
         }
-
-        //Se hace una función por cada cosa que pasa en el item
         fun setNombre(nombre: String) {
             val txtNombre: TextView = view.findViewById(R.id.nombreCompraFavorita)
             var nomCompra = nombre
-            /*if (nombre.contains(" ")) {
-                val n = nombre.split(" ")
-                nomCompra = "${n[0]} ${n[1]}..."
-            }*/
             txtNombre.text = nomCompra
         }
 
@@ -56,9 +49,6 @@ class CompraFavoritaAdapter(
             return view.findViewById(R.id.card_compra_fav)
         }
 
-        /*  fun setLista(productos: MutableList<Producto>) {
-
-          }*/
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CompraFavoritaHolder {

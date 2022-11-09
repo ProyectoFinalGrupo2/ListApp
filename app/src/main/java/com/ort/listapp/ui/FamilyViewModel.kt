@@ -138,6 +138,24 @@ class FamilyViewModel : ViewModel() {
         }
     }
 
+    private fun pasarProductosALista(produtos:MutableList<ItemLista>,idLista: String){
+        val listaDestino = this.familia.value?.listas?.find { it.id == idLista }
+        if(listaDestino!=null){
+            for(prod in produtos){
+                listaDestino.agregarProducto(prod)
+            }
+            this.familia.value?.let { actualizarFamilia(it) }
+
+        }
+    }
+
+    fun copiarListaFavorita(idLista: String){
+        val listaACopiar = familia.value?.listas?.find { it.id == idLista }
+        if(listaACopiar != null){
+            this.pasarProductosALista(listaACopiar.productos,this.getIdListaDeComprasActual())
+        }
+    }
+
     fun precioTotalListaById(id: String): Double{
         val familia = this.familia.value
         val lista = getListaByIdEnFamilia(familia!!, id)

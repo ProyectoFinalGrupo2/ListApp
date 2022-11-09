@@ -20,6 +20,7 @@ import com.ort.listapp.ui.FamilyViewModel
 import com.ort.listapp.ui.adapters.CompraFavoritaAdapter
 import com.ort.listapp.ui.adapters.ProductoAdapter
 import com.ort.listapp.ui.adapters.ProductoListadoAdapter
+import com.ort.listapp.utils.HelperClass
 
 class ComprasFavoritasFragment : Fragment() {
 
@@ -62,6 +63,11 @@ class ComprasFavoritasFragment : Fragment() {
                val action = ComprasFavoritasFragmentDirections.actionComprasFavoritasFragmentToListaDeComprasFragment()
                view?.findNavController()?.navigate(action)
            }
+            binding.btnCopiarListaFav.setOnClickListener {
+                viewModel.copiarListaFavorita(idListaActual)
+                HelperClass.showToast(requireContext(), "Se pasaron todos los productos a la lista actual")
+
+            }
         })
     }
 
@@ -88,6 +94,7 @@ class ComprasFavoritasFragment : Fragment() {
                     {clickSumaYResta(it, -1)}
                 )
             }
+
     }
 
     private fun removerProducto(itemLista: ItemLista) {

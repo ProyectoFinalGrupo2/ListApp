@@ -90,12 +90,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/btn_agregar_prods_a_lista"
+            android:id="@+id/btn_copiar_lista_fav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="30dp"
             android:backgroundTint="#C9AEEC"
-            android:text="Agregar Productos"
+            android:text="Copiar a lista de compras"
             android:textSize="10sp"
             app:layout_constraintBottom_toTopOf="@+id/rv_lista_compras_favoritas"
             app:layout_constraintEnd_toEndOf="parent"
