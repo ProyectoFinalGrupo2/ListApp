@@ -123,6 +123,7 @@ class FamilyViewModel : ViewModel() {
                 "pruebaHistorial",
                 "Compra " + LocalDate.now().toString(),
                 Timestamp.now(),
+                TipoLista.HISTORIAL
             )
             for (item: ItemLista in listaDeCompras.productos) {
                 alacenaVirtual.agregarProducto(item)
@@ -132,7 +133,6 @@ class FamilyViewModel : ViewModel() {
             //vacío la lista de compras
             listaDeCompras.vaciarLista()
 
-            //actualizo la familia
             //actualizo la familia
             actualizarFamilia(familia!!)
         }
