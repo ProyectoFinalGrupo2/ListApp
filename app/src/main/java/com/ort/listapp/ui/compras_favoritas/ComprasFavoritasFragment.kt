@@ -18,25 +18,23 @@ import com.ort.listapp.domain.model.Lista
 import com.ort.listapp.domain.model.TipoLista
 import com.ort.listapp.ui.FamilyViewModel
 import com.ort.listapp.ui.adapters.CompraFavoritaAdapter
-import com.ort.listapp.ui.adapters.ProductoAdapter
 import com.ort.listapp.ui.adapters.ProductoListadoAdapter
 import com.ort.listapp.utils.HelperClass
 
 class ComprasFavoritasFragment : Fragment() {
 
-    companion object {
+    /*companion object {
         fun newInstance() = ComprasFavoritasFragment()
-    }
+    }*/
     private lateinit var binding: FragmentComprasFavoritasBinding
 
     private val viewModel: FamilyViewModel by activityViewModels()
-    private lateinit var idListaActual: String
-//    private lateinit var viewModel: ComprasFavoritasViewModel
+    private var idListaActual: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentComprasFavoritasBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -46,8 +44,8 @@ class ComprasFavoritasFragment : Fragment() {
         viewModel.getFamilia().observe(this, Observer {
             binding.rvComprasFavoritas.setHasFixedSize(true)
             binding.rvComprasFavoritas.layoutManager =
-                GridLayoutManager(requireContext(), 2)
-
+               // GridLayoutManager(requireContext(), 3)
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             binding.rvComprasFavoritas.adapter =
                 viewModel.getFamilia().value?.let { it1 ->
                     viewModel.getListasByTipoEnFamilia(
@@ -64,9 +62,12 @@ class ComprasFavoritasFragment : Fragment() {
                view?.findNavController()?.navigate(action)
            }
             binding.btnCopiarListaFav.setOnClickListener {
-                viewModel.copiarListaFavorita(idListaActual)
+                idListaActual?.let { it1 -> viewModel.copiarListaFavorita(it1) }
                 HelperClass.showToast(requireContext(), "Se pasaron todos los productos a la lista actual")
 
+            }
+            if(idListaActual!= null){
+                this.actualizarLista()
             }
         })
     }
@@ -74,18 +75,23 @@ class ComprasFavoritasFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     fun onClickLista(lista:Lista){
         idListaActual = lista.id.toString()
+        this.actualizarLista()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun actualizarLista(){
         binding.listaFavCompleta.visibility = View.VISIBLE
         binding.txtTotalListaFav.text = "Precio total: $" + idListaActual?.let {
             viewModel.precioTotalListaById(
                 it
             )
         }
-        binding.nombreListaCF.text = lista.nombre
+        //binding.nombreListaCF.text = lista.nombre
         binding.rvListaComprasFavoritas.setHasFixedSize(true)
         binding.rvListaComprasFavoritas.layoutManager =
             LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         binding.rvListaComprasFavoritas.adapter =
-            idListaActual?.let { viewModel.getProductosByIdLista(it) }?.let {
+            idListaActual?.let { viewModel.getProductosByIdLista(it) }?.let { it ->
                 ProductoListadoAdapter(
                     it,
                     requireContext(),
@@ -94,22 +100,25 @@ class ComprasFavoritasFragment : Fragment() {
                     {clickSumaYResta(it, -1)}
                 )
             }
-
     }
 
     private fun removerProducto(itemLista: ItemLista) {
-        viewModel.removerProductoDeListaById(
-            idListaActual,
-            itemLista.producto.id
-        )
+        idListaActual?.let {
+            viewModel.removerProductoDeListaById(
+                it,
+                itemLista.producto.id
+            )
+        }
     }
 
     private fun clickSumaYResta(producto: ItemLista, cantidad: Int) {
-        viewModel.actualizarProductoEnListaById(
-            idListaActual,
-            producto.producto.id,
-            cantidad
-        )
+        idListaActual?.let {
+            viewModel.actualizarProductoEnListaById(
+                it,
+                producto.producto.id,
+                cantidad
+            )
+        }
     }
     /*override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

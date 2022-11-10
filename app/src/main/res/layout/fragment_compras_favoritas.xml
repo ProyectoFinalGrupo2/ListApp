@@ -25,12 +25,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_compras_favoritas"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        android:layout_height="150dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="21dp"
         app:layout_constraintBottom_toTopOf="@+id/lista_fav_completa"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_volver_lista_compra" />
 
@@ -93,13 +93,32 @@
             android:id="@+id/btn_copiar_lista_fav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="15dp"
             android:backgroundTint="#C9AEEC"
             android:text="Copiar a lista de compras"
             android:textSize="10sp"
             app:layout_constraintBottom_toTopOf="@+id/rv_lista_compras_favoritas"
+            app:layout_constraintEnd_toStartOf="@+id/btn_borrar_lista_fav"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.526"
+            tools:ignore="TextContrastCheck" />
+
+        <Button
+            android:id="@+id/btn_borrar_lista_fav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="15dp"
+            android:backgroundTint="#F8AAAA"
+            android:text="Borrar lista"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toTopOf="@+id/rv_lista_compras_favoritas"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/lista_fav_completa"
+            app:layout_constraintStart_toEndOf="@+id/btn_copiar_lista_fav"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.526"
             tools:ignore="TextContrastCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
