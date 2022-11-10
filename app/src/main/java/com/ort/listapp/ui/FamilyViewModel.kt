@@ -136,7 +136,7 @@ class FamilyViewModel : ViewModel() {
             val listaDeCompras = getListaByIdEnFamilia(familia, getIdListaDeComprasActual())
             val alacenaVirtual = getListaByIdEnFamilia(familia, getIdAlacenaVirtual())
             val nuevoHistorial: Lista = Lista(
-                "pruebaHistorial1",
+                LocalDate.now().toString(),
                 "Compra " + LocalDate.now().toString(),
                 Timestamp.now(),
                 TipoLista.HISTORIAL
@@ -166,6 +166,24 @@ class FamilyViewModel : ViewModel() {
 
     fun vaciarCheckList(){
         listaDeComprasChecklist.clear()
+    }
+
+    private fun pasarProductosALista(produtos:MutableList<ItemLista>,idLista: String){
+        val listaDestino = this.familia.value?.let { getListaByIdEnFamilia(it,idLista) }
+        if(listaDestino!=null){
+            for(prod in produtos){
+                listaDestino.agregarProducto(prod)
+            }
+            this.familia.value?.let { actualizarFamilia(it) }
+
+        }
+    }
+
+    fun copiarListaFavorita(idLista: String){
+        val listaACopiar = this.familia.value?.let { getListaByIdEnFamilia(it,idLista) }
+        if(listaACopiar != null){
+            this.pasarProductosALista(listaACopiar.productos,this.getIdListaDeComprasActual())
+        }
     }
 
     fun precioTotalListaById(id: String): Double{
@@ -276,6 +294,16 @@ class FamilyViewModel : ViewModel() {
             actualizarFamilia(familia)
         }
     }
+    fun borrarListaFavorita(idListaActual: String?) {
+    val listaABorrar = idListaActual?.let { this.familia.value?.let { it1 ->
+        getListaByIdEnFamilia(
+            it1, it)
+    }}
+        if(listaABorrar!= null && listaABorrar.tipoLista!!.equals(TipoLista.LISTA_FAVORITA) ){
+            this.familia.value?.listas?.remove(listaABorrar)
+            this.familia.value?.let { this.actualizarFamilia(it) }
+        }
+    }
 
 /*    fun crearListaFavorita(nombre:String, tipoLista: TipoLista){
         this.familia.value?.let { familia ->
@@ -300,6 +328,8 @@ class FamilyViewModel : ViewModel() {
             repoFamilia.guardarFamilia(familia)
         }
     }
+
+
 }
 
 

@@ -48,6 +48,7 @@ class ListaDeComprasFragment : Fragment() {
         val btnEditarLista = binding.btnEditarLista
         val btnComprasFavoritas = binding.btnComprasFavoritas
         val btnAgregarListaFav = binding.btnAgregarListaFav
+        val btnHistorial = binding.btnCrearLista
 
         viewModel.getFamilia().observe(this, Observer {
             binding.txtPrecioTotalLista.text =
@@ -86,6 +87,12 @@ class ListaDeComprasFragment : Fragment() {
                 ListaDeComprasFragmentDirections.actionListaDeComprasFragmentToComprasFavoritasFragment()
             view?.findNavController()?.navigate(action)
             //this.findNavController().navigate(action)
+        }
+
+        btnHistorial.setOnClickListener {
+            val action =
+                ListaDeComprasFragmentDirections.actionListaDeComprasFragmentToHistorial()
+            view?.findNavController()?.navigate(action)
         }
 
         btnAgregarListaFav.setOnClickListener {

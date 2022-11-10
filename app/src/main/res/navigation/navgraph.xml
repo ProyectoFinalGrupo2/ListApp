@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_lista_de_comprasFragment_to_comprasFavoritasFragment"
             app:destination="@id/comprasFavoritasFragment" />
+        <action
+            android:id="@+id/action_lista_de_comprasFragment_to_historial"
+            app:destination="@id/historial" />
     </fragment>
     <fragment
         android:id="@+id/alacenaFragment"
@@ -30,6 +33,15 @@
         tools:layout="@layout/fragment_compras_favoritas" >
         <action
             android:id="@+id/action_comprasFavoritasFragment_to_lista_de_comprasFragment"
+            app:destination="@id/lista_de_comprasFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/historial"
+        android:name="com.ort.listapp.ui.historial.Historial"
+        android:label="fragment_historial"
+        tools:layout="@layout/fragment_historial" >
+        <action
+            android:id="@+id/action_historial_to_lista_de_comprasFragment"
             app:destination="@id/lista_de_comprasFragment" />
     </fragment>
 </navigation>
