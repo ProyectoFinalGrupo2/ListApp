@@ -66,9 +66,14 @@ class ComprasFavoritasFragment : Fragment() {
                 HelperClass.showToast(requireContext(), "Se pasaron todos los productos a la lista actual")
 
             }
-            if(idListaActual!= null){
-                this.actualizarLista()
+
+            binding.btnBorrarListaFav.setOnClickListener {
+                viewModel.borrarListaFavorita(idListaActual)
+                idListaActual = null
+                binding.listaFavCompleta.visibility = View.INVISIBLE
             }
+                this.actualizarLista()
+
         })
     }
 
@@ -80,26 +85,28 @@ class ComprasFavoritasFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun actualizarLista(){
-        binding.listaFavCompleta.visibility = View.VISIBLE
-        binding.txtTotalListaFav.text = "Precio total: $" + idListaActual?.let {
-            viewModel.precioTotalListaById(
-                it
-            )
-        }
-        //binding.nombreListaCF.text = lista.nombre
-        binding.rvListaComprasFavoritas.setHasFixedSize(true)
-        binding.rvListaComprasFavoritas.layoutManager =
-            LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-        binding.rvListaComprasFavoritas.adapter =
-            idListaActual?.let { viewModel.getProductosByIdLista(it) }?.let { it ->
-                ProductoListadoAdapter(
-                    it,
-                    requireContext(),
-                    {removerProducto(it)},
-                    {clickSumaYResta(it, 1)},
-                    {clickSumaYResta(it, -1)}
+        if(idListaActual != null) {
+            binding.listaFavCompleta.visibility = View.VISIBLE
+            binding.txtTotalListaFav.text = "Precio total: $" + idListaActual?.let {
+                viewModel.precioTotalListaById(
+                    it
                 )
             }
+            //binding.nombreListaCF.text = lista.nombre
+            binding.rvListaComprasFavoritas.setHasFixedSize(true)
+            binding.rvListaComprasFavoritas.layoutManager =
+                LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+            binding.rvListaComprasFavoritas.adapter =
+                idListaActual?.let { viewModel.getProductosByIdLista(it) }?.let { it ->
+                    ProductoListadoAdapter(
+                        it,
+                        requireContext(),
+                        { removerProducto(it) },
+                        { clickSumaYResta(it, 1) },
+                        { clickSumaYResta(it, -1) }
+                    )
+                }
+        }
     }
 
     private fun removerProducto(itemLista: ItemLista) {
