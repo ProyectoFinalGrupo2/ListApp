@@ -26,6 +26,8 @@ class FamilyViewModel : ViewModel() {
         }
     }
 
+    private val listaDeComprasChecklist: MutableList<ItemListaChecklist> = mutableListOf()
+
 //    fun loadFamilia(it: MutableLiveData<Familia>) {
 //        viewModelScope.launch {
 //            try {
@@ -46,6 +48,20 @@ class FamilyViewModel : ViewModel() {
             it.tipoLista == tipoLista
         }?.get(0)?.productos ?: emptyList()
     }*/
+
+    fun cargarChecklist(){
+        listaDeComprasChecklist.clear()
+        this.familia.value?.let { familia ->
+            val listaDeCompras = getListaByIdEnFamilia(familia, getIdListaDeComprasActual())
+            for (item: ItemLista in listaDeCompras.productos) {
+                listaDeComprasChecklist.add(ItemListaChecklist(item.producto, item.cantidad, item.nombreUsuario, false))
+            }
+        }
+    }
+
+    fun getProductosChecklist(): MutableList<ItemListaChecklist>{
+        return listaDeComprasChecklist
+    }
 
     fun getProductosByIdLista(idLista: String): List<ItemLista> {
         return this.familia.value?.listas?.filter {
@@ -120,22 +136,36 @@ class FamilyViewModel : ViewModel() {
             val listaDeCompras = getListaByIdEnFamilia(familia, getIdListaDeComprasActual())
             val alacenaVirtual = getListaByIdEnFamilia(familia, getIdAlacenaVirtual())
             val nuevoHistorial: Lista = Lista(
-                "pruebaHistorial",
+                "pruebaHistorial1",
                 "Compra " + LocalDate.now().toString(),
                 Timestamp.now(),
+                TipoLista.HISTORIAL
             )
-            for (item: ItemLista in listaDeCompras.productos) {
-                alacenaVirtual.agregarProducto(item)
-                nuevoHistorial.agregarProducto(item)
+            for (item: ItemListaChecklist in listaDeComprasChecklist) {
+                if(item.estado){
+                    alacenaVirtual.agregarProducto(ItemLista(item.producto, item.cantidad, item.nombreUsuario))
+                    nuevoHistorial.agregarProducto(ItemLista(item.producto, item.cantidad, item.nombreUsuario))
+                    listaDeCompras.removerProductoPorId(item.producto.id)
+                }
             }
 
-            //vacío la lista de compras
-            listaDeCompras.vaciarLista()
+            //recargo la lista de checklist
+            cargarChecklist()
 
             //actualizo la familia
-            //actualizo la familia
-            actualizarFamilia(familia!!)
+            actualizarFamilia(familia)
         }
+    }
+
+    fun clickChecklistProducto(idProducto: String){
+        val prod = listaDeComprasChecklist.find { it.producto.id == idProducto }
+        if (prod != null) {
+            prod.estado = !prod.estado
+        }
+    }
+
+    fun vaciarCheckList(){
+        listaDeComprasChecklist.clear()
     }
 
     fun precioTotalListaById(id: String): Double{

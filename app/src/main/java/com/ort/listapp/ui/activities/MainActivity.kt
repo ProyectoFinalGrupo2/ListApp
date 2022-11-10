@@ -2,10 +2,15 @@ package com.ort.listapp.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener
 import com.ort.listapp.R
@@ -22,6 +27,7 @@ class MainActivity : AppCompatActivity(), AuthStateListener {
     private val firebaseAuth = FirebaseAuth.getInstance()
     private lateinit var bottomNavView: BottomNavigationView
     private lateinit var navHostFragment: NavHostFragment
+    private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,30 +36,8 @@ class MainActivity : AppCompatActivity(), AuthStateListener {
         bottomNavView = findViewById(R.id.bottomNavigationView)
         NavigationUI.setupWithNavController(bottomNavView, navHostFragment.navController)
 
-        val familiaRepository = FamiliaRepository()
-
-        val familia = Familia(
-            id = "familia4",
-            nombre = "Los pORTofino",
-            listas = arrayListOf(
-                Lista(
-                    id = "listaCompras",
-                    nombre = "listaCompras: Familia pORTofino",
-                    tipoLista = TipoLista.LISTA_DE_COMPRAS,
-                    productos = mutableListOf(
-                    )
-                ),
-                Lista(
-                    id = "listaAlacena",
-                    nombre = "Alacena Virtual: Familia pORTofino",
-                    tipoLista = TipoLista.ALACENA_VIRTUAL,
-                    productos = mutableListOf(
-                    )
-                )
-            ),
-            productosFavoritos = arrayListOf(),
-            productosPersonalizados = arrayListOf()
-        )
+        toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
         runBlocking {
             withContext(Dispatchers.Default) {
@@ -86,6 +70,7 @@ class MainActivity : AppCompatActivity(), AuthStateListener {
         super.onStop()
         firebaseAuth.removeAuthStateListener(this)
     }
+    
 }
 
 
