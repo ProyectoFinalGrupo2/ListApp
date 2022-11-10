@@ -72,7 +72,7 @@ class ComprasFavoritasFragment : Fragment() {
                 idListaActual = null
                 binding.listaFavCompleta.visibility = View.INVISIBLE
             }
-                this.actualizarLista()
+                this.actualizarLista(null)
 
         })
     }
@@ -80,11 +80,11 @@ class ComprasFavoritasFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     fun onClickLista(lista:Lista){
         idListaActual = lista.id.toString()
-        this.actualizarLista()
+        this.actualizarLista(lista.nombre)
     }
 
     @SuppressLint("SetTextI18n")
-    private fun actualizarLista(){
+    private fun actualizarLista(nombreLista:String?){
         if(idListaActual != null) {
             binding.listaFavCompleta.visibility = View.VISIBLE
             binding.txtTotalListaFav.text = "Precio total: $" + idListaActual?.let {
@@ -92,7 +92,7 @@ class ComprasFavoritasFragment : Fragment() {
                     it
                 )
             }
-            //binding.nombreListaCF.text = lista.nombre
+            binding.nombreListaCF.text = nombreLista
             binding.rvListaComprasFavoritas.setHasFixedSize(true)
             binding.rvListaComprasFavoritas.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
