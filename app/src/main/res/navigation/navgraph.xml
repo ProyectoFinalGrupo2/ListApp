@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/historial"
-        android:name="com.ort.listapp.ui.historial.HistorialFragment"
+        android:name="com.ort.listapp.ui.historial.Historial"
         android:label="fragment_historial"
         tools:layout="@layout/fragment_historial" >
         <action

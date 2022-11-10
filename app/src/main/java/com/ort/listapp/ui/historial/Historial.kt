@@ -1,6 +1,5 @@
 package com.ort.listapp.ui.historial
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,22 +9,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ort.listapp.R
-import com.ort.listapp.databinding.FragmentComprasFavoritasBinding
 import com.ort.listapp.databinding.FragmentHistorialBinding
 import com.ort.listapp.domain.model.Lista
 import com.ort.listapp.domain.model.TipoLista
 import com.ort.listapp.ui.FamilyViewModel
-import com.ort.listapp.ui.adapters.CompraFavoritaAdapter
 import com.ort.listapp.ui.adapters.HistorialAdapter
-import com.ort.listapp.ui.compras_favoritas.ComprasFavoritasFragmentDirections
+import com.google.firebase.Timestamp
+import java.time.Instant.now
+import java.time.LocalDate
 
-class HistorialFragment : Fragment() {
+class Historial : Fragment() {
 
     companion object {
-        fun newInstance() = HistorialFragment()
+        fun newInstance() = Historial()
     }
 
     private lateinit var binding: FragmentHistorialBinding
@@ -41,30 +39,51 @@ class HistorialFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        /*val listas : MutableList<Lista> = arrayListOf()
+        listas.add(Lista(
+            LocalDate.now().toString(),
+            "Compra " + LocalDate.now().toString(),
+            Timestamp.now(),
+            TipoLista.HISTORIAL
+        ))
+        listas.add(Lista(
+            LocalDate.now().toString(),
+            "Compra " + LocalDate.now().toString(),
+            Timestamp.now(),
+            TipoLista.HISTORIAL
+        ))
+        listas.add(Lista(
+            LocalDate.now().toString(),
+            "Compra " + LocalDate.now().toString(),
+            Timestamp.now(),
+            TipoLista.HISTORIAL
+        ))
+        binding.listaHistoriales.adapter =
+            HistorialAdapter(listas,requireContext()) {
+
+            }*/
+
         viewModel.getFamilia().observe(this, Observer {
             binding.listaHistoriales.setHasFixedSize(true)
             binding.listaHistoriales.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             binding.listaHistoriales.adapter =
-                viewModel.getFamilia().value?.let { it1 ->
+                viewModel.getFamilia().value?.let {
                     viewModel.getListasByTipoEnFamilia(
-                        it1, TipoLista.HISTORIAL)
-                }?.let { it2 ->
-                    HistorialAdapter(it2,requireContext()) { lista ->
-                        onClickLista(
-                            lista
-                        )
+                        it, TipoLista.HISTORIAL
+                    )
+                }?.let {
+                    HistorialAdapter(it, requireContext()) {
+
                     }
                 }
-            binding.btnVolverListaCompra.setOnClickListener {
-                val action = HistorialFragmentDirections.actionHistorialToListaDeComprasFragment()
-                view?.findNavController()?.navigate(action)
-            }
         })
-    }
 
-    @SuppressLint("SetTextI18n")
-    fun onClickLista(lista: Lista){
+
+        binding.btnVolverListaCompra.setOnClickListener {
+            val action = HistorialDirections.actionHistorialToListaDeComprasFragment()
+            view?.findNavController()?.navigate(action)
+        }
 
     }
 }
