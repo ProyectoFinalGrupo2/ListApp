@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.text.DecimalFormat
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 class FamilyViewModel : ViewModel() {
 
@@ -136,10 +137,9 @@ class FamilyViewModel : ViewModel() {
             val listaDeCompras = getListaByIdEnFamilia(familia, getIdListaDeComprasActual())
             val alacenaVirtual = getListaByIdEnFamilia(familia, getIdAlacenaVirtual())
             val nuevoHistorial: Lista = Lista(
-                LocalDate.now().toString(),
-                "Compra " + LocalDate.now().toString(),
-                Timestamp.now(),
-                TipoLista.HISTORIAL
+                id = "Hist${System.currentTimeMillis()}",
+                nombre = "Compra " + LocalDate.now().toString(),
+                tipoLista = TipoLista.HISTORIAL
             )
             for (item: ItemListaChecklist in listaDeComprasChecklist) {
                 if(item.estado){
@@ -151,6 +151,8 @@ class FamilyViewModel : ViewModel() {
 
             //recargo la lista de checklist
             cargarChecklist()
+
+            familia.listas.add(nuevoHistorial)
 
             //actualizo la familia
             actualizarFamilia(familia)
