@@ -24,6 +24,10 @@ import com.ort.listapp.ui.adapters.RealizarCompraAdapter
 @SuppressLint("SetTextI18n")
 class ListaDeComprasFragment : Fragment() {
 
+//    companion object {
+//        fun newInstance() = ListaDeComprasFragment()
+//    }
+
     private lateinit var binding: FragmentListaDeComprasBinding
 
     private val viewModel: FamilyViewModel by activityViewModels()
@@ -47,6 +51,7 @@ class ListaDeComprasFragment : Fragment() {
         val btnEditarLista = binding.btnEditarLista
         val btnComprasFavoritas = binding.btnComprasFavoritas
         val btnAgregarListaFav = binding.btnAgregarListaFav
+        val btnHistorial = binding.btnCrearLista
         val txtPrecioTotalLista = binding.txtPrecioTotalLista
         var rvListaCompras = binding.rvListaCompra
 
@@ -64,8 +69,14 @@ class ListaDeComprasFragment : Fragment() {
                 { clickSumaYResta(it, 1) },
                 { clickSumaYResta(it, -1) }
             )
-        }
 
+            binding.rvListaRC.setHasFixedSize(true)
+            binding.rvListaRC.layoutManager = LinearLayoutManager(requireContext())
+
+            viewModel.cargarChecklist()
+            adapterRC = RealizarCompraAdapter(viewModel.getProductosChecklist()) { clickChecklist(it) }
+            binding.rvListaRC.adapter = adapterRC
+        }
 
         btnRealizarCompra.setOnClickListener {
             realizarCompra()
@@ -80,6 +91,12 @@ class ListaDeComprasFragment : Fragment() {
                 ListaDeComprasFragmentDirections.actionListaDeComprasFragmentToComprasFavoritasFragment()
             view?.findNavController()?.navigate(action)
 //            this.findNavController().navigate(action)
+        }
+
+        btnHistorial.setOnClickListener {
+            val action =
+                ListaDeComprasFragmentDirections.actionListaDeComprasFragmentToHistorial()
+            view?.findNavController()?.navigate(action)
         }
 
         btnAgregarListaFav.setOnClickListener {
@@ -144,15 +161,9 @@ class ListaDeComprasFragment : Fragment() {
             "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual())
                 .toString()
 
-        binding.rvListaRC.setHasFixedSize(true)
-        binding.rvListaRC.layoutManager = LinearLayoutManager(requireContext())
-
-        adapterRC =
-            RealizarCompraAdapter(viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()))
-        binding.rvListaRC.adapter = adapterRC
-
         binding.btnConfirmarCompra.setOnClickListener {
             viewModel.realizarCompra()
+            editarLista()
         }
 
         /*popupBuilder = AlertDialog.Builder(context)
@@ -185,13 +196,17 @@ class ListaDeComprasFragment : Fragment() {
     popup.show()*/
     }
 
+    private fun clickChecklist(idProducto: String){
+        viewModel.clickChecklistProducto(idProducto)
+    }
+
     private fun editarLista() {
         //oculto los componentes de realizar compra con la checklist
-        binding.rvListaRC.visibility = View.GONE
-        binding.btnConfirmarCompra.visibility = View.GONE
-        binding.btnEditarLista.visibility = View.GONE
-        binding.precioTotalCompra.visibility = View.GONE
-        binding.txtConfirmarCompra.visibility = View.GONE
+        binding.rvListaRC.visibility = View.INVISIBLE
+        binding.btnConfirmarCompra.visibility = View.INVISIBLE
+        binding.btnEditarLista.visibility = View.INVISIBLE
+        binding.precioTotalCompra.visibility = View.INVISIBLE
+        binding.txtConfirmarCompra.visibility = View.INVISIBLE
 
         //muestro los componentes de la lista de compras
         binding.btnComprasFavoritas.visibility = View.VISIBLE
@@ -201,7 +216,10 @@ class ListaDeComprasFragment : Fragment() {
         binding.rvListaCompra.visibility = View.VISIBLE
         binding.txtPrecioTotalLista.visibility = View.VISIBLE
 
-
     }
 
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        viewModel.vaciarCheckList()
+//    }
 }

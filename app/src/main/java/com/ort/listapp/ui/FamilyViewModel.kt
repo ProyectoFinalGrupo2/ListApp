@@ -11,6 +11,7 @@ import com.ort.listapp.domain.model.*
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 class FamilyViewModel : ViewModel() {
 
@@ -23,6 +24,8 @@ class FamilyViewModel : ViewModel() {
             repoFamilia.suscribeFamilia(it)
         }
     }
+
+    private val listaDeComprasChecklist: MutableList<ItemListaChecklist> = mutableListOf()
 
 //    fun loadFamilia(it: MutableLiveData<Familia>) {
 //        viewModelScope.launch {
@@ -44,6 +47,20 @@ class FamilyViewModel : ViewModel() {
             it.tipoLista == tipoLista
         }?.get(0)?.productos ?: emptyList()
     }*/
+
+    fun cargarChecklist(){
+        listaDeComprasChecklist.clear()
+        this.familia.value?.let { familia ->
+            val listaDeCompras = getListaByIdEnFamilia(familia, getIdListaDeComprasActual())
+            for (item: ItemLista in listaDeCompras.productos) {
+                listaDeComprasChecklist.add(ItemListaChecklist(item.producto, item.cantidad, item.nombreUsuario, false))
+            }
+        }
+    }
+
+    fun getProductosChecklist(): MutableList<ItemListaChecklist>{
+        return listaDeComprasChecklist
+    }
 
     fun getProductosByIdLista(idLista: String): List<ItemLista> {
         return this.familia.value?.listas?.filter {
@@ -118,20 +135,54 @@ class FamilyViewModel : ViewModel() {
             val listaDeCompras = getListaByIdEnFamilia(familia, getIdListaDeComprasActual())
             val alacenaVirtual = getListaByIdEnFamilia(familia, getIdAlacenaVirtual())
             val nuevoHistorial: Lista = Lista(
-                "pruebaHistorial",
-                "Compra " + LocalDate.now().toString(),
-                TipoLista.HISTORIAL
+                id = "Hist${System.currentTimeMillis()}",
+                nombre = "Compra " + LocalDate.now().toString(),
+                tipoLista = TipoLista.HISTORIAL
             )
-            for (item: ItemLista in listaDeCompras.productos) {
-                alacenaVirtual.agregarProducto(item)
-                nuevoHistorial.agregarProducto(item)
+            for (item: ItemListaChecklist in listaDeComprasChecklist) {
+                if(item.estado){
+                    alacenaVirtual.agregarProducto(ItemLista(item.producto, item.cantidad, item.nombreUsuario))
+                    nuevoHistorial.agregarProducto(ItemLista(item.producto, item.cantidad, item.nombreUsuario))
+                    listaDeCompras.removerProductoPorId(item.producto.id)
+                }
             }
 
-            //vacío la lista de compras
-            listaDeCompras.vaciarLista()
+            //recargo la lista de checklist
+            cargarChecklist()
+
+            familia.listas.add(nuevoHistorial)
 
             //actualizo la familia
             actualizarFamilia(familia)
+        }
+    }
+
+    fun clickChecklistProducto(idProducto: String){
+        val prod = listaDeComprasChecklist.find { it.producto.id == idProducto }
+        if (prod != null) {
+            prod.estado = !prod.estado
+        }
+    }
+
+    fun vaciarCheckList(){
+        listaDeComprasChecklist.clear()
+    }
+
+    private fun pasarProductosALista(produtos:MutableList<ItemLista>,idLista: String){
+        val listaDestino = this.familia.value?.let { getListaByIdEnFamilia(it,idLista) }
+        if(listaDestino!=null){
+            for(prod in produtos){
+                listaDestino.agregarProducto(prod)
+            }
+            this.familia.value?.let { actualizarFamilia(it) }
+
+        }
+    }
+
+    fun copiarListaFavorita(idLista: String){
+        val listaACopiar = this.familia.value?.let { getListaByIdEnFamilia(it,idLista) }
+        if(listaACopiar != null){
+            this.pasarProductosALista(listaACopiar.productos,this.getIdListaDeComprasActual())
         }
     }
 
@@ -242,6 +293,16 @@ class FamilyViewModel : ViewModel() {
             actualizarFamilia(familia)
         }
     }
+    fun borrarListaFavorita(idListaActual: String?) {
+    val listaABorrar = idListaActual?.let { this.familia.value?.let { it1 ->
+        getListaByIdEnFamilia(
+            it1, it)
+    }}
+        if(listaABorrar!= null && listaABorrar.tipoLista!!.equals(TipoLista.LISTA_FAVORITA) ){
+            this.familia.value?.listas?.remove(listaABorrar)
+            this.familia.value?.let { this.actualizarFamilia(it) }
+        }
+    }
 
 /*    fun crearListaFavorita(nombre:String, tipoLista: TipoLista){
         this.familia.value?.let { familia ->
@@ -266,6 +327,8 @@ class FamilyViewModel : ViewModel() {
             repoFamilia.guardarFamilia(familia)
         }
     }
+
+
 }
 
 

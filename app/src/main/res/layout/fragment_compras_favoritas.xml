@@ -25,11 +25,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_compras_favoritas"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="21dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/lista_fav_completa"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_volver_lista_compra" />
 
@@ -37,7 +38,6 @@
         android:id="@+id/lista_fav_completa"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
         android:orientation="vertical"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -59,46 +59,70 @@
             android:scrollbars="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_total_lista_fav" />
 
         <TextView
             android:id="@+id/txt_total_lista_fav"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_height="24dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
+            android:text="HOLAA"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="#000000"
             app:emojiCompatEnabled="true"
             app:layout_constraintBottom_toTopOf="@+id/rv_lista_compras_favoritas"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nombre_lista_CF" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/nombre_lista_CF"
+            app:layout_constraintTop_toBottomOf="@+id/btn_borrar_lista_fav" />
 
         <TextView
             android:id="@+id/nombre_lista_CF"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="nombre lista"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="#000000"
             app:emojiCompatEnabled="true"
-            app:layout_constraintBottom_toTopOf="@+id/txt_total_lista_fav"
+            app:layout_constraintBottom_toTopOf="@+id/rv_lista_compras_favoritas"
+            app:layout_constraintEnd_toStartOf="@+id/txt_total_lista_fav"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_copiar_lista_fav" />
 
         <Button
-            android:id="@+id/btn_agregar_prods_a_lista"
+            android:id="@+id/btn_copiar_lista_fav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
+            android:layout_marginTop="16dp"
             android:backgroundTint="#C9AEEC"
-            android:text="Agregar Productos"
+            android:text="Copiar a lista de compras"
+
+            android:textColor="#000000"
             android:textSize="10sp"
-            app:layout_constraintBottom_toTopOf="@+id/rv_lista_compras_favoritas"
+            app:layout_constraintBottom_toTopOf="@+id/nombre_lista_CF"
+            app:layout_constraintEnd_toStartOf="@+id/btn_borrar_lista_fav"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.333"
+            tools:ignore="TextContrastCheck" />
+
+        <Button
+            android:id="@+id/btn_borrar_lista_fav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#F8AAAA"
+            android:text="Borrar lista"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toTopOf="@+id/txt_total_lista_fav"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/lista_fav_completa"
+            app:layout_constraintStart_toEndOf="@+id/btn_copiar_lista_fav"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.333"
             tools:ignore="TextContrastCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -9,15 +9,18 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ort.listapp.R
 import com.ort.listapp.domain.model.ItemLista
+import com.ort.listapp.domain.model.ItemListaChecklist
 
-class RealizarCompraAdapter(var listaProductos: List<ItemLista>) :
+class RealizarCompraAdapter(var listaProductos: MutableList<ItemListaChecklist>, var clickChecklist:(String) -> Unit) :
     RecyclerView.Adapter<RealizarCompraAdapter.RealizarCompraHolder>() {
 
     class RealizarCompraHolder(v: View) : RecyclerView.ViewHolder(v) {
         private var view: View
+        val cbProducto: CheckBox
 
         init {
             this.view = v
+            cbProducto = view.findViewById<CheckBox>(R.id.cbProducto)
         }
 
         fun setNombre(nombre: String) {
@@ -52,6 +55,8 @@ class RealizarCompraAdapter(var listaProductos: List<ItemLista>) :
         holder.setNombre(listaProductos[position].producto.nombre)
         holder.setCantidad(listaProductos[position].cantidad)
         holder.setPrecio(listaProductos[position].producto.precio)
+
+        holder.cbProducto.setOnClickListener { clickChecklist(listaProductos[position].producto.id) }
     }
 
     override fun getItemCount(): Int {

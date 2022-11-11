@@ -2,10 +2,15 @@ package com.ort.listapp.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener
 import com.ort.listapp.R
@@ -15,6 +20,7 @@ class MainActivity : AppCompatActivity(), AuthStateListener {
     private val firebaseAuth = FirebaseAuth.getInstance()
     private lateinit var bottomNavView: BottomNavigationView
     private lateinit var navHostFragment: NavHostFragment
+    private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +28,10 @@ class MainActivity : AppCompatActivity(), AuthStateListener {
         navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
         bottomNavView = findViewById(R.id.bottomNavigationView)
         NavigationUI.setupWithNavController(bottomNavView, navHostFragment.navController)
+
+        toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
     }
 
     override fun onStart() {
@@ -48,6 +58,7 @@ class MainActivity : AppCompatActivity(), AuthStateListener {
         super.onStop()
         firebaseAuth.removeAuthStateListener(this)
     }
+
 }
 
 

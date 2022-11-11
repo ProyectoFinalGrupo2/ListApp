@@ -2,6 +2,7 @@ package com.ort.listapp.ui.productos
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.media.Image
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -114,7 +115,7 @@ class ProductosFragment : Fragment() {
     private fun crearProductoPersonalizado() {
         popupBuilder = AlertDialog.Builder(context)
         val popUpView = layoutInflater.inflate(R.layout.popup_crear_producto, null)
-        val btnCerrar = popUpView.findViewById<ImageButton>(R.id.btn_cerrar_popup)
+        val btnCerrar = popUpView.findViewById<ImageView>(R.id.btn_cerrar_popup)
         val btnCrear = popUpView.findViewById<Button>(R.id.btn_crear_lista)
         val nombreProd = popUpView.findViewById<EditText>(R.id.txt_producto_pers_nombre)
         val precioProducto = popUpView.findViewById<EditText>(R.id.txt_producto_pers_precio)
@@ -168,7 +169,7 @@ class ProductosFragment : Fragment() {
         val nombreProd = popUpView.findViewById<TextView>(R.id.txt_nom_prod_popup)
         val precioProducto = popUpView.findViewById<TextView>(R.id.txt_precio_prod_popup)
         val subtotal = popUpView.findViewById<TextView>(R.id.txt_subtotal_popup)
-        val btnCerrar = popUpView.findViewById<ImageButton>(R.id.btn_cerrar_popup)
+        val btnCerrar = popUpView.findViewById<ImageView>(R.id.btn_cerrar_popup)
         val btnAgregar = popUpView.findViewById<Button>(R.id.btn_crear_lista)
         val btnEditar = popUpView.findViewById<Button>(R.id.btn_editar_producto)
         val corazonFav = popUpView.findViewById<ImageView>(R.id.btn_corazon_fav)
@@ -254,7 +255,7 @@ class ProductosFragment : Fragment() {
     private fun editarProducto(producto: Producto) {
         popupBuilder = AlertDialog.Builder(context)
         val popUpView = layoutInflater.inflate(R.layout.popup_crear_producto, null)
-        val btnCerrar = popUpView.findViewById<ImageButton>(R.id.btn_cerrar_popup)
+        val btnCerrar = popUpView.findViewById<ImageView>(R.id.btn_cerrar_popup)
         val btnBorrar = popUpView.findViewById<Button>(R.id.btn_borrar_producto)
         val btnEditar = popUpView.findViewById<Button>(R.id.btn_crear_lista)
         val nombreProd = popUpView.findViewById<EditText>(R.id.txt_producto_pers_nombre)

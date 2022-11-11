@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/configFragment"
+        android:icon="@drawable/ic_settings_24"
+        android:title="Configuracion" />
+
+    <item
+        android:id="@+id/infoFamilyFragment"
+        android:icon="@drawable/ic_family_24"
+        android:title="Familia"
+        />
+</menu>
