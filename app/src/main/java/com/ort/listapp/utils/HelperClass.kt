@@ -2,6 +2,7 @@ package com.ort.listapp.utils
 
 import android.content.Context
 import android.util.Log
+import android.util.Patterns
 import android.widget.Toast
 import com.ort.listapp.utils.SysConstants.TAG
 
@@ -18,4 +19,7 @@ internal object HelperClass {
         val charPool: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
         return List(size) { charPool.random() }.joinToString("")
     }
+
+    fun isEmailValid(email: String): Boolean =
+        Patterns.EMAIL_ADDRESS.matcher(email).matches()
 }

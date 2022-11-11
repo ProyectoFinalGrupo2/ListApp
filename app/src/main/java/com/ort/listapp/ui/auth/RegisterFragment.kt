@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.ort.listapp.databinding.FragmentRegisterBinding
+import com.ort.listapp.utils.HelperClass.isEmailValid
 import com.ort.listapp.utils.HelperClass.showToast
 
 class RegisterFragment : Fragment() {
@@ -30,17 +31,32 @@ class RegisterFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        val inputNombre = binding.inputNombre
-        val inputEmail = binding.inputEmail
-        val inputPass = binding.inputPass
+        val tfNombre = binding.tfNombre
+        val inputNombre = tfNombre.editText
+        val tfEmail = binding.tfEmail
+        val inputEmail = tfEmail.editText
+        val tfPass = binding.tfPass
+        val inputPass = tfPass.editText
         val btnRegister = binding.btnRegister
 
         btnRegister.setOnClickListener {
-            authViewModel.registrarUsuario(
-                inputNombre.text.toString(),
-                inputEmail.text.toString(),
-                inputPass.text.toString()
-            )
+            if (inputNombre != null && inputEmail != null && inputPass != null) {
+                tfNombre.helperText = null
+                tfPass.helperText = null
+                if (inputNombre.text.isEmpty()) {
+                    tfNombre.error = "El nombre no puede estar vacio"
+                } else if (!isEmailValid(inputEmail.text.toString().trim())) {
+                    tfEmail.error = "Email invalido"
+                } else if (inputPass.text.isBlank()) {
+                    tfPass.error = "Debe ingresar una contraseña"
+                } else {
+                    authViewModel.registrarUsuario(
+                        inputNombre.text.toString(),
+                        inputEmail.text.toString(),
+                        inputPass.text.toString()
+                    )
+                }
+            }
         }
 
         authViewModel.authState.observe(this) {
@@ -52,31 +68,27 @@ class RegisterFragment : Fragment() {
             btnRegister.isEnabled = it.isDataValid
         }
 
-        inputNombre.doAfterTextChanged {
-            authViewModel.registerDataChanged(
-                inputNombre.text.toString(),
-                inputEmail.text.toString(),
-                inputPass.text.toString()
-            )
+        inputNombre?.doAfterTextChanged {
+            tfNombre.error = null
+            if (inputNombre.text.length < 3) {
+                tfNombre.helperText = "Ingrese 3 o más caracteres"
+            } else tfNombre.helperText = null
         }
 
-        inputEmail.doAfterTextChanged {
-            authViewModel.registerDataChanged(
-                inputNombre.text.toString(),
-                inputEmail.text.toString(),
-                inputPass.text.toString()
-            )
+        inputEmail?.doAfterTextChanged {
+            tfEmail.error = null
+            if (!isEmailValid(inputEmail?.text.toString().trim())) {
+                tfEmail.helperText = "Ingrese un email válido"
+            } else tfEmail.helperText = null
         }
 
-        inputPass.doAfterTextChanged {
-            authViewModel.registerDataChanged(
-                inputNombre.text.toString(),
-                inputEmail.text.toString(),
-                inputPass.text.toString()
-            )
+        inputPass?.doAfterTextChanged {
+            tfPass.error = null
+            if (inputPass.text.length < 5) {
+                tfPass.helperText = "Ingrese 5 o más caracteres"
+            } else tfPass.helperText = null
         }
     }
-
 
     private fun goToFamilyFragment() {
         val action = RegisterFragmentDirections.actionRegisterFragmentToFamiliaFragment()

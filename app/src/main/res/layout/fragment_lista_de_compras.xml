@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.lista_de_compras.ListaDeComprasFragment"
-    android:id="@+id/frameLayout2" >
+    android:id="@+id/frameLayout2">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvListaRC"
@@ -79,7 +79,7 @@
         android:backgroundTint="#C9AEEC"
         android:text="Listas Favoritas"
         android:textSize="10sp"
-        app:layout_constraintBottom_toTopOf="@+id/lista_compra"
+        app:layout_constraintBottom_toTopOf="@+id/rvListaCompra"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.133"
         app:layout_constraintStart_toStartOf="parent"
@@ -94,7 +94,7 @@
         android:backgroundTint="#C9AEEC"
         android:text="Historial"
         android:textSize="10sp"
-        app:layout_constraintBottom_toTopOf="@+id/lista_compra"
+        app:layout_constraintBottom_toTopOf="@+id/rvListaCompra"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.448"
         app:layout_constraintStart_toEndOf="@+id/btn_compras_favoritas"
@@ -113,7 +113,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btn_agregar_lista_fav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lista_compra"
+        app:layout_constraintTop_toBottomOf="@+id/rvListaCompra"
         app:layout_constraintVertical_bias="1.0"
         tools:ignore="TouchTargetSizeCheck" />
 
@@ -127,12 +127,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lista_compra"
+        app:layout_constraintTop_toBottomOf="@+id/rvListaCompra"
         app:layout_constraintVertical_bias="0.637"
         tools:ignore="TouchTargetSizeCheck" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/lista_compra"
+        android:id="@+id/rvListaCompra"
         android:layout_width="0dp"
         android:layout_height="372dp"
         android:layout_margin="10dp"
@@ -145,7 +145,8 @@
         app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.416" />
+        app:layout_constraintVertical_bias="0.416"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <TextView
         android:id="@+id/txtPrecioTotalLista"
@@ -157,6 +158,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lista_compra" />
+        app:layout_constraintTop_toBottomOf="@+id/rvListaCompra" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

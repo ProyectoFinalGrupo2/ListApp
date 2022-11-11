@@ -99,7 +99,7 @@ class AuthViewModel : ViewModel() {
     }
 
     private fun isNombreValid(nombre: String): Boolean =
-        nombre.length > 3
+        nombre.length > 2
 
     private fun isEmailValid(email: String): Boolean =
         Patterns.EMAIL_ADDRESS.matcher(email).matches()

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -16,10 +17,6 @@ class FamiliaFragment : Fragment() {
     private val authViewModel: AuthViewModel by activityViewModels()
     private lateinit var binding: FragmentFamiliaBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,25 +27,76 @@ class FamiliaFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        val inputNombre = binding.inputNombre
-        val inputCodigo = binding.inputCodigo
-        val inputRegPass = binding.inputRegPass
-        val inputAddPass = binding.inputAddPass
+
+        val tfNombre = binding.tfNombre
+        val inputNombre = tfNombre.editText
+        val tfCodigo = binding.tfCodigo
+        val inputCodigo = tfCodigo.editText
+        val tfRegPass = binding.tfRegPass
+        val inputRegPass = tfRegPass.editText
+        val tfAddPass = binding.tfAddPass
+        val inputAddPass = tfAddPass.editText
         val btnRegister = binding.btnRegister
         val btnAdd = binding.btnAdd
 
-        btnRegister.setOnClickListener {
-            authViewModel.registrarFamilia(
-                inputNombre.text.toString(),
-                inputRegPass.text.toString(),
-            )
+        inputNombre?.doAfterTextChanged {
+            tfNombre.error = null
+            if (inputNombre.text.length < 3) {
+                tfNombre.helperText = "Ingrese 3 o más caracteres"
+            } else tfNombre.helperText = null
         }
 
+        inputRegPass?.doAfterTextChanged {
+            tfRegPass.error = null
+            if (inputRegPass.text.length < 5) {
+                tfRegPass.helperText = "Ingrese 5 o más caracteres"
+            } else tfRegPass.helperText = null
+        }
+
+        btnRegister.setOnClickListener {
+            if (inputNombre != null && inputRegPass != null) {
+                tfNombre.helperText = null
+                tfRegPass.helperText = null
+                if (inputNombre.text.isEmpty()) {
+                    tfNombre.error = "El nombre no puede estar vacio"
+                } else if (inputRegPass.text.isBlank()) {
+                    tfRegPass.error = "Debe ingresar una contraseña"
+                } else {
+                    authViewModel.registrarFamilia(
+                        inputNombre.text.toString(),
+                        inputRegPass.text.toString(),
+                    )
+                }
+            }
+        }
+
+        fun isCodigoValid(inputCodigo: EditText) =
+            inputCodigo.text.length == 6
+
         btnAdd.setOnClickListener {
-            authViewModel.sumarseEnFamilia(
-                inputCodigo.text.toString(),
-                inputAddPass.text.toString(),
-            )
+            if (inputCodigo != null && inputAddPass != null) {
+                if (!isCodigoValid(inputCodigo)) {
+                    tfCodigo.error = "Código inválido"
+                } else if (inputAddPass.text.isBlank()) {
+                    tfAddPass.error = "Debe ingresar una contraseña"
+                } else {
+                    authViewModel.sumarseEnFamilia(
+                        inputCodigo.text.toString(),
+                        inputAddPass.text.toString(),
+                    )
+                }
+            }
+        }
+
+        inputCodigo?.doAfterTextChanged {
+            tfCodigo.error = null
+            if (!isCodigoValid(inputCodigo)) {
+                tfCodigo.helperText = "Ingrese los 6 caracteres provistos"
+            } else tfCodigo.helperText = null
+        }
+
+        inputAddPass?.doAfterTextChanged {
+            tfAddPass.error = null
         }
 
         authViewModel.authState.observe(this) {
@@ -57,38 +105,7 @@ class FamiliaFragment : Fragment() {
                 requireContext(),
                 it.errorMessage
             )
-            btnRegister.isEnabled = it.isDataValid
-            btnAdd.isEnabled = it.isDataValid
         }
-
-        inputNombre.doAfterTextChanged {
-            authViewModel.familiaDataChanged(
-                inputNombre.text.toString(),
-                inputRegPass.text.toString()
-            )
-        }
-
-        inputRegPass.doAfterTextChanged {
-            authViewModel.familiaDataChanged(
-                inputNombre.text.toString(),
-                inputRegPass.text.toString()
-            )
-        }
-
-        inputCodigo.doAfterTextChanged {
-            authViewModel.familiaDataChanged(
-                inputCodigo.text.toString(),
-                inputAddPass.text.toString()
-            )
-        }
-
-        inputAddPass.doAfterTextChanged {
-            authViewModel.familiaDataChanged(
-                inputCodigo.text.toString(),
-                inputAddPass.text.toString()
-            )
-        }
-
     }
 
     private fun goToMainActivity() {

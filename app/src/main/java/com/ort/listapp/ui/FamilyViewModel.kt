@@ -1,16 +1,14 @@
 package com.ort.listapp.ui
 
+//import com.ort.listapp.helpers.SysConstants
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.Timestamp
 import com.ort.listapp.data.FamiliaRepository
 import com.ort.listapp.data.ProductoRepository
 import com.ort.listapp.domain.model.*
-//import com.ort.listapp.helpers.SysConstants
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.text.DecimalFormat
 import java.time.LocalDate
 
@@ -122,7 +120,6 @@ class FamilyViewModel : ViewModel() {
             val nuevoHistorial: Lista = Lista(
                 "pruebaHistorial",
                 "Compra " + LocalDate.now().toString(),
-                Timestamp.now(),
                 TipoLista.HISTORIAL
             )
             for (item: ItemLista in listaDeCompras.productos) {
@@ -134,16 +131,16 @@ class FamilyViewModel : ViewModel() {
             listaDeCompras.vaciarLista()
 
             //actualizo la familia
-            actualizarFamilia(familia!!)
+            actualizarFamilia(familia)
         }
     }
 
-    fun precioTotalListaById(id: String): Double{
+    fun precioTotalListaById(id: String): Double {
         val familia = this.familia.value
         val lista = getListaByIdEnFamilia(familia!!, id)
-        var precioTotal : Double = 0.0
-        for (item: ItemLista in lista.productos){
-            precioTotal+=(item.producto.precio * item.cantidad)
+        var precioTotal: Double = 0.0
+        for (item: ItemLista in lista.productos) {
+            precioTotal += (item.producto.precio * item.cantidad)
         }
         return DecimalFormat("#.##").format(precioTotal).toDouble()
     }
@@ -230,16 +227,15 @@ class FamilyViewModel : ViewModel() {
         }
     }
 
-    fun crearListaFavorita(nombre:String){
+    fun crearListaFavorita(nombre: String) {
         this.familia.value?.let { familia ->
             val listaDeCompras = getListaByIdEnFamilia(familia, getIdListaDeComprasActual())
             val nuevaLista = Lista(
                 "ListaFav${System.currentTimeMillis()}",
                 nombre,
-                Timestamp.now(),
                 TipoLista.LISTA_FAVORITA
             )
-            for (prod in listaDeCompras.productos){
+            for (prod in listaDeCompras.productos) {
                 nuevaLista.agregarProducto(prod)
             }
             familia.listas.add(nuevaLista)
