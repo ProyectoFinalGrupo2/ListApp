@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.ort.listapp.R
 import com.ort.listapp.domain.model.ItemLista
 import com.ort.listapp.domain.model.Lista
-import com.ort.listapp.domain.model.Producto
+import java.security.Timestamp
 
 
 class HistorialAdapter(
@@ -32,9 +31,22 @@ class HistorialAdapter(
         //Se hace una función por cada cosa que pasa en el item
         fun setNombre(nombre: String) {
             val txtNombre: TextView = view.findViewById(R.id.nombreLista)
-            txtNombre.text = nombre
+            txtNombre.text = "Compra del " + nombre
         }
 
+        fun setCantidad(cantidad: Int) {
+            val txtCantidad: TextView = view.findViewById(R.id.cant)
+            if(cantidad == 1){
+                txtCantidad.text = "Un solo producto"
+            }else{
+                txtCantidad.text = "${cantidad.toString()} Productos"
+            }
+        }
+
+        fun setPrecio(precio: Double) {
+            val txtPrecio: TextView = view.findViewById(R.id.precio)
+            txtPrecio.text = "Total = $${precio.toString()}"
+        }
 
         fun loadImg(position:Int) {
             val fotoCompra: ImageView = view.findViewById(R.id.fotoHistorial)
@@ -59,13 +71,27 @@ class HistorialAdapter(
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_lista_historial, parent, false)
         return (HistorialHolder(view))
+        //val lengthComparator = Comparator { fecha1: Timestamp, fecha2: Timestamp -> fecha1 fecha2 }
+        //println(listOf("aaa", "bb", "c").sortedWith(lengthComparator))
+        historiales.sortedByDescending {
+            it.fechaCreacion
+        }
     }
 
     override fun onBindViewHolder(holder: HistorialHolder, position: Int) {
-        //Iteración de la lista y va  usando las funciones set
-        //Solamente itera sobre los elementos en pantalla e itera a medida que se scrollea
         historiales[position].nombre?.let { holder.setNombre(it) }
+        historiales[position].productos
         holder.loadImg(position)
+        holder.setPrecio(precioTotal(historiales[position].productos))
+        holder.setCantidad(historiales[position].productos.size)
+    }
+
+    fun precioTotal(lista: MutableList<ItemLista>): Double {
+        var total = 0.0
+        lista.forEach {
+            total += it.producto.precio
+        }
+        return total
     }
 
     override fun getItemCount(): Int {
