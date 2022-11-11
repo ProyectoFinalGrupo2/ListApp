@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.ort.listapp.databinding.FragmentLoginBinding
+import com.ort.listapp.utils.HelperClass.isEmailValid
 import com.ort.listapp.utils.HelperClass.showToast
 
 class LoginFragment : Fragment() {
@@ -26,8 +27,10 @@ class LoginFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        val inputEmail = binding.inputEmail
-        val inputPass = binding.inputPass
+        val tfEmail = binding.tfEmail
+        val inputEmail = tfEmail.editText
+        val tfPass = binding.tfPass
+        val inputPass = tfPass.editText
         val btnLogin = binding.btnLogin
         val btnRegister = binding.btnRegister
 
@@ -42,34 +45,37 @@ class LoginFragment : Fragment() {
             }
 
             btnLogin.setOnClickListener {
-                authViewModel.login(
-                    inputEmail.text.toString(),
-                    inputPass.text.toString()
-                )
+                if (inputEmail != null && inputPass != null) {
+                    if (!isEmailValid(inputEmail.text.toString().trim())) {
+                        tfEmail.error = "Email invalido"
+                    } else if (inputPass.text.isBlank()) {
+                        tfPass.error = "Debe ingresar una contraseña"
+                    } else {
+                        authViewModel.login(
+                            inputEmail.text.toString().trim(),
+                            inputPass.text.toString()
+                        )
+                    }
+                }
             }
 
-            authViewModel.authState.observe(this@LoginFragment) {
+            authViewModel.authState.observe(this) {
                 if (it.loggedSinFamilia) goToFamilyFragment()
                 if (it.loggedConFamilia) goToMainActivity()
                 if (it.errorMessage.isNotBlank()) {
                     showToast(requireContext(), it.errorMessage)
                     authViewModel.authState.postValue(AuthState())
                 }
-                btnLogin.isEnabled = it.isDataValid
+                inputEmail?.text?.clear()
+                inputPass?.text?.clear()
             }
 
-            inputEmail.doAfterTextChanged {
-                authViewModel.loginDataChanged(
-                    inputEmail.text.toString(),
-                    inputPass.text.toString()
-                )
+            inputEmail?.doAfterTextChanged {
+                tfEmail.error = null
             }
 
-            inputPass.doAfterTextChanged {
-                authViewModel.loginDataChanged(
-                    inputEmail.text.toString(),
-                    inputPass.text.toString()
-                )
+            inputPass?.doAfterTextChanged {
+                tfPass.error = null
             }
         }
     }

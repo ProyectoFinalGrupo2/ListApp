@@ -5,11 +5,10 @@ import com.google.firebase.Timestamp
 data class Lista(
     val id: String? = null,
     val nombre: String? = null,
-    val fechaCreacion: Timestamp? = Timestamp.now(),
     val tipoLista: TipoLista? = null,
+    val fechaCreacion: Timestamp? = Timestamp.now(),
     val productos: MutableList<ItemLista> = mutableListOf(),
 ) {
-
     fun agregarProducto(itemLista: ItemLista) {
         val id = itemLista.producto.id
         if (productoEstaEnLista(id)) {
