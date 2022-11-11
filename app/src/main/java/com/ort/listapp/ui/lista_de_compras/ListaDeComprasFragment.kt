@@ -24,13 +24,8 @@ import com.ort.listapp.ui.adapters.RealizarCompraAdapter
 @SuppressLint("SetTextI18n")
 class ListaDeComprasFragment : Fragment() {
 
-//    companion object {
-//        fun newInstance() = ListaDeComprasFragment()
-//    }
-
-    private lateinit var binding: FragmentListaDeComprasBinding
-
     private val viewModel: FamilyViewModel by activityViewModels()
+    private lateinit var binding: FragmentListaDeComprasBinding
 
     private lateinit var popup: AlertDialog
     private lateinit var popupBuilder: AlertDialog.Builder
@@ -74,7 +69,8 @@ class ListaDeComprasFragment : Fragment() {
             binding.rvListaRC.layoutManager = LinearLayoutManager(requireContext())
 
             viewModel.cargarChecklist()
-            adapterRC = RealizarCompraAdapter(viewModel.getProductosChecklist()) { clickChecklist(it) }
+            adapterRC =
+                RealizarCompraAdapter(viewModel.getProductosChecklist()) { clickChecklist(it) }
             binding.rvListaRC.adapter = adapterRC
         }
 
@@ -143,19 +139,10 @@ class ListaDeComprasFragment : Fragment() {
 
     private fun realizarCompra() {
         //oculto los componentes de la lista de compras
-        binding.btnComprasFavoritas.visibility = View.GONE
-        binding.btnAgregarListaFav.visibility = View.GONE
-        binding.btnRealizarCompra.visibility = View.GONE
-        binding.btnCrearLista.visibility = View.GONE
-        binding.rvListaCompra.visibility = View.GONE
-        binding.txtPrecioTotalLista.visibility = View.GONE
+        visibilidadListaCompras(View.GONE)
 
         //muestro los componentes de realizar compra con la checklist
-        binding.rvListaRC.visibility = View.VISIBLE
-        binding.btnConfirmarCompra.visibility = View.VISIBLE
-        binding.btnEditarLista.visibility = View.VISIBLE
-        binding.precioTotalCompra.visibility = View.VISIBLE
-        binding.txtConfirmarCompra.visibility = View.VISIBLE
+        visibilidadChecklist(View.VISIBLE)
 
         binding.precioTotalCompra.text =
             "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual())
@@ -196,29 +183,36 @@ class ListaDeComprasFragment : Fragment() {
     popup.show()*/
     }
 
-    private fun clickChecklist(idProducto: String){
+    private fun clickChecklist(idProducto: String) {
         viewModel.clickChecklistProducto(idProducto)
     }
 
     private fun editarLista() {
         //oculto los componentes de realizar compra con la checklist
-        binding.rvListaRC.visibility = View.INVISIBLE
-        binding.btnConfirmarCompra.visibility = View.INVISIBLE
-        binding.btnEditarLista.visibility = View.INVISIBLE
-        binding.precioTotalCompra.visibility = View.INVISIBLE
-        binding.txtConfirmarCompra.visibility = View.INVISIBLE
+        visibilidadChecklist(View.INVISIBLE)
 
         //muestro los componentes de la lista de compras
-        binding.btnComprasFavoritas.visibility = View.VISIBLE
-        binding.btnAgregarListaFav.visibility = View.VISIBLE
-        binding.btnRealizarCompra.visibility = View.VISIBLE
-        binding.btnCrearLista.visibility = View.VISIBLE
-        binding.rvListaCompra.visibility = View.VISIBLE
-        binding.txtPrecioTotalLista.visibility = View.VISIBLE
-
+        visibilidadListaCompras(View.VISIBLE)
     }
 
-//    override fun onDestroyView() {
+    private fun visibilidadChecklist(visibility: Int) {
+        binding.rvListaRC.visibility = visibility
+        binding.btnConfirmarCompra.visibility = visibility
+        binding.btnEditarLista.visibility = visibility
+        binding.precioTotalCompra.visibility = visibility
+        binding.txtConfirmarCompra.visibility = visibility
+    }
+
+    private fun visibilidadListaCompras(visibility: Int) {
+        binding.btnComprasFavoritas.visibility = visibility
+        binding.btnAgregarListaFav.visibility = visibility
+        binding.btnRealizarCompra.visibility = visibility
+        binding.btnCrearLista.visibility = visibility
+        binding.rvListaCompra.visibility = visibility
+        binding.txtPrecioTotalLista.visibility = visibility
+    }
+
+    //    override fun onDestroyView() {
 //        super.onDestroyView()
 //        viewModel.vaciarCheckList()
 //    }

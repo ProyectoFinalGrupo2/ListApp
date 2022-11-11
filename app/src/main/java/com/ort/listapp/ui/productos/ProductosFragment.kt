@@ -2,7 +2,6 @@ package com.ort.listapp.ui.productos
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.media.Image
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -59,7 +58,6 @@ class ProductosFragment : Fragment() {
         val tvProdPersonalizados = binding.tvProdPersonalizados
         val tvProdFiltrados = binding.tvProdFiltrados
 
-
         rvProdFavoritos.setHasFixedSize(true)
         rvProdFavoritos.layoutManager =
             GridLayoutManager(requireContext(), 3)
@@ -92,24 +90,29 @@ class ProductosFragment : Fragment() {
             crearProductoPersonalizado()
         }
 
+        fun visibilidadProdFavYPers(visibility: Int) {
+            tvProdFavoritos.visibility = visibility
+            rvProdFavoritos.visibility = visibility
+            tvProdPersonalizados.visibility = visibility
+            rvProdPersonalizados.visibility = visibility
+        }
+
+        fun visibilidadProdFiltrados(visibility: Int) {
+            tvProdFiltrados.visibility = visibility
+            rvProdFiltrados.visibility = visibility
+        }
+
         etBuscar.doAfterTextChanged {
             if (etBuscar.text.toString().length > 2) {
                 productosViewModel.getProductosByText(etBuscar.text.toString())
-                tvProdFavoritos.visibility = View.GONE
-                rvProdFavoritos.visibility = View.GONE
-                tvProdPersonalizados.visibility = View.GONE
-                rvProdPersonalizados.visibility = View.GONE
-                tvProdFiltrados.visibility = View.VISIBLE
-                rvProdFiltrados.visibility = View.VISIBLE
+                visibilidadProdFavYPers(View.GONE)
+                visibilidadProdFiltrados(View.VISIBLE)
             } else {
-                tvProdFavoritos.visibility = View.VISIBLE
-                rvProdFavoritos.visibility = View.VISIBLE
-                tvProdPersonalizados.visibility = View.VISIBLE
-                rvProdPersonalizados.visibility = View.VISIBLE
-                tvProdFiltrados.visibility = View.GONE
-                rvProdFiltrados.visibility = View.GONE
+                visibilidadProdFavYPers(View.VISIBLE)
+                visibilidadProdFiltrados(View.GONE)
             }
         }
+
     }
 
     private fun crearProductoPersonalizado() {
@@ -176,7 +179,7 @@ class ProductosFragment : Fragment() {
         var cantActual = 1
         var esFavorito = viewModel.esProductoFav(producto)
 
-        if(producto.id.contains(PREFIJO_PROD_PERS)){
+        if (producto.id.contains(PREFIJO_PROD_PERS)) {
             btnEditar.visibility = View.VISIBLE
         }
 
@@ -202,7 +205,8 @@ class ProductosFragment : Fragment() {
         popUp.show()
         nombreProd.text = producto.nombre
         precioProducto.text = "$${producto.precio}"
-        Glide.with(popUpView).load(producto.imgURL()).placeholder(R.drawable.productos_icon_placeholder).into(imagen)
+        Glide.with(popUpView).load(producto.imgURL())
+            .placeholder(R.drawable.productos_icon_placeholder).into(imagen)
         marcarCorazon()
 
         botonAgregar.setOnClickListener {
@@ -210,6 +214,7 @@ class ProductosFragment : Fragment() {
             cantidad.text = cantActual.toString()
             actualizarSubtotal()
         }
+
         botonRestar.setOnClickListener {
             if (cantActual > 1) {
                 cantActual--
@@ -295,6 +300,7 @@ class ProductosFragment : Fragment() {
                 popUp.dismiss()
             }
         }
+
         btnBorrar.setOnClickListener {
             viewModel.eliminarProductoPersonalizado(producto)
             popUp.dismiss()
@@ -303,7 +309,6 @@ class ProductosFragment : Fragment() {
         btnCerrar.setOnClickListener {
             popUp.dismiss()
         }
-
     }
 
     override fun onDestroyView() {
