@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_pop_up">
+
+
+    <TextView
+        android:id="@+id/txt_nom_prod_popup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:text="Compra realizada el 2022-11-11"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#222221"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@+id/txt_cantidad_agregarprod"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prods" />
+
+    <TextView
+        android:id="@+id/txt_cantidad_agregarprod"
+        android:layout_width="296dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="1dp"
+        android:gravity="center"
+        android:inputType="number"
+        android:text="Precio total: $2344.65"
+        android:textColor="#222221"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_crear_lista"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_nom_prod_popup" />
+
+    <ImageView
+        android:id="@+id/btn_cerrar_popup"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023"
+        app:srcCompat="@drawable/cancel_icon" />
+
+    <Button
+        android:id="@+id/btn_crear_lista"
+        android:layout_width="207dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="11dp"
+
+        android:layout_marginBottom="16dp"
+        android:text="Agregar a la Lista"
+        android:textColor="#222221"
+        app:backgroundTint="#E4F5FF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_cantidad_agregarprod" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/prods"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_marginTop="16dp"
+        android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/txt_nom_prod_popup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_cerrar_popup" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
