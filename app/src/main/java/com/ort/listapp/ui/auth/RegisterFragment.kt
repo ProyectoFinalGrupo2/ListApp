@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.ort.listapp.databinding.FragmentRegisterBinding
+import com.ort.listapp.utils.HelperClass.getCircularProgress
 import com.ort.listapp.utils.HelperClass.isEmailValid
 import com.ort.listapp.utils.HelperClass.showToast
 
@@ -16,10 +17,6 @@ class RegisterFragment : Fragment() {
 
     private val authViewModel: AuthViewModel by activityViewModels()
     private lateinit var binding: FragmentRegisterBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +47,8 @@ class RegisterFragment : Fragment() {
                 } else if (inputPass.text.isBlank()) {
                     tfPass.error = "Debe ingresar una contraseña"
                 } else {
+                    btnRegister.icon = getCircularProgress(requireContext())
+                    btnRegister.isClickable = false
                     authViewModel.registrarUsuario(
                         inputNombre.text.toString(),
                         inputEmail.text.toString(),
@@ -65,7 +64,8 @@ class RegisterFragment : Fragment() {
                 requireContext(),
                 it.errorMessage
             )
-            btnRegister.isEnabled = it.isDataValid
+            btnRegister.icon = null
+            btnRegister.isClickable = true
         }
 
         inputNombre?.doAfterTextChanged {

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.ort.listapp.databinding.FragmentFamiliaBinding
+import com.ort.listapp.utils.HelperClass
 import com.ort.listapp.utils.HelperClass.showToast
 
 class FamiliaFragment : Fragment() {
@@ -62,6 +63,8 @@ class FamiliaFragment : Fragment() {
                 } else if (inputRegPass.text.isBlank()) {
                     tfRegPass.error = "Debe ingresar una contraseña"
                 } else {
+                    btnRegister.icon = HelperClass.getCircularProgress(requireContext())
+                    btnRegister.isClickable = false
                     authViewModel.registrarFamilia(
                         inputNombre.text.toString(),
                         inputRegPass.text.toString(),
@@ -80,6 +83,8 @@ class FamiliaFragment : Fragment() {
                 } else if (inputAddPass.text.isBlank()) {
                     tfAddPass.error = "Debe ingresar una contraseña"
                 } else {
+                    btnAdd.icon = HelperClass.getCircularProgress(requireContext())
+                    btnAdd.isClickable = false
                     authViewModel.sumarseEnFamilia(
                         inputCodigo.text.toString(),
                         inputAddPass.text.toString(),
@@ -105,6 +110,10 @@ class FamiliaFragment : Fragment() {
                 requireContext(),
                 it.errorMessage
             )
+            btnRegister.icon = null
+            btnRegister.isClickable = true
+            btnAdd.icon = null
+            btnAdd.isClickable = true
         }
     }
 
