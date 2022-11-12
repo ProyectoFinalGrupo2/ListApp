@@ -67,7 +67,7 @@
         app:boxBackgroundColor="#F5EDFC"
         app:errorEnabled="true"
         app:endIconMode="password_toggle"
-        app:layout_constraintBottom_toTopOf="@+id/buttonsLayout"
+        app:layout_constraintBottom_toTopOf="@+id/buttonsLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tfEmail">
@@ -81,7 +81,7 @@
 
 
     <LinearLayout
-        android:id="@+id/buttonsLayout"
+        android:id="@+id/buttonsLogin"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginHorizontal="30dp"
@@ -94,13 +94,13 @@
         app:layout_constraintTop_toBottomOf="@id/tfPass">
 
         <com.google.android.material.button.MaterialButton
-            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
             android:id="@+id/btnRegister"
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
             android:layout_width="160dp"
             android:layout_height="70dp"
             android:letterSpacing="0.15"
-            android:textAllCaps="false"
-            android:text="Registro" />
+            android:text="Registro"
+            android:textAllCaps="false" />
 
         <View
             android:layout_width="0dp"
@@ -108,15 +108,24 @@
             android:layout_weight="1" />
 
         <com.google.android.material.button.MaterialButton
-            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
             android:id="@+id/btnLogin"
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
             android:layout_width="160dp"
             android:layout_height="70dp"
             android:letterSpacing="0.15"
-            android:textAllCaps="false"
-            android:text="Ingresar" />
+            android:text="Ingresar"
+            android:textAllCaps="false" />
 
     </LinearLayout>
 
-
+    <Button
+        android:id="@+id/btnOlv"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:text="Olvidé la contraseña"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonsLogin" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -20,16 +21,36 @@ import com.ort.listapp.domain.model.ItemLista
 import com.ort.listapp.ui.FamilyViewModel
 import com.ort.listapp.ui.adapters.ProductoListadoAdapter
 import com.ort.listapp.ui.adapters.RealizarCompraAdapter
+import com.ort.listapp.ui.auth.AuthViewModel
+import com.ort.listapp.utils.HelperClass.showToast
 
 @SuppressLint("SetTextI18n")
 class ListaDeComprasFragment : Fragment() {
 
+    private val authViewModel: AuthViewModel by activityViewModels()
     private val viewModel: FamilyViewModel by activityViewModels()
     private lateinit var binding: FragmentListaDeComprasBinding
 
     private lateinit var popup: AlertDialog
     private lateinit var popupBuilder: AlertDialog.Builder
     private lateinit var adapterRC: RealizarCompraAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            AlertDialog.Builder(context)
+                .setTitle("Salir")
+                .setMessage("Desea cerrar sesión?")
+                .setPositiveButton("SI") { dialog, _ ->
+                    authViewModel.logout()
+                    showToast(requireContext(), "Adiós...")
+                    dialog.cancel()
+                }
+                .setNegativeButton("NO", null)
+                .show()
+        }
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -217,3 +238,4 @@ class ListaDeComprasFragment : Fragment() {
 //        viewModel.vaciarCheckList()
 //    }
 }
+

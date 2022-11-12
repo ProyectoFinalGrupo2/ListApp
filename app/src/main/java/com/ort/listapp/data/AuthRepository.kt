@@ -45,6 +45,18 @@ class AuthRepository {
         }
     }
 
+    suspend fun sendPasswordResetEmail(
+        email: String,
+    ): AuthResponse {
+        return try {
+            val authResult = firebaseAuth.sendPasswordResetEmail(email).await()
+            AuthResponse(errorMessage = "Email enviado")
+        } catch (e: Exception) {
+            logErrorMessage(e.message)
+            AuthResponse(errorMessage = "Se produjo un error restableciendo contraseña")
+        }
+    }
+
     fun checkIfUserIsAuthenticated(): Boolean = firebaseAuth.currentUser != null
 
     fun logout() = firebaseAuth.signOut()
