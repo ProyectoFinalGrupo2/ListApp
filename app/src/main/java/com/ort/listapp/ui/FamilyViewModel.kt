@@ -136,7 +136,7 @@ class FamilyViewModel : ViewModel() {
             val alacenaVirtual = getListaByIdEnFamilia(familia, getIdAlacenaVirtual())
             val nuevoHistorial: Lista = Lista(
                 id = "Hist${System.currentTimeMillis()}",
-                nombre = "Compra " + LocalDate.now().toString(),
+                nombre = "${LocalDate.now()}",
                 tipoLista = TipoLista.HISTORIAL
             )
             for (item: ItemListaChecklist in listaDeComprasChecklist) {

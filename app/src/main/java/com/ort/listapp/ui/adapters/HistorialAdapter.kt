@@ -11,13 +11,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ort.listapp.R
 import com.ort.listapp.domain.model.ItemLista
 import com.ort.listapp.domain.model.Lista
-import com.ort.listapp.domain.model.Producto
+import java.security.Timestamp
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 class HistorialAdapter(
     var historiales: List<Lista>,
     val context: Context,
-    var onClickLista: (Lista) -> Unit
+    var onClick: (Lista) -> Unit
 ) : RecyclerView.Adapter<HistorialAdapter.HistorialHolder>() {
 
 
@@ -32,9 +34,22 @@ class HistorialAdapter(
         //Se hace una función por cada cosa que pasa en el item
         fun setNombre(nombre: String) {
             val txtNombre: TextView = view.findViewById(R.id.nombreLista)
-            txtNombre.text = nombre
+            txtNombre.text = "Compra " + nombre
         }
 
+        fun setCantidad(cantidad: Int) {
+            val txtCantidad: TextView = view.findViewById(R.id.cant)
+            if(cantidad == 1){
+                txtCantidad.text = "Un solo producto"
+            }else{
+                txtCantidad.text = "${cantidad} Productos"
+            }
+        }
+
+        fun setPrecio(precio: Double) {
+            val txtPrecio: TextView = view.findViewById(R.id.precio)
+            txtPrecio.text = "Total = $${precio.toString().split(".")[0]}"
+        }
 
         fun loadImg(position:Int) {
             val fotoCompra: ImageView = view.findViewById(R.id.fotoHistorial)
@@ -45,11 +60,11 @@ class HistorialAdapter(
             }
         }
 
-        /*fun getLista(): CardView {
-            return view.findViewById(R.id.card_compra_fav)
+        fun getCard(): CardView {
+            return view.findViewById(R.id.card_lista_historial)
         }
 
-        fun setLista(productos: MutableList<ItemLista>) {
+        /*fun setLista(productos: MutableList<ItemLista>) {
             var prods : MutableList<ItemLista> = view.findViewById(R.id.listaProds)
             prods = productos
         }*/
@@ -62,10 +77,23 @@ class HistorialAdapter(
     }
 
     override fun onBindViewHolder(holder: HistorialHolder, position: Int) {
-        //Iteración de la lista y va  usando las funciones set
-        //Solamente itera sobre los elementos en pantalla e itera a medida que se scrollea
         historiales[position].nombre?.let { holder.setNombre(it) }
+        historiales[position].productos
         holder.loadImg(position)
+        holder.setPrecio(precioTotal(historiales[position].productos))
+        holder.setCantidad(historiales[position].productos.size)
+
+        holder.getCard().setOnClickListener {
+            onClick(historiales[position])
+        }
+    }
+
+    fun precioTotal(lista: MutableList<ItemLista>): Double {
+        var total = 0.0
+        lista.forEach {
+            total += it.producto.precio * it.cantidad
+        }
+        return total
     }
 
     override fun getItemCount(): Int {
