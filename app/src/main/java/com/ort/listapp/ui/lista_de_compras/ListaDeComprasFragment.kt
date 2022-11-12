@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ort.listapp.R
 import com.ort.listapp.databinding.FragmentListaDeComprasBinding
 import com.ort.listapp.domain.model.ItemLista
+import com.ort.listapp.domain.model.TipoLista
 import com.ort.listapp.ui.FamilyViewModel
 import com.ort.listapp.ui.adapters.ProductoListadoAdapter
 import com.ort.listapp.ui.adapters.RealizarCompraAdapter
@@ -49,6 +50,7 @@ class ListaDeComprasFragment : Fragment() {
         val btnHistorial = binding.btnCrearLista
         val txtPrecioTotalLista = binding.txtPrecioTotalLista
         var rvListaCompras = binding.rvListaCompra
+
 
         viewModel.getFamilia().observe(this) {
             val total = viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual())
@@ -109,7 +111,7 @@ class ListaDeComprasFragment : Fragment() {
             btnCrear.setOnClickListener {
                 val nombre = nombreLista.text.toString()
                 if (nombre.isNotEmpty()) {
-                    viewModel.crearListaFavorita(nombre)
+                    viewModel.crearLista(nombre,TipoLista.LISTA_FAVORITA)
                     popup.dismiss()
                 } else {
                     nombreLista.error = "El nombre de la lista no puede estar vacío."

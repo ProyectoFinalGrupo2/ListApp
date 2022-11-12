@@ -73,4 +73,8 @@ class CompraFavoritaAdapter(
     override fun getItemCount(): Int {
         return comprasFavoritas.size
     }
+
+    public fun updateData(comprasFavoritas2: List<Lista>){
+        this.comprasFavoritas = comprasFavoritas2
+    }
 }

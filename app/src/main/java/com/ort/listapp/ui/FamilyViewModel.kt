@@ -272,19 +272,19 @@ class FamilyViewModel : ViewModel() {
         }[0]
 
 
-    fun getListasByTipoEnFamilia(familia: Familia, tipoLista: TipoLista): List<Lista> {
+    fun getListasByTipoEnFamilia(familia: Familia, tipoLista: TipoLista): MutableList<Lista> {
         return familia.listas.filter {
             it.tipoLista == tipoLista
-        }
+        }.toMutableList()
     }
 
-    fun crearListaFavorita(nombre: String) {
+    fun crearLista(nombre: String,tipoLista: TipoLista) {
         this.familia.value?.let { familia ->
             val listaDeCompras = getListaByIdEnFamilia(familia, getIdListaDeComprasActual())
             val nuevaLista = Lista(
                 "ListaFav${System.currentTimeMillis()}",
                 nombre,
-                TipoLista.LISTA_FAVORITA
+                tipoLista
             )
             for (prod in listaDeCompras.productos) {
                 nuevaLista.agregarProducto(prod)

@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter
 
 
 class HistorialAdapter(
-    var historiales: List<Lista>,
+    var historiales: MutableList<Lista>,
     val context: Context,
     var onClick: (Lista) -> Unit
 ) : RecyclerView.Adapter<HistorialAdapter.HistorialHolder>() {
@@ -54,9 +54,9 @@ class HistorialAdapter(
         fun loadImg(position:Int) {
             val fotoCompra: ImageView = view.findViewById(R.id.fotoHistorial)
             if(position % 2 == 0){
-                fotoCompra.setImageResource(R.drawable.cart_icon_1)
+                fotoCompra.setImageResource(R.drawable.img_bolsa_compras)
             }else{
-                fotoCompra.setImageResource(R.drawable.cart_icon_2)
+                fotoCompra.setImageResource(R.drawable.img_bolsa_compras_2)
             }
         }
 
@@ -94,6 +94,11 @@ class HistorialAdapter(
             total += it.producto.precio * it.cantidad
         }
         return total
+    }
+
+    internal fun setListas(listas:MutableList<Lista>){
+        historiales = listas
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {

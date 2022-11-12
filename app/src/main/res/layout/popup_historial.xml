@@ -34,7 +34,7 @@
         android:text="Precio total: $2344.65"
         android:textColor="#222221"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_crear_lista"
+        app:layout_constraintBottom_toTopOf="@+id/btn_copiar_historial"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_nom_prod_popup" />
@@ -53,11 +53,10 @@
         app:srcCompat="@drawable/cancel_icon" />
 
     <Button
-        android:id="@+id/btn_crear_lista"
+        android:id="@+id/btn_copiar_historial"
         android:layout_width="207dp"
         android:layout_height="56dp"
         android:layout_marginTop="11dp"
-
         android:layout_marginBottom="16dp"
         android:text="Agregar a la Lista"
         android:textColor="#222221"

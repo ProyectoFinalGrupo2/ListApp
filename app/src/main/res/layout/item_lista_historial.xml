@@ -32,6 +32,7 @@
             android:layout_width="86dp"
             android:layout_height="54dp"
             android:layout_marginStart="32dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="32dp"
             android:contentDescription="TODO"
             app:layout_constraintBottom_toTopOf="@+id/nombreLista"
