@@ -24,6 +24,7 @@ import com.ort.listapp.ui.adapters.ProductoAdapter
 import com.ort.listapp.utils.SysConstants.PREFIJO_PROD_PERS
 import java.text.DecimalFormat
 
+@SuppressLint("SetTextI18n")
 class ProductosFragment : Fragment() {
 
     private var _binding: FragmentProductosBinding? = null
@@ -161,7 +162,6 @@ class ProductosFragment : Fragment() {
 
     }
 
-    @SuppressLint("SetTextI18n")
     fun onItemClick(producto: Producto) {
         popupBuilder = AlertDialog.Builder(context)
         val popUpView = layoutInflater.inflate(R.layout.popup_producto_layout, null)

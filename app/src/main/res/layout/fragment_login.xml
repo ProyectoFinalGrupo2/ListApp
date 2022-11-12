@@ -42,9 +42,9 @@
         android:id="@+id/tfEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="50dp"
+        android:layout_marginHorizontal="30dp"
         android:hint="Email"
-        app:boxBackgroundColor="#C9AEEC"
+        app:boxBackgroundColor="#FFF5EDFC"
         app:errorEnabled="true"
         app:layout_constraintBottom_toTopOf="@+id/tfPass"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,12 +62,12 @@
         android:id="@+id/tfPass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="50dp"
+        android:layout_marginHorizontal="30dp"
         android:hint="Contraseña"
-        app:boxBackgroundColor="#C9AEEC"
+        app:boxBackgroundColor="#F5EDFC"
         app:errorEnabled="true"
         app:endIconMode="password_toggle"
-        app:layout_constraintBottom_toTopOf="@+id/buttonsLayout"
+        app:layout_constraintBottom_toTopOf="@+id/buttonsLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tfEmail">
@@ -81,10 +81,10 @@
 
 
     <LinearLayout
-        android:id="@+id/buttonsLayout"
+        android:id="@+id/buttonsLogin"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginHorizontal="50dp"
+        android:layout_marginHorizontal="30dp"
         android:layout_marginBottom="100dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -93,24 +93,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tfPass">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnRegister"
-            android:layout_width="140dp"
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+            android:layout_width="160dp"
             android:layout_height="70dp"
-            android:text="Registro" />
+            android:letterSpacing="0.15"
+            android:text="Registro"
+            android:textAllCaps="false" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogin"
-            android:layout_width="140dp"
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+            android:layout_width="160dp"
             android:layout_height="70dp"
-            android:text="Ingresar" />
+            android:letterSpacing="0.15"
+            android:text="Ingresar"
+            android:textAllCaps="false" />
 
     </LinearLayout>
 
-
+    <Button
+        android:id="@+id/btnOlv"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:text="Olvidé la contraseña"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonsLogin" />
 </androidx.constraintlayout.widget.ConstraintLayout>

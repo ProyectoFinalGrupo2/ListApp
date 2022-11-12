@@ -57,6 +57,13 @@ class AuthViewModel : ViewModel() {
         }
     }
 
+    fun passwordReset(email: String) {
+        viewModelScope.launch {
+            val authResponse = authRepository.sendPasswordResetEmail(email)
+            authState.postValue(AuthState(errorMessage = authResponse.errorMessage))
+        }
+    }
+
     fun checkIfUserIsAuthenticated(): Boolean = authRepository.checkIfUserIsAuthenticated()
 
     fun logout() = authRepository.logout()

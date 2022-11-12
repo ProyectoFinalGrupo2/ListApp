@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.ort.listapp.databinding.FragmentLoginBinding
+import com.ort.listapp.utils.HelperClass.getCircularProgress
 import com.ort.listapp.utils.HelperClass.isEmailValid
 import com.ort.listapp.utils.HelperClass.showToast
 
@@ -27,17 +28,17 @@ class LoginFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
         val tfEmail = binding.tfEmail
         val inputEmail = tfEmail.editText
         val tfPass = binding.tfPass
         val inputPass = tfPass.editText
         val btnLogin = binding.btnLogin
         val btnRegister = binding.btnRegister
+        val btnOlv = binding.btnOlv
 
-//        val currentUser = auth.currentUser
-        val currentUser = null
-        if (currentUser != null) {
-//            goToMainActivity()
+        if (authViewModel.checkIfUserIsAuthenticated()) {
+            goToMainActivity()
         } else {
             btnRegister.setOnClickListener {
                 val action = LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
@@ -51,6 +52,8 @@ class LoginFragment : Fragment() {
                     } else if (inputPass.text.isBlank()) {
                         tfPass.error = "Debe ingresar una contraseña"
                     } else {
+                        btnLogin.icon = getCircularProgress(requireContext())
+                        btnLogin.isClickable = false
                         authViewModel.login(
                             inputEmail.text.toString().trim(),
                             inputPass.text.toString()
@@ -64,10 +67,12 @@ class LoginFragment : Fragment() {
                 if (it.loggedConFamilia) goToMainActivity()
                 if (it.errorMessage.isNotBlank()) {
                     showToast(requireContext(), it.errorMessage)
-                    authViewModel.authState.postValue(AuthState())
                 }
+                btnLogin.icon = null
+                btnLogin.isClickable = true
                 inputEmail?.text?.clear()
                 inputPass?.text?.clear()
+                authViewModel.authState.postValue(AuthState())
             }
 
             inputEmail?.doAfterTextChanged {
@@ -77,6 +82,11 @@ class LoginFragment : Fragment() {
             inputPass?.doAfterTextChanged {
                 tfPass.error = null
             }
+
+            btnOlv.setOnClickListener {
+                goToForgotFragment()
+            }
+
         }
     }
 
@@ -90,6 +100,11 @@ class LoginFragment : Fragment() {
 
     private fun goToFamilyFragment() {
         val action = LoginFragmentDirections.actionLoginFragmentToFamiliaFragment()
+        binding.root.findNavController().navigate(action)
+    }
+
+    private fun goToForgotFragment() {
+        val action = LoginFragmentDirections.actionLoginFragmentToForgotFragment()
         binding.root.findNavController().navigate(action)
     }
 }
