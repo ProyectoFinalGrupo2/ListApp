@@ -1,16 +1,19 @@
 package com.ort.listapp.ui.compras_favoritas
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ort.listapp.R
 import com.ort.listapp.databinding.FragmentComprasFavoritasBinding
 import com.ort.listapp.domain.model.ItemLista
 import com.ort.listapp.domain.model.Lista
@@ -28,8 +31,10 @@ class ComprasFavoritasFragment : Fragment() {
     private lateinit var binding: FragmentComprasFavoritasBinding
 
     private val viewModel: FamilyViewModel by activityViewModels()
-    private var idListaActual: String? = null
+    private var listaActual: Lista? = null
     private var listas :MutableList<Lista>? = null
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,60 +44,68 @@ class ComprasFavoritasFragment : Fragment() {
         return binding.root
     }
 
-    private fun setRecycler(){
-        listas = viewModel.getFamilia().value?.let { viewModel.getListasByTipoEnFamilia(it,TipoLista.LISTA_FAVORITA) }
-        binding.rvComprasFavoritas.setHasFixedSize(true)
-        binding.rvComprasFavoritas.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.rvComprasFavoritas.adapter =
-            listas?.let { it2 ->
-                CompraFavoritaAdapter(it2,requireContext()) { lista ->
-                    onClickLista(
-                        lista
-                    )
-                }
-            }
-    }
     @SuppressLint("NotifyDataSetChanged")
     override fun onStart() {
-
         super.onStart()
-        setRecycler()
+
+        var rvComprasFavoritas = binding.rvComprasFavoritas
+        var btnVolverListaCompra = binding.btnVolverListaCompra
+        listas = viewModel.getFamilia().value?.let { viewModel.getListasByTipoEnFamilia(it,TipoLista.LISTA_FAVORITA) }
+
         viewModel.getFamilia().observe(this, Observer {
-            listas?.let { it1 -> listas!!.removeAll(it1) }
+            listas?.clear()
             viewModel.getFamilia().value?.let { viewModel.getListasByTipoEnFamilia(it,TipoLista.LISTA_FAVORITA) }
-                ?.let { it1 -> listas?.addAll(it1) }
+                ?.let {listas?.addAll(it) }
             this.actualizarLista()
-            binding.rvComprasFavoritas.adapter?.notifyDataSetChanged()
+            rvComprasFavoritas.adapter?.notifyDataSetChanged()
 
         })
-        binding.btnVolverListaCompra.setOnClickListener {
+        btnVolverListaCompra.setOnClickListener {
             val action = ComprasFavoritasFragmentDirections.actionComprasFavoritasFragmentToListaDeComprasFragment()
             view?.findNavController()?.navigate(action)
         }
+
+        fun setRVListas(){
+            rvComprasFavoritas.setHasFixedSize(true)
+            rvComprasFavoritas.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            rvComprasFavoritas.adapter =
+                listas?.let { it2 ->
+                    CompraFavoritaAdapter(it2,requireContext()) { lista ->
+                        onClickLista(
+                            lista
+                        )
+                    }
+                }
+        }
+
+        setRVListas()
     }
 
-    @SuppressLint("SetTextI18n")
-    fun onClickLista(lista:Lista){
-        idListaActual = lista.id.toString()
+
+
+
+    private fun onClickLista(lista:Lista){
+        listaActual = lista
         this.actualizarLista()
     }
 
-    @SuppressLint("SetTextI18n")
+
     private fun actualizarLista(){
-        if(idListaActual != null) {
-            binding.listaFavCompleta.visibility = View.VISIBLE
-            binding.txtTotalListaFav.text = "Precio total: $" + idListaActual?.let {
+        if(listaActual != null) {
+            val totalLista = listaActual!!.id?.let {
                 viewModel.precioTotalListaById(
                     it
                 )
-            }
-            binding.nombreListaCF.text = listas?.find { it.id == idListaActual }?.nombre
+            }.toString()
+            binding.listaFavCompleta.visibility = View.VISIBLE
+            binding.txtTotalListaFav.text = resources.getString(R.string.precio_total,totalLista)
+            binding.nombreListaCF.text = listaActual!!.nombre
             binding.rvListaComprasFavoritas.setHasFixedSize(true)
             binding.rvListaComprasFavoritas.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             binding.rvListaComprasFavoritas.adapter =
-                idListaActual?.let { viewModel.getProductosByIdLista(it) }?.let { it ->
+                listaActual!!.id?.let { viewModel.getProductosByIdLista(it) }?.let { it ->
                     ProductoListadoAdapter(
                         it,
                         requireContext(),
@@ -103,20 +116,52 @@ class ComprasFavoritasFragment : Fragment() {
                 }
 
             binding.btnCopiarListaFav.setOnClickListener {
-                idListaActual?.let { it1 -> viewModel.copiarListaFavorita(it1) }
+                listaActual!!.id?.let { it1 -> viewModel.copiarListaFavorita(it1) }
                 HelperClass.showToast(requireContext(), "Se pasaron todos los productos a la lista actual")
 
             }
             binding.btnBorrarListaFav.setOnClickListener {
-                viewModel.borrarListaFavorita(idListaActual)
-                idListaActual = null
-                binding.listaFavCompleta.visibility = View.INVISIBLE
+                this.borrarLista()
+
             }
         }
     }
 
+    @SuppressLint("StringFormatMatches")
+    private fun borrarLista(){
+        val popupBuilder = AlertDialog.Builder(context)
+        val popUpView = layoutInflater.inflate(R.layout.popup_borrar_item, null)
+        popupBuilder.setView(popUpView)
+        val popUp = popupBuilder.create()
+        val btnCancelar = popUpView.findViewById<Button>(R.id.btn_cancelar_borrar)
+        val btnBorrar = popUpView.findViewById<Button>(R.id.btn_borrar_item)
+        val txtBorrar = popUpView.findViewById<TextView>(R.id.txt_borrar_item)
+        val txtDescripcion = popUpView.findViewById<TextView>(R.id.txt_info_borrado_item)
+        val btnCerrar = popUpView.findViewById<ImageView>(R.id.btn_cerrar_popup)
+
+        txtBorrar.text = resources.getString(R.string.borrar_lista,
+            "'"+ (listaActual?.nombre +"'"
+        ))
+        txtDescripcion.text = resources.getString(R.string.aviso_borrar_lista)
+
+        btnBorrar.setOnClickListener {
+            viewModel.borrarListaFavorita(listaActual?.id)
+            listaActual = null
+            binding.listaFavCompleta.visibility = View.INVISIBLE
+            popUp.dismiss()
+        }
+        btnCerrar.setOnClickListener {
+            popUp.dismiss()
+        }
+        btnCancelar.setOnClickListener{
+            popUp.dismiss()
+
+        }
+        popUp.show()
+    }
+
     private fun removerProducto(itemLista: ItemLista) {
-        idListaActual?.let {
+        listaActual?.id?.let {
             viewModel.removerProductoDeListaById(
                 it,
                 itemLista.producto.id
@@ -125,7 +170,7 @@ class ComprasFavoritasFragment : Fragment() {
     }
 
     private fun clickSumaYResta(producto: ItemLista, cantidad: Int) {
-        idListaActual?.let {
+        listaActual?.id?.let {
             viewModel.actualizarProductoEnListaById(
                 it,
                 producto.producto.id,
