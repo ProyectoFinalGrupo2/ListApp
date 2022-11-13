@@ -11,6 +11,7 @@ import androidx.navigation.findNavController
 import com.ort.listapp.databinding.FragmentLoginBinding
 import com.ort.listapp.utils.HelperClass.getCircularProgress
 import com.ort.listapp.utils.HelperClass.isEmailValid
+import com.ort.listapp.utils.HelperClass.logErrorMessage
 import com.ort.listapp.utils.HelperClass.showToast
 
 class LoginFragment : Fragment() {
@@ -18,16 +19,33 @@ class LoginFragment : Fragment() {
     private val authViewModel: AuthViewModel by activityViewModels()
     private lateinit var binding: FragmentLoginBinding
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        logErrorMessage("LoginFragment onCreate")
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        logErrorMessage("LoginFragment onCreateView")
         binding = FragmentLoginBinding.inflate(layoutInflater)
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        logErrorMessage("LoginFragment onViewCreated")
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        logErrorMessage("LoginFragment onViewStateRestored")
+    }
+
     override fun onStart() {
         super.onStart()
+        logErrorMessage("LoginFragment onStart")
 
         val tfEmail = binding.tfEmail
         val inputEmail = tfEmail.editText
@@ -76,6 +94,7 @@ class LoginFragment : Fragment() {
             }
 
             inputEmail?.doAfterTextChanged {
+
                 tfEmail.error = null
             }
 
@@ -90,12 +109,43 @@ class LoginFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        logErrorMessage("LoginFragment onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        logErrorMessage("LoginFragment onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        logErrorMessage("LoginFragment onStop")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        logErrorMessage("LoginFragment onSaveInstanceState")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        logErrorMessage("LoginFragment onDestroyView")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        logErrorMessage("LoginFragment onDestroy")
+    }
+
     private fun checkIfUserIsAuthenticated(): Boolean =
         authViewModel.checkIfUserIsAuthenticated()
 
     private fun goToMainActivity() {
         val action = LoginFragmentDirections.actionLoginFragmentToMainActivity()
         binding.root.findNavController().navigate(action)
+        requireActivity().finish()
     }
 
     private fun goToFamilyFragment() {

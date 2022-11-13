@@ -21,13 +21,13 @@ class AuthViewModel : ViewModel() {
     fun registrarUsuario(nombre: String, email: String, pass: String) {
         viewModelScope.launch {
             val authResponse = authRepository.createUserWithEmailAndPassword(nombre, email, pass)
-            if (authResponse.errorMessage.isBlank()) {
+            if (authResponse.message.isBlank()) {
                 val usuarioNuevo = authResponse.usuario
                 prefsHelper.saveUserName(usuarioNuevo.nombre)
                 prefsHelper.saveUserId(usuarioNuevo.uid)
                 authState.postValue(AuthState(loggedSinFamilia = true))
             } else {
-                authState.postValue(AuthState(errorMessage = authResponse.errorMessage))
+                authState.postValue(AuthState(errorMessage = authResponse.message))
             }
         }
     }
@@ -41,7 +41,7 @@ class AuthViewModel : ViewModel() {
     fun login(email: String, pass: String) {
         viewModelScope.launch {
             val authResponse = authRepository.signInWithEmailAndPassword(email, pass)
-            if (authResponse.errorMessage.isBlank()) {
+            if (authResponse.message.isBlank()) {
                 val usuario = authResponse.usuario
                 prefsHelper.saveUserName(usuario.nombre)
                 prefsHelper.saveUserId(usuario.uid)
@@ -52,7 +52,7 @@ class AuthViewModel : ViewModel() {
                     prefsHelper.saveFamilyId(usuario.familia)
                 }
             } else {
-                authState.postValue(AuthState(errorMessage = authResponse.errorMessage))
+                authState.postValue(AuthState(errorMessage = authResponse.message))
             }
         }
     }
@@ -60,7 +60,7 @@ class AuthViewModel : ViewModel() {
     fun passwordReset(email: String) {
         viewModelScope.launch {
             val authResponse = authRepository.sendPasswordResetEmail(email)
-            authState.postValue(AuthState(errorMessage = authResponse.errorMessage))
+            authState.postValue(AuthState(errorMessage = authResponse.message))
         }
     }
 
