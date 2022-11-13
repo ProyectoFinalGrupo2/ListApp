@@ -41,10 +41,8 @@
                 android:id="@+id/editTextBuscar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="6dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="10dp"
                 android:hint="Buscar"
                 app:endIconMode="clear_text"
                 app:layout_constraintBottom_toTopOf="@id/tvProdFavoritos"
@@ -64,9 +62,7 @@
                 android:id="@+id/tvProdFavoritos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
-                android:layout_marginBottom="20dp"
-
+                android:layout_marginVertical="10dp"
                 android:shadowColor="#000000"
                 android:text="Productos favoritos"
                 android:textColor="#000000"
@@ -74,19 +70,18 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/rvProdFavoritos"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.055"
+                app:layout_constraintHorizontal_bias="0.05"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/editTextBuscar" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvProdFavoritos"
-
                 android:layout_width="0dp"
-
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginHorizontal="5dp"
                 android:background="#fefefe"
                 android:scrollbars="horizontal"
                 app:layout_constraintBottom_toTopOf="@+id/tvProdPersonalizados"
@@ -100,14 +95,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_marginTop="22dp"
+                android:layout_marginVertical="10dp"
                 android:shadowColor="#000000"
                 android:text="Productos Personalizados"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.075"
+                app:layout_constraintHorizontal_bias="0.05"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rvProdFavoritos" />
 
@@ -115,7 +110,8 @@
                 android:id="@+id/rvProdPersonalizados"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvProdPersonalizados">
@@ -144,7 +140,8 @@
                 android:id="@+id/rvProdFiltrados"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginHorizontal="5dp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

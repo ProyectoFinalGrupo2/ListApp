@@ -120,5 +120,6 @@ class FamiliaFragment : Fragment() {
     private fun goToMainActivity() {
         val action = FamiliaFragmentDirections.actionFamiliaFragmentToMainActivity()
         binding.root.findNavController().navigate(action)
+        requireActivity().finish()
     }
 }

@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.ListaAppApplication.Companion.prefsHelper
@@ -21,6 +23,7 @@ import com.ort.listapp.domain.model.ItemLista
 import com.ort.listapp.domain.model.Producto
 import com.ort.listapp.ui.FamilyViewModel
 import com.ort.listapp.ui.adapters.ProductoAdapter
+import com.ort.listapp.ui.adapters.ProductoFiltradoAdapter
 import com.ort.listapp.utils.SysConstants.PREFIJO_PROD_PERS
 import java.text.DecimalFormat
 
@@ -33,6 +36,10 @@ class ProductosFragment : Fragment() {
     private val viewModel: FamilyViewModel by activityViewModels()
     private val productosViewModel: ProductosViewModel by viewModels()
 
+    private lateinit var rvProdFavoritos: RecyclerView
+    private lateinit var rvProdPersonalizados: RecyclerView
+    private lateinit var rvProdFiltrados: RecyclerView
+
     private lateinit var popUp: AlertDialog
     private lateinit var popupBuilder: AlertDialog.Builder
 
@@ -42,15 +49,34 @@ class ProductosFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProductosBinding.inflate(inflater, container, false)
+
+        // This is the appropriate place to set up the initial state of your view, to start observing
+        // LiveData instances whose callbacks update the fragment's view, and to set up adapters on
+        // any RecyclerView or ViewPager2 instances in your fragment's view.
+        // from: https://developer.android.com/guide/fragments/lifecycle
+        initRecyclersViews()
+
         return binding.root
+    }
+
+    private fun initRecyclersViews() {
+        rvProdFavoritos = binding.rvProdFavoritos
+        rvProdFavoritos.setHasFixedSize(true)
+        rvProdFavoritos.layoutManager =
+            GridLayoutManager(requireContext(), 3)
+
+        rvProdPersonalizados = binding.rvProdPersonalizados
+        rvProdPersonalizados.setHasFixedSize(true)
+        rvProdPersonalizados.layoutManager =
+            GridLayoutManager(requireContext(), 3)
+
+        rvProdFiltrados = binding.rvProdFiltrados
+        rvProdFiltrados.setHasFixedSize(true)
+        rvProdFiltrados.layoutManager = LinearLayoutManager(requireContext())
     }
 
     override fun onStart() {
         super.onStart()
-
-        val rvProdFavoritos = binding.rvProdFavoritos
-        val rvProdPersonalizados = binding.rvProdPersonalizados
-        val rvProdFiltrados = binding.rvProdFiltrados
 
         val btnCrearProducto = binding.btnNuevoProducto
         val etBuscar = binding.editTextBuscar.editText!!
@@ -59,9 +85,6 @@ class ProductosFragment : Fragment() {
         val tvProdPersonalizados = binding.tvProdPersonalizados
         val tvProdFiltrados = binding.tvProdFiltrados
 
-        rvProdFavoritos.setHasFixedSize(true)
-        rvProdFavoritos.layoutManager =
-            GridLayoutManager(requireContext(), 3)
         viewModel.getFamilia().observe(viewLifecycleOwner) {
             rvProdFavoritos.adapter =
                 ProductoAdapter(viewModel.getProductosFavoritos(), requireContext()) { prod ->
@@ -69,9 +92,6 @@ class ProductosFragment : Fragment() {
                 }
         }
 
-        rvProdPersonalizados.setHasFixedSize(true)
-        rvProdPersonalizados.layoutManager =
-            GridLayoutManager(requireContext(), 3)
         viewModel.getFamilia().observe(viewLifecycleOwner) {
             rvProdPersonalizados.adapter =
                 ProductoAdapter(viewModel.getProductosPersonalizados(), requireContext()) { prod ->
@@ -79,10 +99,8 @@ class ProductosFragment : Fragment() {
                 }
         }
 
-        rvProdFiltrados.setHasFixedSize(true)
-        rvProdFiltrados.layoutManager = GridLayoutManager(requireContext(), 3)
         productosViewModel.recStock.observe(viewLifecycleOwner) {
-            rvProdFiltrados.adapter = ProductoAdapter(it, requireContext()) { prod ->
+            rvProdFiltrados.adapter = ProductoFiltradoAdapter(it, requireContext()) { prod ->
                 onItemClick(prod)
             }
         }
@@ -99,7 +117,7 @@ class ProductosFragment : Fragment() {
         }
 
         fun visibilidadProdFiltrados(visibility: Int) {
-            tvProdFiltrados.visibility = visibility
+//            tvProdFiltrados.visibility = visibility
             rvProdFiltrados.visibility = visibility
         }
 

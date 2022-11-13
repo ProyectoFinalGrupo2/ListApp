@@ -27,7 +27,7 @@ class AuthRepository {
             AuthResponse(usuario = usuarioNuevo)
         } catch (e: Exception) {
             logErrorMessage(e.message)
-            AuthResponse(errorMessage = "Se produjo un error creando el usuario")
+            AuthResponse(message = "Se produjo un error creando el usuario")
         }
     }
 
@@ -41,7 +41,7 @@ class AuthRepository {
             AuthResponse(usuario = usuario)
         } catch (e: Exception) {
             logErrorMessage(e.message)
-            AuthResponse(errorMessage = "Se produjo un error iniciando sesión ")
+            AuthResponse(message = "Se produjo un error iniciando sesión ")
         }
     }
 
@@ -49,11 +49,11 @@ class AuthRepository {
         email: String,
     ): AuthResponse {
         return try {
-            val authResult = firebaseAuth.sendPasswordResetEmail(email).await()
-            AuthResponse(errorMessage = "Email enviado")
+            firebaseAuth.sendPasswordResetEmail(email).await()
+            AuthResponse(message = "Email enviado")
         } catch (e: Exception) {
             logErrorMessage(e.message)
-            AuthResponse(errorMessage = "Se produjo un error restableciendo contraseña")
+            AuthResponse(message = "Se produjo un error restableciendo contraseña")
         }
     }
 

@@ -31,6 +31,9 @@ class ListaDeComprasFragment : Fragment() {
     private val viewModel: FamilyViewModel by activityViewModels()
     private lateinit var binding: FragmentListaDeComprasBinding
 
+    private lateinit var rvListaCompra: RecyclerView
+    private lateinit var rvListaRC: RecyclerView
+
     private lateinit var popup: AlertDialog
     private lateinit var popupBuilder: AlertDialog.Builder
     private lateinit var adapterRC: RealizarCompraAdapter
@@ -57,7 +60,25 @@ class ListaDeComprasFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentListaDeComprasBinding.inflate(inflater, container, false)
+
+        // This is the appropriate place to set up the initial state of your view, to start observing
+        // LiveData instances whose callbacks update the fragment's view, and to set up adapters on
+        // any RecyclerView or ViewPager2 instances in your fragment's view.
+        // from: https://developer.android.com/guide/fragments/lifecycle
+        initRecyclersViews()
+
         return binding.root
+    }
+
+    private fun initRecyclersViews() {
+        rvListaCompra = binding.rvListaCompra
+        rvListaCompra.setHasFixedSize(true)
+        rvListaCompra.layoutManager =
+            LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+
+        rvListaRC = binding.rvListaRC
+        rvListaRC.setHasFixedSize(true)
+        rvListaRC.layoutManager = LinearLayoutManager(requireContext())
     }
 
     override fun onStart() {
@@ -69,30 +90,24 @@ class ListaDeComprasFragment : Fragment() {
         val btnAgregarListaFav = binding.btnAgregarListaFav
         val btnHistorial = binding.btnCrearLista
         val txtPrecioTotalLista = binding.txtPrecioTotalLista
-        var rvListaCompras = binding.rvListaCompra
 
         viewModel.getFamilia().observe(this) {
             val total = viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual())
                 .toString()
             txtPrecioTotalLista.text = "Precio total: $$total"
             val productos = viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual())
-            rvListaCompras.setHasFixedSize(true)
-            rvListaCompras.layoutManager =
-                LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-            rvListaCompras.adapter = ProductoListadoAdapter(
+            rvListaCompra.adapter = ProductoListadoAdapter(
                 productos, requireContext(),
                 { removerProducto(it) },
                 { clickSumaYResta(it, 1) },
                 { clickSumaYResta(it, -1) }
             )
 
-            binding.rvListaRC.setHasFixedSize(true)
-            binding.rvListaRC.layoutManager = LinearLayoutManager(requireContext())
-
             viewModel.cargarChecklist()
-            adapterRC =
-                RealizarCompraAdapter(viewModel.getProductosChecklist()) { clickChecklist(it) }
-            binding.rvListaRC.adapter = adapterRC
+
+            rvListaRC.adapter = RealizarCompraAdapter(viewModel.getProductosChecklist()) {
+                clickChecklist(it)
+            }
         }
 
         btnRealizarCompra.setOnClickListener {
