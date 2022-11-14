@@ -42,6 +42,11 @@ class RealizarCompraAdapter(var listaProductos: MutableList<ItemListaChecklist>,
             val txtPrecio: TextView = view.findViewById(R.id.txtPrecioRC)
             txtPrecio.text = "$" + precio.toString()
         }
+
+        fun setChecked(checked: Boolean){
+            val cbProducto: CheckBox = view.findViewById(R.id.cbProducto)
+            cbProducto.isChecked = checked
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RealizarCompraHolder {
@@ -55,6 +60,7 @@ class RealizarCompraAdapter(var listaProductos: MutableList<ItemListaChecklist>,
         holder.setNombre(listaProductos[position].producto.nombre)
         holder.setCantidad(listaProductos[position].cantidad)
         holder.setPrecio(listaProductos[position].producto.precio)
+        holder.setChecked(listaProductos[position].estado)
 
         holder.cbProducto.setOnClickListener { clickChecklist(listaProductos[position].producto.id) }
     }
