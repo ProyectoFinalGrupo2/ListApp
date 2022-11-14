@@ -35,6 +35,16 @@ data class Lista(
         }
     }
 
+    fun modificarProductoPorID(idProd:String, nombre:String, precio:Double, idCategoria: String){
+        var item = buscarProductoPorId(idProd)
+        if(item !=null){
+            var prod = item.producto
+            prod.nombre = nombre
+            prod.precio = precio
+            prod.id_Categoria = idCategoria
+        }
+    }
+
     private fun productoEstaEnLista(id: String): Boolean {
         return productos.firstOrNull { it.producto.id == id } != null
     }

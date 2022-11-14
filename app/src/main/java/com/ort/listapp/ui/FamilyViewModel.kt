@@ -11,7 +11,6 @@ import com.ort.listapp.domain.model.*
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 class FamilyViewModel : ViewModel() {
 
@@ -101,23 +100,41 @@ class FamilyViewModel : ViewModel() {
     fun esProductoFav(producto: Producto): Boolean =
         this.familia.value?.productosFavoritos?.find { it == producto } != null
 
+    private fun actualizarProductoPersEnLista(idLista: String, idProducto:String, nombre: String, precio: Double, id_categoria:String){
+        val lista = this.getFamilia().value?.let { this.getListaByIdEnFamilia(it,idLista) }
+        if(lista?.productos?.find { itemLista -> itemLista.producto.id == idProducto } != null){
+            lista.modificarProductoPorID(idProducto,nombre,precio,id_categoria )
+        }
+    }
 
-    fun actualizarProductoPersonalizado(
-        idProducto: String,
-        nombre: String,
-        precio: Double,
-        id_categoria: String
+    fun actualizarProductoPersonalizado(idProducto: String, nombre: String, precio: Double,id_categoria: String
     ) {
-        this.familia.value?.let { familia ->
-            val producto = familia.productosPersonalizados.find { it.id == idProducto }
-            producto?.let {
-                it.id = idProducto
+        val familia = this.getFamilia().value
+        if (familia != null) {
+            //Actualizo el producto personalizado
+            familia.productosPersonalizados.find { it.id == idProducto }?.let {
                 it.nombre = nombre
                 it.precio = precio
                 it.id_Categoria = id_categoria
-                actualizarFamilia(familia)
             }
+            //Actualizo en productos favoritos
+            familia.productosFavoritos.find { it.id == idProducto }?.let {
+                it.nombre = nombre
+                it.precio = precio
+                it.id_Categoria = id_categoria
+            }
+
+           //Itero y actualizo en las compras favoritas
+            this.getListasByTipoEnFamilia(familia,TipoLista.LISTA_FAVORITA).forEach {
+                it.id?.let { it1 -> actualizarProductoPersEnLista(it1,idProducto,nombre,precio,id_categoria) }
+            }
+            //Actualizo en lista de compras
+            this.actualizarProductoPersEnLista(getIdListaDeComprasActual(), idProducto, nombre, precio, id_categoria)
+            //Actualizo en la alacena
+            this.actualizarProductoPersEnLista(getIdAlacenaVirtual(), idProducto, nombre, precio, id_categoria)
+            actualizarFamilia(familia)
         }
+
     }
 
     fun eliminarProductoPersonalizado(producto: Producto) {

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ort.listapp.R
 import com.ort.listapp.databinding.FragmentComprasFavoritasBinding
+import com.ort.listapp.databinding.FragmentProductosBinding
 import com.ort.listapp.domain.model.ItemLista
 import com.ort.listapp.domain.model.Lista
 import com.ort.listapp.domain.model.TipoLista
@@ -28,7 +29,8 @@ class ComprasFavoritasFragment : Fragment() {
     /*companion object {
         fun newInstance() = ComprasFavoritasFragment()
     }*/
-    private lateinit var binding: FragmentComprasFavoritasBinding
+    private var _binding: FragmentComprasFavoritasBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel: FamilyViewModel by activityViewModels()
     private var listaActual: Lista? = null
@@ -40,7 +42,7 @@ class ComprasFavoritasFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentComprasFavoritasBinding.inflate(inflater, container, false)
+        _binding = FragmentComprasFavoritasBinding.inflate(inflater, container, false)
         cargarListas()
         initRecyclerView()
         return binding.root
@@ -190,5 +192,9 @@ class ComprasFavoritasFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(ComprasFavoritasViewModel::class.java)
         // TODO: Use the ViewModel
     }*/
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }
