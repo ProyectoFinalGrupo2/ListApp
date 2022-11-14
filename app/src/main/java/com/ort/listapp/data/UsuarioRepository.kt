@@ -29,4 +29,8 @@ class UsuarioRepository {
     suspend fun agregarFamiliaEnUsuario(uid: String, familiaId: String) {
         usuariosRef.document(uid).update("familia", familiaId).await()
     }
+
+    suspend fun quitarFamiliaDeUsuario(uid: String) {
+        usuariosRef.document(uid).update("familia", "").await()
+    }
 }

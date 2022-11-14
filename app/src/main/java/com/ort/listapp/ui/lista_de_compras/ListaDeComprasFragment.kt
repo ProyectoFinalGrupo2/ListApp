@@ -10,11 +10,10 @@ import android.widget.ImageView
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.R
 import com.ort.listapp.databinding.FragmentListaDeComprasBinding
 import com.ort.listapp.domain.model.ItemLista
@@ -24,6 +23,7 @@ import com.ort.listapp.ui.adapters.RealizarCompraAdapter
 import com.ort.listapp.ui.auth.AuthViewModel
 import com.ort.listapp.utils.HelperClass.showToast
 
+@Suppress("DEPRECATION")
 @SuppressLint("SetTextI18n")
 class ListaDeComprasFragment : Fragment() {
 
@@ -65,34 +65,7 @@ class ListaDeComprasFragment : Fragment() {
         // any RecyclerView or ViewPager2 instances in your fragment's view.
         // from: https://developer.android.com/guide/fragments/lifecycle
         initRecyclersViews()
-        setHasOptionsMenu(true)
         return binding.root
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.tool_bar, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.userConfigButton -> {
-                val action =
-                    ListaDeComprasFragmentDirections.actionListaDeComprasFragmentToUserConfigFragment()
-                view?.findNavController()?.navigate(action)
-//                val navBar: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
-//                navBar.visibility = View.GONE
-                true
-            }
-            R.id.infoFamilyButton -> {
-                val action =
-                    ListaDeComprasFragmentDirections.actionListaDeComprasFragmentToInfoFamilyFragment2()
-                view?.findNavController()?.navigate(action)
-//                val navBar: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
-//                navBar.visibility = View.GONE
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     private fun initRecyclersViews() {
@@ -104,6 +77,31 @@ class ListaDeComprasFragment : Fragment() {
         rvListaRC = binding.rvListaRC
         rvListaRC.setHasFixedSize(true)
         rvListaRC.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.tool_bar, menu)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        var direction: NavDirections? = null
+        when (item.itemId) {
+            R.id.userConfigButton -> {
+                direction =
+                    ListaDeComprasFragmentDirections.actionListaDeComprasFragmentToUserConfigFragment()
+            }
+//            R.id.infoFamilyButton -> {
+//                direction =
+//                    ListaDeComprasFragmentDirections.actionListaDeComprasFragmentToInfoFamilyFragment2()
+//            }
+            else -> super.onOptionsItemSelected(item)
+        }
+        direction?.let {
+            view?.findNavController()?.navigate(direction)
+        }
+        return true
     }
 
     override fun onStart() {
@@ -199,7 +197,7 @@ class ListaDeComprasFragment : Fragment() {
     }
 
     private fun realizarCompra() {
-        if(viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()).isNotEmpty()){
+        if (viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()).isNotEmpty()) {
             //oculto los componentes de la lista de compras
             visibilidadListaCompras(View.GONE)
 
@@ -211,15 +209,15 @@ class ListaDeComprasFragment : Fragment() {
                     .toString()
 
             binding.btnConfirmarCompra.setOnClickListener {
-                if(viewModel.hayProductosCheckeados()){
+                if (viewModel.hayProductosCheckeados()) {
                     viewModel.realizarCompra()
                     editarLista()
-                }else{
-                    showToast(requireContext(),"No se seleccionó ningún producto")
+                } else {
+                    showToast(requireContext(), "No se seleccionó ningún producto")
                 }
             }
-        }else{
-            showToast(requireContext(),"No hay productos en la lista")
+        } else {
+            showToast(requireContext(), "No hay productos en la lista")
         }
     }
 
