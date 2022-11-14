@@ -15,7 +15,7 @@
         android:layout_marginTop="16dp"
         android:backgroundTint="#C9AEEC"
         android:text="Volver a lista de compras"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/rv_compras_favoritas"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.468"

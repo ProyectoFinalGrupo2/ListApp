@@ -16,6 +16,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.R
 import com.ort.listapp.databinding.FragmentHistorialBinding
 import com.ort.listapp.domain.model.Lista
@@ -104,5 +105,28 @@ class Historial : Fragment() {
         prods.adapter = ProductoListadoHistorialAdapter(
             list.productos, requireContext()
         )
+
+        btnCerrar.setOnClickListener {
+            popUp.dismiss()
+        }
+
+        var id : List<Lista> = ArrayList()
+
+        viewModel.getFamilia().value?.let {
+            id = viewModel.getListasByTipoEnFamilia(it, TipoLista.LISTA_DE_COMPRAS)
+        }
+
+        btnCrear.setOnClickListener {
+            list.productos.forEach { it1 ->
+                id.forEach { it2 ->
+                    it2.id?.let { it3 -> viewModel.agregarProductoEnListaById(it3, it1) }
+                }
+            }
+            Snackbar.make(
+                binding.root, "Se agregaron los productos de la compra hecha el ${list.nombre} a la lista.", Snackbar.LENGTH_SHORT
+            ).show()
+            popUp.dismiss()
+        }
+
     }
 }
