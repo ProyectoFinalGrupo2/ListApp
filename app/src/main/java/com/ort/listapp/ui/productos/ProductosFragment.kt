@@ -3,19 +3,21 @@ package com.ort.listapp.ui.productos
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputLayout
+import com.ort.listapp.ListaAppApplication
 import com.ort.listapp.ListaAppApplication.Companion.prefsHelper
 import com.ort.listapp.R
 import com.ort.listapp.databinding.FragmentProductosBinding
@@ -24,11 +26,15 @@ import com.ort.listapp.domain.model.Producto
 import com.ort.listapp.ui.FamilyViewModel
 import com.ort.listapp.ui.adapters.ProductoAdapter
 import com.ort.listapp.ui.adapters.ProductoFiltradoAdapter
+import com.ort.listapp.ui.auth.AuthViewModel
+import com.ort.listapp.utils.HelperClass
 import com.ort.listapp.utils.SysConstants.PREFIJO_PROD_PERS
 import java.text.DecimalFormat
 
 @SuppressLint("SetTextI18n")
 class ProductosFragment : Fragment() {
+
+    private val authViewModel: AuthViewModel by activityViewModels()
 
     private var _binding: FragmentProductosBinding? = null
     private val binding get() = _binding!!
@@ -55,7 +61,7 @@ class ProductosFragment : Fragment() {
         // any RecyclerView or ViewPager2 instances in your fragment's view.
         // from: https://developer.android.com/guide/fragments/lifecycle
         initRecyclersViews()
-
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -73,6 +79,105 @@ class ProductosFragment : Fragment() {
         rvProdFiltrados = binding.rvProdFiltrados
         rvProdFiltrados.setHasFixedSize(true)
         rvProdFiltrados.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.tool_bar, menu)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        var direction: NavDirections? = null
+        when (item.itemId) {
+            R.id.userConfigButton -> {
+                initPopup()
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+        return true
+    }
+
+    private fun initPopup() {
+        popupBuilder = AlertDialog.Builder(requireContext())
+        val popUpView = layoutInflater.inflate(R.layout.popup_configuracion, null)
+        val btnCerrar = popUpView.findViewById<ImageView>(R.id.btn_cerrar_popup_config)
+        val nombreUsuario = popUpView.findViewById<TextView>(R.id.nombreUsuarioPopup)
+        val email = popUpView.findViewById<TextView>(R.id.emailConfigPopup)
+        val tfNewEmail = popUpView.findViewById<TextInputLayout>(R.id.tfNewEmailPopup)
+        val inputEmail = tfNewEmail.editText
+        val btnCambiarEmail =
+            popUpView.findViewById<MaterialButton>(R.id.btnCambiarEmailPopup)
+        val nombreFamilia = popUpView.findViewById<TextView>(R.id.nombreFamiliaPopup)
+        val codigoFamilia = popUpView.findViewById<TextView>(R.id.codigoFamiliaPopup)
+        val passFamilia = popUpView.findViewById<TextView>(R.id.passFamiliaPopup)
+        val btnSalirFamilia =
+            popUpView.findViewById<MaterialButton>(R.id.btnSalirFamiliaPopup)
+        val btnCerrarSesion =
+            popUpView.findViewById<MaterialButton>(R.id.btnCerrarSesionPopup)
+
+        val familia = viewModel.getFamilia().value
+        val userName = ListaAppApplication.prefsHelper.getUserName()
+        val userEmail = ListaAppApplication.prefsHelper.getUserEmail()
+
+        if (familia != null) {
+            nombreUsuario.text = "Nombre del usuario: $userName"
+            email.text = "Email: $userEmail"
+            nombreFamilia.text = "Familia: ${familia.nombre}"
+            codigoFamilia.text = "Código: ${familia.id}"
+            passFamilia.text = "Contraseña: ${familia.password}"
+        }
+
+        btnCambiarEmail.setOnClickListener {
+            if (inputEmail != null) {
+                if (!HelperClass.isEmailValid(inputEmail.text.toString().trim())) {
+                    tfNewEmail.error = "Email invalido"
+                } else {
+                    btnCambiarEmail.icon = HelperClass.getCircularProgress(requireContext())
+                    btnCambiarEmail.isClickable = false
+                    authViewModel.changeEmail(
+                        inputEmail.text.toString(),
+                    )
+                }
+            }
+        }
+
+        btnSalirFamilia.setOnClickListener {
+            authViewModel.borrarseDeFamilia()
+        }
+
+        btnCerrarSesion.setOnClickListener {
+            authViewModel.logout()
+        }
+
+        authViewModel.authState.observe(this) {
+            if (it.successMessage.isNotBlank()) {
+                HelperClass.showToast(
+                    requireContext(),
+                    it.successMessage
+                )
+                authViewModel.logout()
+            }
+            if (it.errorMessage.isNotBlank()) HelperClass.showToast(
+                requireContext(),
+                it.errorMessage
+            )
+        }
+
+        inputEmail?.doAfterTextChanged {
+            tfNewEmail.error = null
+            if (!HelperClass.isEmailValid(inputEmail.text.toString().trim())) {
+                tfNewEmail.helperText = "Ingrese un email válido"
+            } else tfNewEmail.helperText = null
+        }
+
+        popupBuilder.setView(popUpView)
+        popUp = popupBuilder.create()
+        popUp.show()
+
+        btnCerrar.setOnClickListener {
+            popUp.dismiss()
+        }
     }
 
     override fun onStart() {

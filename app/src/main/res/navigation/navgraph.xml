@@ -19,9 +19,6 @@
         <action
             android:id="@+id/action_lista_de_comprasFragment_to_userConfigFragment"
             app:destination="@id/userConfigFragment" />
-        <action
-            android:id="@+id/action_lista_de_comprasFragment_to_infoFamilyFragment2"
-            app:destination="@id/infoFamilyFragment" />
     </fragment>
     <fragment
         android:id="@+id/alacenaFragment"
@@ -57,15 +54,6 @@
         tools:layout="@layout/fragment_user_config" >
         <action
             android:id="@+id/action_userConfigFragment_to_lista_de_comprasFragment"
-            app:destination="@id/lista_de_comprasFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/infoFamilyFragment"
-        android:name="com.ort.listapp.ui.infoFamily.InfoFamilyFragment"
-        android:label="fragment_info_family"
-        tools:layout="@layout/fragment_info_family" >
-        <action
-            android:id="@+id/action_infoFamilyFragment_to_lista_de_comprasFragment"
             app:destination="@id/lista_de_comprasFragment" />
     </fragment>
 </navigation>

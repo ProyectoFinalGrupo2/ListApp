@@ -94,15 +94,10 @@ class ListaDeComprasFragment : Fragment() {
         var direction: NavDirections? = null
         when (item.itemId) {
             R.id.userConfigButton -> {
-                direction =
-                    ListaDeComprasFragmentDirections.actionListaDeComprasFragmentToUserConfigFragment()
                 initPopup()
             }
             else -> super.onOptionsItemSelected(item)
         }
-//        direction?.let {
-//            view?.findNavController()?.navigate(direction)
-//        }
         return true
     }
 
