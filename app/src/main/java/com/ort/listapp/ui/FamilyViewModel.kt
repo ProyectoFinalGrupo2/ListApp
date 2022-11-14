@@ -157,6 +157,16 @@ class FamilyViewModel : ViewModel() {
         }
     }
 
+    fun hayProductosCheckeados(): Boolean{
+        var count = 0
+        for (item: ItemListaChecklist in listaDeComprasChecklist){
+            if (item.estado){
+                count++
+            }
+        }
+        return count > 0
+    }
+
     fun clickChecklistProducto(idProducto: String){
         val prod = listaDeComprasChecklist.find { it.producto.id == idProducto }
         if (prod != null) {

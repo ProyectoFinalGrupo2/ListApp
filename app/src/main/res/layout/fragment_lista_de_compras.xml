@@ -78,13 +78,12 @@
         android:layout_height="49dp"
         android:backgroundTint="#C9AEEC"
         android:text="Listas Favoritas"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/rvListaCompra"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.133"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.788"
         tools:ignore="TextContrastCheck" />
 
     <Button
@@ -93,13 +92,12 @@
         android:layout_height="49dp"
         android:backgroundTint="#C9AEEC"
         android:text="Historial"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/rvListaCompra"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.448"
         app:layout_constraintStart_toEndOf="@+id/btn_compras_favoritas"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.788"
         tools:ignore="TextContrastCheck" />
 
     <Button
@@ -109,7 +107,7 @@
         android:layout_marginTop="20dp"
         android:backgroundTint="#7CC8A2"
         android:text="Realizar Compra"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_agregar_lista_fav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -123,7 +121,7 @@
         android:layout_height="41dp"
         android:backgroundTint="#C9AEEC"
         android:text="Agregar como lista favorita"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

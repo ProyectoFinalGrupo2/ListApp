@@ -16,6 +16,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.R
 import com.ort.listapp.databinding.FragmentHistorialBinding
 import com.ort.listapp.domain.model.Lista
@@ -39,8 +40,6 @@ class Historial : Fragment() {
     private val viewModel: FamilyViewModel by activityViewModels()
     private lateinit var popUp: AlertDialog
     private lateinit var popupBuilder: AlertDialog.Builder
-    private var ordenReciente = false
-    private var historiales: MutableList<Lista>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,21 +49,29 @@ class Historial : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun onStart() {
         super.onStart()
-        this.setHistoriales()
+        var hist : List<Lista> = ArrayList()
         viewModel.getFamilia().observe(this, Observer {
-            historiales = viewModel.getFamilia().value?.let {
-                viewModel.getListasByTipoEnFamilia(
-                    it,
-                    TipoLista.HISTORIAL
-                )
+            binding.listaHistoriales.setHasFixedSize(true)
+            binding.listaHistoriales.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            binding.listaHistoriales.apply {
+                layoutManager = GridLayoutManager(this.context, 2)
             }
-            /* historiales?.let { it1 -> historiales!!.removeAll(it1) }
-            viewModel.getFamilia().value?.let { viewModel.getListasByTipoEnFamilia(it,TipoLista.HISTORIAL) }
-                ?.let { it1 -> historiales?.addAll(it1) }*/
-            binding.listaHistoriales.adapter?.notifyDataSetChanged()
+            binding.listaHistoriales.adapter =
+                viewModel.getFamilia().value?.let {
+                    viewModel.getListasByTipoEnFamilia(
+                        it, TipoLista.HISTORIAL
+                    )
+                }?.let {
+                    hist = it.sortedBy {
+                        it.fechaCreacion
+                    }
+                    HistorialAdapter(hist, requireContext()) {
+                        onItemClick(it)
+                    }
+                }
         })
 
 
@@ -72,51 +79,8 @@ class Historial : Fragment() {
             val action = HistorialDirections.actionHistorialToListaDeComprasFragment()
             view?.findNavController()?.navigate(action)
         }
-        binding.btnOrdenarHistoriales.setOnClickListener {
-            var listas = viewModel.getFamilia().value?.let {
-                viewModel.getListasByTipoEnFamilia(
-                    it, TipoLista.HISTORIAL
-                )
-            }
-            if (listas != null) {
-                if (!ordenReciente) {
-                    listas.sortByDescending { it.fechaCreacion }
-                } else {
-                    listas.sortBy { it.fechaCreacion }
-                }
-                ordenReciente = !ordenReciente
-            }
-
-            binding.listaHistoriales.adapter =
-                listas?.let { it1 ->
-                    HistorialAdapter(it1, requireContext()) {
-                        onItemClick(it)
-                    }
-                }
-        }
 
     }
-
-    private fun setHistoriales() {
-        historiales = viewModel.getFamilia().value?.let {
-            viewModel.getListasByTipoEnFamilia(
-                it, TipoLista.HISTORIAL
-            )
-        }
-        binding.listaHistoriales.setHasFixedSize(true)
-        binding.listaHistoriales.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.listaHistoriales.apply {
-            layoutManager = GridLayoutManager(this.context, 2)
-        }
-        binding.listaHistoriales.adapter =
-            historiales?.let { it1 ->
-                HistorialAdapter(it1, requireContext()) {
-                    onItemClick(it)
-                }
-            }
-    }
-
 
     @SuppressLint("SetTextI18n")
     fun onItemClick(list : Lista){
@@ -126,7 +90,7 @@ class Historial : Fragment() {
         val precio = popUpView.findViewById<TextView>(R.id.txt_cantidad_agregarprod)
         val prods = popUpView.findViewById<RecyclerView>(R.id.prods)
         val btnCerrar = popUpView.findViewById<ImageView>(R.id.btn_cerrar_popup)
-        val btnCrear = popUpView.findViewById<Button>(R.id.btn_copiar_historial)
+        val btnCrear = popUpView.findViewById<Button>(R.id.btn_crear_lista)
 
         popupBuilder.setView(popUpView)
         popUp = popupBuilder.create()
@@ -142,7 +106,25 @@ class Historial : Fragment() {
             list.productos, requireContext()
         )
 
-        btnCerrar.setOnClickListener{
+        btnCerrar.setOnClickListener {
+            popUp.dismiss()
+        }
+
+        var id : List<Lista> = ArrayList()
+
+        viewModel.getFamilia().value?.let {
+            id = viewModel.getListasByTipoEnFamilia(it, TipoLista.LISTA_DE_COMPRAS)
+        }
+
+        btnCrear.setOnClickListener {
+            list.productos.forEach { it1 ->
+                id.forEach { it2 ->
+                    it2.id?.let { it3 -> viewModel.agregarProductoEnListaById(it3, it1) }
+                }
+            }
+            Snackbar.make(
+                binding.root, "Se agregaron los productos de la compra hecha el ${list.nombre} a la lista.", Snackbar.LENGTH_SHORT
+            ).show()
             popUp.dismiss()
         }
 

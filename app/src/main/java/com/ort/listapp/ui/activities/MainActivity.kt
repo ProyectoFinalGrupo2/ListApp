@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity(), AuthStateListener {
         toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
+
     }
 
     override fun onStart() {
@@ -60,6 +61,7 @@ class MainActivity : AppCompatActivity(), AuthStateListener {
         super.onDestroy()
         logErrorMessage("MainActivity destroyed")
     }
+
 
 }
 

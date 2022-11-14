@@ -3,21 +3,37 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/drawable-v24/ic_add_to_cart.xml" value="0.2115" />
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/drawable-v24/ic_boxes.xml" value="0.2115" />
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2115" />
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/drawable-v24/ic_shopping_list.xml" value="0.2115" />
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/drawable/background_pop_up.xml" value="0.2115" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/drawable/border.xml" value="0.2115" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/drawable/border_producto.xml" value="0.2115" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/drawable/border_producto_alacena.xml" value="0.2115" />
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/drawable/border_producto_ldc.xml" value="0.2115" />
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/drawable/ic_family_24.xml" value="0.2115" />
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2115" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/drawable/ic_search_24.xml" value="0.2115" />
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/drawable/ic_settings_24.xml" value="0.2115" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/fragment_alacena.xml" value="0.2463768115942029" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/fragment_compras_favoritas.xml" value="0.33" />
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/fragment_config.xml" value="0.2463768115942029" />
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/fragment_info_family.xml" value="0.2463768115942029" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/fragment_item_lista.xml" value="0.5" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/fragment_lista_de_compras.xml" value="0.1" />
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/fragment_login.xml" value="0.2463768115942029" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/fragment_productos.xml" value="0.3125" />
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/fragment_register.xml" value="0.2463768115942029" />
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/fragment_user_config.xml" value="0.5" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/item_compra_favorita.xml" value="0.2463768115942029" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/item_producto.xml" value="0.17831813576494426" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/item_producto_alacena.xml" value="0.5" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/item_producto_lista_de_compras.xml" value="0.5" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/item_producto_realizar_compra.xml" value="0.5" />
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/popup_crear_producto.xml" value="0.2463768115942029" />
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/popup_historial.xml" value="0.2463768115942029" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/popup_producto_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/popup_realizar_compra.xml" value="0.36666666666666664" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/menu/bottom_bar.xml" value="0.36666666666666664" />

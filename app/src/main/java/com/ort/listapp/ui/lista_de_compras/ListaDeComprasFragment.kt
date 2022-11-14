@@ -3,9 +3,7 @@ package com.ort.listapp.ui.lista_de_compras
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -15,6 +13,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.R
 import com.ort.listapp.databinding.FragmentListaDeComprasBinding
 import com.ort.listapp.domain.model.ItemLista
@@ -37,7 +37,6 @@ class ListaDeComprasFragment : Fragment() {
 
     private lateinit var popup: AlertDialog
     private lateinit var popupBuilder: AlertDialog.Builder
-    private lateinit var adapterRC: RealizarCompraAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +52,7 @@ class ListaDeComprasFragment : Fragment() {
                 .setNegativeButton("NO", null)
                 .show()
         }
-
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -67,8 +66,34 @@ class ListaDeComprasFragment : Fragment() {
         // any RecyclerView or ViewPager2 instances in your fragment's view.
         // from: https://developer.android.com/guide/fragments/lifecycle
         initRecyclersViews()
-
+        setHasOptionsMenu(true)
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.tool_bar, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.userConfigButton -> {
+                val action =
+                    ListaDeComprasFragmentDirections.actionListaDeComprasFragmentToUserConfigFragment()
+                view?.findNavController()?.navigate(action)
+//                val navBar: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
+//                navBar.visibility = View.GONE
+                true
+            }
+            R.id.infoFamilyButton -> {
+                val action =
+                    ListaDeComprasFragmentDirections.actionListaDeComprasFragmentToInfoFamilyFragment2()
+                view?.findNavController()?.navigate(action)
+//                val navBar: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
+//                navBar.visibility = View.GONE
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun initRecyclersViews() {
@@ -176,49 +201,28 @@ class ListaDeComprasFragment : Fragment() {
     }
 
     private fun realizarCompra() {
-        //oculto los componentes de la lista de compras
-        visibilidadListaCompras(View.GONE)
+        if(viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()).isNotEmpty()){
+            //oculto los componentes de la lista de compras
+            visibilidadListaCompras(View.GONE)
 
-        //muestro los componentes de realizar compra con la checklist
-        visibilidadChecklist(View.VISIBLE)
+            //muestro los componentes de realizar compra con la checklist
+            visibilidadChecklist(View.VISIBLE)
 
-        binding.precioTotalCompra.text =
-            "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual())
-                .toString()
+            binding.precioTotalCompra.text =
+                "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual())
+                    .toString()
 
-        binding.btnConfirmarCompra.setOnClickListener {
-            viewModel.realizarCompra()
-            editarLista()
+            binding.btnConfirmarCompra.setOnClickListener {
+                if(viewModel.hayProductosCheckeados()){
+                    viewModel.realizarCompra()
+                    editarLista()
+                }else{
+                    showToast(requireContext(),"No se seleccionó ningún producto")
+                }
+            }
+        }else{
+            showToast(requireContext(),"No hay productos en la lista")
         }
-
-        /*popupBuilder = AlertDialog.Builder(context)
-    val popupView = layoutInflater.inflate(R.layout.popup_realizar_compra, null)
-    val reciclerView = popupView.findViewById<RecyclerView>(R.id.rvListaRCOld)
-    val btnConfirmar = popupView.findViewById<Button>(R.id.btnConfirmarCompraOld)
-    val btnEditarLista = popupView.findViewById<Button>(R.id.btnEditarListaOld)
-    val txtPrecioTotal = popupView.findViewById<TextView>(R.id.precioTotalCompraOld)
-
-    txtPrecioTotal.text = "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual()).toString()
-
-    reciclerView.setHasFixedSize(true)
-    reciclerView.layoutManager = LinearLayoutManager(requireContext())
-
-    adapterRC = RealizarCompraAdapter(viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()))
-    reciclerView.adapter = adapterRC
-
-    popupBuilder.setView(popupView)
-    popup = popupBuilder.create()
-
-    btnConfirmar.setOnClickListener{
-        viewModel.realizarCompra()
-        popup.dismiss()
-    }
-
-    btnEditarLista.setOnClickListener {
-        popup.dismiss()
-    }
-
-    popup.show()*/
     }
 
     private fun clickChecklist(idProducto: String) {

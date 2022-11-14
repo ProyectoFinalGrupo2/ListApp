@@ -89,9 +89,6 @@ class ProductoListadoAdapter(
 
         holder.btnDelete.setOnClickListener {
             clickEliminar(productos[position])
-            Snackbar.make(
-                it, "Se elimino ${producto.nombre}", Snackbar.LENGTH_SHORT
-            ).show()
         }
 
         holder.btnSumar.setOnClickListener {
