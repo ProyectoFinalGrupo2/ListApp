@@ -7,13 +7,13 @@
 
     <ImageView
         android:id="@+id/btn_cerrar_popup_config"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/cancel_icon" />
+        app:srcCompat="@drawable/cancel_icon" />
 
     <TextView
         android:id="@+id/tituloConfiguracionPopup"

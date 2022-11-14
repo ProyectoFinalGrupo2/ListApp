@@ -144,6 +144,10 @@ class ListaDeComprasFragment : Fragment() {
                     authViewModel.borrarseDeFamilia()
                 }
 
+                btnCerrarSesion.setOnClickListener {
+                    authViewModel.logout()
+                }
+
                 authViewModel.authState.observe(this) {
                     if (it.successMessage.isNotBlank()) {
                         showToast(
