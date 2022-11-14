@@ -57,6 +57,10 @@ class ComprasFavoritasFragment : Fragment() {
                     )
                 }
             }
+
+        binding.rvListaComprasFavoritas.setHasFixedSize(true)
+        binding.rvListaComprasFavoritas.layoutManager =
+            LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
     }
     @SuppressLint("NotifyDataSetChanged")
     override fun onStart() {
@@ -102,9 +106,9 @@ class ComprasFavoritasFragment : Fragment() {
             binding.listaFavCompleta.visibility = View.VISIBLE
             binding.txtTotalListaFav.text = resources.getString(R.string.precio_total,totalLista)
             binding.nombreListaCF.text = listaActual!!.nombre
-            binding.rvListaComprasFavoritas.setHasFixedSize(true)
-            binding.rvListaComprasFavoritas.layoutManager =
-                LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+            //binding.rvListaComprasFavoritas.setHasFixedSize(true)
+            //binding.rvListaComprasFavoritas.layoutManager =
+            //    LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             binding.rvListaComprasFavoritas.adapter =
                 listaActual!!.id?.let { viewModel.getProductosByIdLista(it) }?.let { it ->
                     ProductoListadoAdapter(

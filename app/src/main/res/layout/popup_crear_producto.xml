@@ -108,19 +108,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_producto_pers_presentacion" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="35dp"
-                    android:textColor="#222221"
-
-                    android:text="Producto favorito" />
-
-                <Switch
-                    android:id="@+id/switch_prod_pers_fav"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
 
         </LinearLayout>
 

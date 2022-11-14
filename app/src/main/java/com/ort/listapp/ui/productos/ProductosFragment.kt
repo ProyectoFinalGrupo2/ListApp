@@ -142,7 +142,6 @@ class ProductosFragment : Fragment() {
         val nombreProd = popUpView.findViewById<EditText>(R.id.txt_producto_pers_nombre)
         val precioProducto = popUpView.findViewById<EditText>(R.id.txt_producto_pers_precio)
         val spinner = popUpView.findViewById<Spinner>(R.id.txt_producto_pers_categoria)
-        val switchFav = popUpView.findViewById<Switch>(R.id.switch_prod_pers_fav)
 
         popupBuilder.setView(popUpView)
         popUp = popupBuilder.create()
@@ -167,9 +166,6 @@ class ProductosFragment : Fragment() {
                         precio = precioProducto.text.toString().toDouble(),
                     )
                 viewModel.agregarProductoPersonalizado(producto)
-                if (switchFav.isChecked) {
-                    viewModel.agregarProductoFavorito(producto)
-                }
                 popUp.dismiss()
             }
         }
@@ -284,7 +280,6 @@ class ProductosFragment : Fragment() {
         val nombreProd = popUpView.findViewById<EditText>(R.id.txt_producto_pers_nombre)
         val precioProducto = popUpView.findViewById<EditText>(R.id.txt_producto_pers_precio)
         val spinner = popUpView.findViewById<Spinner>(R.id.txt_producto_pers_categoria)
-        val switchFav = popUpView.findViewById<Switch>(R.id.switch_prod_pers_fav)
 
         btnEditar.text = "Confirmar Edición"
         btnBorrar.visibility = View.VISIBLE
@@ -312,9 +307,6 @@ class ProductosFragment : Fragment() {
                     precioProducto.text.toString().toDouble(),
                     spinner.selectedItem.toString()
                 )
-                if (switchFav.isChecked) {
-                    viewModel.agregarProductoFavorito(producto)
-                }
                 popUp.dismiss()
             }
         }

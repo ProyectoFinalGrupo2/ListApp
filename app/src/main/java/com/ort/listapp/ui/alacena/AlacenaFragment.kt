@@ -31,7 +31,7 @@ class AlacenaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAlacenaBinding.inflate(inflater, container, false)
-        productosAlacena = mutableListOf<ItemLista>()
+        productosAlacena = mutableListOf()
         cargarProductos()
         initRecyclerView()
         return binding.root
