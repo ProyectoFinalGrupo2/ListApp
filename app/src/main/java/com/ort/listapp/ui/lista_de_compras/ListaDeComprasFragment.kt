@@ -96,86 +96,7 @@ class ListaDeComprasFragment : Fragment() {
             R.id.userConfigButton -> {
                 direction =
                     ListaDeComprasFragmentDirections.actionListaDeComprasFragmentToUserConfigFragment()
-
-                popupBuilder = AlertDialog.Builder(context)
-                val popUpView = layoutInflater.inflate(R.layout.popup_configuracion, null)
-                val btnCerrar = popUpView.findViewById<ImageView>(R.id.btn_cerrar_popup_config)
-                val nombreUsuario = popUpView.findViewById<TextView>(R.id.nombreUsuarioPopup)
-                val email = popUpView.findViewById<TextView>(R.id.emailConfigPopup)
-                val tfNewEmail = popUpView.findViewById<TextInputLayout>(R.id.tfNewEmailPopup)
-                val inputEmail = tfNewEmail.editText
-                val btnCambiarEmail =
-                    popUpView.findViewById<MaterialButton>(R.id.btnCambiarEmailPopup)
-                val nombreFamilia = popUpView.findViewById<TextView>(R.id.nombreFamiliaPopup)
-                val codigoFamilia = popUpView.findViewById<TextView>(R.id.codigoFamiliaPopup)
-                val passFamilia = popUpView.findViewById<TextView>(R.id.passFamiliaPopup)
-                val btnSalirFamilia =
-                    popUpView.findViewById<MaterialButton>(R.id.btnSalirFamiliaPopup)
-                val btnCerrarSesion =
-                    popUpView.findViewById<MaterialButton>(R.id.btnCerrarSesionPopup)
-
-                val familia = viewModel.getFamilia().value
-                val userName = ListaAppApplication.prefsHelper.getUserName()
-                val userEmail = ListaAppApplication.prefsHelper.getUserEmail()
-
-                if (familia != null) {
-                    nombreUsuario.text = "Nombre del usuario: $userName"
-                    email.text = "Email: $userEmail"
-                    nombreFamilia.text = "Familia: ${familia.nombre}"
-                    codigoFamilia.text = "Código: ${familia.id}"
-                    passFamilia.text = "Contraseña: ${familia.password}"
-                }
-
-                btnCambiarEmail.setOnClickListener {
-                    if (inputEmail != null) {
-                        if (!HelperClass.isEmailValid(inputEmail.text.toString().trim())) {
-                            tfNewEmail.error = "Email invalido"
-                        } else {
-                            btnCambiarEmail.icon = HelperClass.getCircularProgress(requireContext())
-                            btnCambiarEmail.isClickable = false
-                            authViewModel.changeEmail(
-                                inputEmail.text.toString(),
-                            )
-                        }
-                    }
-                }
-
-                btnSalirFamilia.setOnClickListener {
-                    authViewModel.borrarseDeFamilia()
-                }
-
-                btnCerrarSesion.setOnClickListener {
-                    authViewModel.logout()
-                }
-
-                authViewModel.authState.observe(this) {
-                    if (it.successMessage.isNotBlank()) {
-                        showToast(
-                            requireContext(),
-                            it.successMessage
-                        )
-                        authViewModel.logout()
-                    }
-                    if (it.errorMessage.isNotBlank()) showToast(
-                        requireContext(),
-                        it.errorMessage
-                    )
-                }
-
-                inputEmail?.doAfterTextChanged {
-                    tfNewEmail.error = null
-                    if (!HelperClass.isEmailValid(inputEmail.text.toString().trim())) {
-                        tfNewEmail.helperText = "Ingrese un email válido"
-                    } else tfNewEmail.helperText = null
-                }
-
-                popupBuilder.setView(popUpView)
-                popup = popupBuilder.create()
-                popup.show()
-
-                btnCerrar.setOnClickListener {
-                    popup.dismiss()
-                }
+                initPopup()
             }
             else -> super.onOptionsItemSelected(item)
         }
@@ -183,6 +104,88 @@ class ListaDeComprasFragment : Fragment() {
 //            view?.findNavController()?.navigate(direction)
 //        }
         return true
+    }
+
+    private fun initPopup() {
+        popupBuilder = AlertDialog.Builder(requireContext())
+        val popUpView = layoutInflater.inflate(R.layout.popup_configuracion, null)
+        val btnCerrar = popUpView.findViewById<ImageView>(R.id.btn_cerrar_popup_config)
+        val nombreUsuario = popUpView.findViewById<TextView>(R.id.nombreUsuarioPopup)
+        val email = popUpView.findViewById<TextView>(R.id.emailConfigPopup)
+        val tfNewEmail = popUpView.findViewById<TextInputLayout>(R.id.tfNewEmailPopup)
+        val inputEmail = tfNewEmail.editText
+        val btnCambiarEmail =
+            popUpView.findViewById<MaterialButton>(R.id.btnCambiarEmailPopup)
+        val nombreFamilia = popUpView.findViewById<TextView>(R.id.nombreFamiliaPopup)
+        val codigoFamilia = popUpView.findViewById<TextView>(R.id.codigoFamiliaPopup)
+        val passFamilia = popUpView.findViewById<TextView>(R.id.passFamiliaPopup)
+        val btnSalirFamilia =
+            popUpView.findViewById<MaterialButton>(R.id.btnSalirFamiliaPopup)
+        val btnCerrarSesion =
+            popUpView.findViewById<MaterialButton>(R.id.btnCerrarSesionPopup)
+
+        val familia = viewModel.getFamilia().value
+        val userName = ListaAppApplication.prefsHelper.getUserName()
+        val userEmail = ListaAppApplication.prefsHelper.getUserEmail()
+
+        if (familia != null) {
+            nombreUsuario.text = "Nombre del usuario: $userName"
+            email.text = "Email: $userEmail"
+            nombreFamilia.text = "Familia: ${familia.nombre}"
+            codigoFamilia.text = "Código: ${familia.id}"
+            passFamilia.text = "Contraseña: ${familia.password}"
+        }
+
+        btnCambiarEmail.setOnClickListener {
+            if (inputEmail != null) {
+                if (!HelperClass.isEmailValid(inputEmail.text.toString().trim())) {
+                    tfNewEmail.error = "Email invalido"
+                } else {
+                    btnCambiarEmail.icon = HelperClass.getCircularProgress(requireContext())
+                    btnCambiarEmail.isClickable = false
+                    authViewModel.changeEmail(
+                        inputEmail.text.toString(),
+                    )
+                }
+            }
+        }
+
+        btnSalirFamilia.setOnClickListener {
+            authViewModel.borrarseDeFamilia()
+        }
+
+        btnCerrarSesion.setOnClickListener {
+            authViewModel.logout()
+        }
+
+        authViewModel.authState.observe(this) {
+            if (it.successMessage.isNotBlank()) {
+                showToast(
+                    requireContext(),
+                    it.successMessage
+                )
+                authViewModel.logout()
+            }
+            if (it.errorMessage.isNotBlank()) showToast(
+                requireContext(),
+                it.errorMessage
+            )
+        }
+
+        inputEmail?.doAfterTextChanged {
+            tfNewEmail.error = null
+            if (!HelperClass.isEmailValid(inputEmail.text.toString().trim())) {
+                tfNewEmail.helperText = "Ingrese un email válido"
+            } else tfNewEmail.helperText = null
+        }
+
+        popupBuilder.setView(popUpView)
+        popup = popupBuilder.create()
+        popup.show()
+
+        btnCerrar.setOnClickListener {
+            popup.dismiss()
+        }
     }
 
     override fun onStart() {
@@ -214,7 +217,7 @@ class ListaDeComprasFragment : Fragment() {
             }
         }
 
-        if(viewModel.estaEnRealizarCompra()){
+        if (viewModel.estaEnRealizarCompra()) {
             visibilidadListaCompras(View.INVISIBLE)
             visibilidadChecklist(View.VISIBLE)
         }
@@ -228,11 +231,11 @@ class ListaDeComprasFragment : Fragment() {
         }
 
         binding.btnConfirmarCompra.setOnClickListener {
-            if(viewModel.hayProductosCheckeados()){
+            if (viewModel.hayProductosCheckeados()) {
                 viewModel.realizarCompra()
                 editarLista()
-            }else{
-                showToast(requireContext(),"No se seleccionó ningún producto")
+            } else {
+                showToast(requireContext(), "No se seleccionó ningún producto")
             }
         }
 
@@ -250,7 +253,7 @@ class ListaDeComprasFragment : Fragment() {
         }
 
         btnAgregarListaFav.setOnClickListener {
-            if(viewModel.hayProductosEnLista() == true){
+            if (viewModel.hayProductosEnLista() == true) {
                 popupBuilder = AlertDialog.Builder(context)
                 val popupView = layoutInflater.inflate(R.layout.popup_crear_compra_fav, null)
                 val nombreLista = popupView.findViewById<EditText>(R.id.txt_nombre_compra_fav)
@@ -264,7 +267,7 @@ class ListaDeComprasFragment : Fragment() {
                 btnCrear.setOnClickListener {
                     val nombre = nombreLista.text.toString()
                     if (nombre.isNotEmpty()) {
-                        viewModel.crearLista(nombre,TipoLista.LISTA_FAVORITA)
+                        viewModel.crearLista(nombre, TipoLista.LISTA_FAVORITA)
                         popup.dismiss()
                     } else {
                         nombreLista.error = "El nombre de la lista no puede estar vacío."
@@ -274,8 +277,8 @@ class ListaDeComprasFragment : Fragment() {
                 popupBuilder.setView(popupView)
                 popup = popupBuilder.create()
                 popup.show()
-            }else{
-                showToast(requireContext(),"No hay productos en la lista")
+            } else {
+                showToast(requireContext(), "No hay productos en la lista")
             }
 
         }
@@ -297,7 +300,7 @@ class ListaDeComprasFragment : Fragment() {
     }
 
     private fun realizarCompra() {
-        if(viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()).isNotEmpty()){
+        if (viewModel.getProductosByIdLista(viewModel.getIdListaDeComprasActual()).isNotEmpty()) {
             //oculto los componentes de la lista de compras
             visibilidadListaCompras(View.GONE)
 
@@ -310,8 +313,8 @@ class ListaDeComprasFragment : Fragment() {
                 "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual())
                     .toString()
 
-        }else{
-            showToast(requireContext(),"No hay productos en la lista")
+        } else {
+            showToast(requireContext(), "No hay productos en la lista")
         }
     }
 
