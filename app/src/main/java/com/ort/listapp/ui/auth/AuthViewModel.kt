@@ -8,6 +8,7 @@ import com.ort.listapp.ListaAppApplication.Companion.prefsHelper
 import com.ort.listapp.data.AuthRepository
 import com.ort.listapp.data.FamiliaRepository
 import com.ort.listapp.data.UsuarioRepository
+import com.ort.listapp.domain.model.Usuario
 import com.ort.listapp.utils.HelperClass.getRandomCode
 import kotlinx.coroutines.launch
 
@@ -21,30 +22,22 @@ class AuthViewModel : ViewModel() {
     fun registrarUsuario(nombre: String, email: String, pass: String) {
         viewModelScope.launch {
             val authResponse = authRepository.createUserWithEmailAndPassword(nombre, email, pass)
-            if (authResponse.message.isBlank()) {
+            if (authResponse.errorMessage.isBlank()) {
                 val usuarioNuevo = authResponse.usuario
-                prefsHelper.saveUserName(usuarioNuevo.nombre)
-                prefsHelper.saveUserId(usuarioNuevo.uid)
+                savePrefs(usuarioNuevo)
                 authState.postValue(AuthState(loggedSinFamilia = true))
             } else {
-                authState.postValue(AuthState(errorMessage = authResponse.message))
+                authState.postValue(AuthState(errorMessage = authResponse.errorMessage))
             }
         }
-    }
-
-    fun registerDataChanged(nombre: String, email: String, pass: String) {
-        if (isNombreValid(nombre) && isEmailValid(email) && isPasswordValid(pass))
-            authState.postValue(AuthState(isDataValid = true))
-        else authState.postValue(AuthState(isDataValid = false))
     }
 
     fun login(email: String, pass: String) {
         viewModelScope.launch {
             val authResponse = authRepository.signInWithEmailAndPassword(email, pass)
-            if (authResponse.message.isBlank()) {
+            if (authResponse.errorMessage.isBlank()) {
                 val usuario = authResponse.usuario
-                prefsHelper.saveUserName(usuario.nombre)
-                prefsHelper.saveUserId(usuario.uid)
+                savePrefs(usuario)
                 if (usuario.familia.isBlank()) {
                     authState.postValue(AuthState(loggedSinFamilia = true))
                 } else {
@@ -52,7 +45,7 @@ class AuthViewModel : ViewModel() {
                     prefsHelper.saveFamilyId(usuario.familia)
                 }
             } else {
-                authState.postValue(AuthState(errorMessage = authResponse.message))
+                authState.postValue(AuthState(errorMessage = authResponse.errorMessage))
             }
         }
     }
@@ -60,13 +53,28 @@ class AuthViewModel : ViewModel() {
     fun passwordReset(email: String) {
         viewModelScope.launch {
             val authResponse = authRepository.sendPasswordResetEmail(email)
-            authState.postValue(AuthState(errorMessage = authResponse.message))
+            authState.postValue(AuthState(errorMessage = authResponse.errorMessage))
+        }
+    }
+
+    fun changeEmail(email: String) {
+        viewModelScope.launch {
+            val authResponse = authRepository.updateEmail(email)
+            authState.postValue(
+                AuthState(
+                    successMessage = authResponse.successMessage,
+                    errorMessage = authResponse.errorMessage,
+                )
+            )
         }
     }
 
     fun checkIfUserIsAuthenticated(): Boolean = authRepository.checkIfUserIsAuthenticated()
 
-    fun logout() = authRepository.logout()
+    fun logout() {
+        authRepository.logout()
+        prefsHelper.wipe()
+    }
 
     fun registrarFamilia(nombre: String, passFamilia: String) {
         viewModelScope.launch {
@@ -93,16 +101,11 @@ class AuthViewModel : ViewModel() {
         }
     }
 
-    fun familiaDataChanged(nombreFamilia: String, passFamilia: String) {
-        if (isNombreValid(nombreFamilia) && isPasswordValid(passFamilia))
-            authState.postValue(AuthState(isDataValid = true))
-        else authState.postValue(AuthState(isDataValid = false))
-    }
-
-    fun loginDataChanged(email: String, pass: String) {
-        if (isEmailValid(email) && isPasswordValid(pass))
-            authState.postValue(AuthState(isDataValid = true))
-        else authState.postValue(AuthState(isDataValid = false))
+    fun borrarseDeFamilia() {
+        viewModelScope.launch {
+            usuarioRepository.quitarFamiliaDeUsuario(prefsHelper.getUserId())
+            authState.postValue(AuthState(successMessage = "Se ha quitado de la familia"))
+        }
     }
 
     private fun isNombreValid(nombre: String): Boolean =
@@ -114,4 +117,9 @@ class AuthViewModel : ViewModel() {
     private fun isPasswordValid(pass: String): Boolean =
         pass.length > 5
 
+    private fun savePrefs(usuario: Usuario) {
+        prefsHelper.saveUserName(usuario.nombre)
+        prefsHelper.saveUserId(usuario.uid)
+        prefsHelper.saveUserEmail(usuario.email)
+    }
 }

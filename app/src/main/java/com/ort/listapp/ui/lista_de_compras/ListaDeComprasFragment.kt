@@ -10,11 +10,10 @@ import android.widget.ImageView
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.ort.listapp.R
 import com.ort.listapp.databinding.FragmentListaDeComprasBinding
 import com.ort.listapp.domain.model.ItemLista
@@ -25,6 +24,7 @@ import com.ort.listapp.ui.adapters.RealizarCompraAdapter
 import com.ort.listapp.ui.auth.AuthViewModel
 import com.ort.listapp.utils.HelperClass.showToast
 
+@Suppress("DEPRECATION")
 @SuppressLint("SetTextI18n")
 class ListaDeComprasFragment : Fragment() {
 
@@ -70,32 +70,6 @@ class ListaDeComprasFragment : Fragment() {
         return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.tool_bar, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.userConfigButton -> {
-                val action =
-                    ListaDeComprasFragmentDirections.actionListaDeComprasFragmentToUserConfigFragment()
-                view?.findNavController()?.navigate(action)
-//                val navBar: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
-//                navBar.visibility = View.GONE
-                true
-            }
-            R.id.infoFamilyButton -> {
-                val action =
-                    ListaDeComprasFragmentDirections.actionListaDeComprasFragmentToInfoFamilyFragment2()
-                view?.findNavController()?.navigate(action)
-//                val navBar: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
-//                navBar.visibility = View.GONE
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     private fun initRecyclersViews() {
         rvListaCompra = binding.rvListaCompra
         rvListaCompra.setHasFixedSize(true)
@@ -107,6 +81,31 @@ class ListaDeComprasFragment : Fragment() {
         rvListaRC.layoutManager = LinearLayoutManager(requireContext())
     }
 
+    @Deprecated("Deprecated in Java")
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.tool_bar, menu)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        var direction: NavDirections? = null
+        when (item.itemId) {
+            R.id.userConfigButton -> {
+                direction =
+                    ListaDeComprasFragmentDirections.actionListaDeComprasFragmentToUserConfigFragment()
+            }
+//            R.id.infoFamilyButton -> {
+//                direction =
+//                    ListaDeComprasFragmentDirections.actionListaDeComprasFragmentToInfoFamilyFragment2()
+//            }
+            else -> super.onOptionsItemSelected(item)
+        }
+        direction?.let {
+            view?.findNavController()?.navigate(direction)
+        }
+        return true
+    }
+
     override fun onStart() {
         super.onStart()
 
@@ -116,7 +115,6 @@ class ListaDeComprasFragment : Fragment() {
         val btnAgregarListaFav = binding.btnAgregarListaFav
         val btnHistorial = binding.btnCrearLista
         val txtPrecioTotalLista = binding.txtPrecioTotalLista
-
 
         viewModel.getFamilia().observe(this) {
             val total = viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual())

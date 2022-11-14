@@ -27,7 +27,7 @@ class AuthRepository {
             AuthResponse(usuario = usuarioNuevo)
         } catch (e: Exception) {
             logErrorMessage(e.message)
-            AuthResponse(message = "Se produjo un error creando el usuario")
+            AuthResponse(errorMessage = "Se produjo un error creando el usuario")
         }
     }
 
@@ -38,10 +38,11 @@ class AuthRepository {
         return try {
             val authResult = firebaseAuth.signInWithEmailAndPassword(email, pass).await()
             val usuario = usuarioRepository.obtenerUsuario(authResult.user?.uid!!)
+            usuario.email = email
             AuthResponse(usuario = usuario)
         } catch (e: Exception) {
             logErrorMessage(e.message)
-            AuthResponse(message = "Se produjo un error iniciando sesión ")
+            AuthResponse(errorMessage = "Se produjo un error iniciando sesión ")
         }
     }
 
@@ -50,10 +51,30 @@ class AuthRepository {
     ): AuthResponse {
         return try {
             firebaseAuth.sendPasswordResetEmail(email).await()
-            AuthResponse(message = "Email enviado")
+            AuthResponse(errorMessage = "Email enviado")
         } catch (e: Exception) {
             logErrorMessage(e.message)
-            AuthResponse(message = "Se produjo un error restableciendo contraseña")
+            AuthResponse(errorMessage = "Se produjo un error restableciendo contraseña")
+        }
+    }
+
+    suspend fun updateEmail(email: String): AuthResponse {
+        return try {
+            firebaseAuth.currentUser!!.updateEmail(email).await()
+            AuthResponse(successMessage = "Email modificado")
+        } catch (e: Exception) {
+            logErrorMessage(e.message)
+            AuthResponse(errorMessage = "Se produjo un error cambiando el email")
+        }
+    }
+
+    suspend fun userDelete(): AuthResponse {
+        return try {
+            firebaseAuth.currentUser!!.delete().await()
+            AuthResponse(errorMessage = "Usuario eliminado")
+        } catch (e: Exception) {
+            logErrorMessage(e.message)
+            AuthResponse(errorMessage = "Se produjo un error borrando el usuario")
         }
     }
 

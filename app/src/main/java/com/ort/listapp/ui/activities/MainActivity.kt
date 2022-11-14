@@ -24,12 +24,11 @@ class MainActivity : AppCompatActivity(), AuthStateListener {
         setContentView(R.layout.activity_main)
         navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
         bottomNavView = findViewById(R.id.bottomNavigationView)
-        NavigationUI.setupWithNavController(bottomNavView, navHostFragment.navController)
+        val navController = navHostFragment.navController
+        NavigationUI.setupWithNavController(bottomNavView, navController)
 
         toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-
-
     }
 
     override fun onStart() {
