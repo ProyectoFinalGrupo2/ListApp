@@ -8,6 +8,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import com.ort.listapp.ListaAppApplication.Companion.prefsHelper
 import com.ort.listapp.databinding.FragmentLoginBinding
 import com.ort.listapp.utils.HelperClass.getCircularProgress
 import com.ort.listapp.utils.HelperClass.isEmailValid
@@ -54,6 +55,10 @@ class LoginFragment : Fragment() {
         val btnLogin = binding.btnLogin
         val btnRegister = binding.btnRegister
         val btnOlv = binding.btnOlv
+
+        if (authViewModel.checkIfUserIsAuthenticated() &&
+            prefsHelper.getFamilyId().isBlank()
+        ) authViewModel.logout()
 
         if (authViewModel.checkIfUserIsAuthenticated()) {
             goToMainActivity()
