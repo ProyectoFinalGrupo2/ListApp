@@ -41,21 +41,35 @@ class ComprasFavoritasFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentComprasFavoritasBinding.inflate(inflater, container, false)
+        cargarListas()
+        initRecyclerView()
         return binding.root
     }
-
+    private fun initRecyclerView(){
+        binding.rvComprasFavoritas.setHasFixedSize(true)
+        binding.rvComprasFavoritas.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvComprasFavoritas.adapter =
+            listas?.let { it2 ->
+                CompraFavoritaAdapter(it2,requireContext()) { lista ->
+                    onClickLista(
+                        lista
+                    )
+                }
+            }
+    }
     @SuppressLint("NotifyDataSetChanged")
     override fun onStart() {
         super.onStart()
 
-        var rvComprasFavoritas = binding.rvComprasFavoritas
-        var btnVolverListaCompra = binding.btnVolverListaCompra
-        listas = viewModel.getFamilia().value?.let { viewModel.getListasByTipoEnFamilia(it,TipoLista.LISTA_FAVORITA) }
+        val rvComprasFavoritas = binding.rvComprasFavoritas
+        val btnVolverListaCompra = binding.btnVolverListaCompra
 
         viewModel.getFamilia().observe(this, Observer {
             listas?.clear()
             viewModel.getFamilia().value?.let { viewModel.getListasByTipoEnFamilia(it,TipoLista.LISTA_FAVORITA) }
                 ?.let {listas?.addAll(it) }
+
             this.actualizarLista()
             rvComprasFavoritas.adapter?.notifyDataSetChanged()
 
@@ -65,25 +79,12 @@ class ComprasFavoritasFragment : Fragment() {
             view?.findNavController()?.navigate(action)
         }
 
-        fun setRVListas(){
-            rvComprasFavoritas.setHasFixedSize(true)
-            rvComprasFavoritas.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            rvComprasFavoritas.adapter =
-                listas?.let { it2 ->
-                    CompraFavoritaAdapter(it2,requireContext()) { lista ->
-                        onClickLista(
-                            lista
-                        )
-                    }
-                }
-        }
-
-        setRVListas()
     }
 
 
-
+    private fun cargarListas(){
+        listas = viewModel.getFamilia().value?.let { viewModel.getListasByTipoEnFamilia(it,TipoLista.LISTA_FAVORITA) }
+    }
 
     private fun onClickLista(lista:Lista){
         listaActual = lista
@@ -124,6 +125,8 @@ class ComprasFavoritasFragment : Fragment() {
                 this.borrarLista()
 
             }
+        }else{
+            binding.listaFavCompleta.visibility = View.INVISIBLE
         }
     }
 

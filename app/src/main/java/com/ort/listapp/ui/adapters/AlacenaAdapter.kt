@@ -16,7 +16,7 @@ import com.ort.listapp.domain.model.ItemLista
 
 @SuppressLint("SetTextI18n")
 class AlacenaAdapter(
-    var productos: List<ItemLista>,
+    var productos: MutableList<ItemLista>,
     val context: Context,
     var clickSuma: (ItemLista) -> Unit,
     var clickResta: (ItemLista) -> Unit

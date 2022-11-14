@@ -1,6 +1,8 @@
 package com.ort.listapp.ui.alacena
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,28 +23,30 @@ class AlacenaFragment : Fragment() {
     private var _binding: FragmentAlacenaBinding? = null
     private val binding get() = _binding!!
     private val viewModel: FamilyViewModel by activityViewModels()
+    private var productosAlacena :MutableList<ItemLista>? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAlacenaBinding.inflate(inflater, container, false)
+        productosAlacena = mutableListOf<ItemLista>()
+        cargarProductos()
+        initRecyclerView()
         return binding.root
     }
-
-    override fun onStart() {
-        super.onStart()
-
-        viewModel.getFamilia().observe(this, Observer {
-            binding.alacenaProductos.setHasFixedSize(true)
-            binding.alacenaProductos.layoutManager =
-                LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-            binding.alacenaProductos.apply {
-                layoutManager = GridLayoutManager(this.context, 2)
-            }
-            binding.alacenaProductos.adapter =
+    private fun initRecyclerView(){
+        binding.alacenaProductos.setHasFixedSize(true)
+        binding.alacenaProductos.layoutManager =
+            LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+        binding.alacenaProductos.apply {
+            layoutManager = GridLayoutManager(this.context, 2)
+        }
+        binding.alacenaProductos.adapter =
+            productosAlacena?.let {prods->
                 AlacenaAdapter(
-                    viewModel.getProductosByIdLista(viewModel.getIdAlacenaVirtual()),
+                    prods,
                     requireContext(),
                     {
                         clickSumaYResta(it, 1)
@@ -50,6 +54,22 @@ class AlacenaFragment : Fragment() {
                     {
                         clickSumaYResta(it, -1)
                     })
+            }
+
+    }
+    private fun cargarProductos(){
+        productosAlacena?.clear()
+        productosAlacena?.addAll(viewModel.getProductosByIdLista(viewModel.getIdAlacenaVirtual()).toMutableList())
+    }
+
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onStart() {
+        super.onStart()
+        val rvAdapter = binding.alacenaProductos.adapter
+        viewModel.getFamilia().observe(this, Observer {
+            cargarProductos()
+            rvAdapter?.notifyDataSetChanged()
         })
     }
 
@@ -59,10 +79,15 @@ class AlacenaFragment : Fragment() {
             producto.producto.id,
             cantidad
         )
+        productosAlacena?.indexOf(producto)?.let {
+            binding.alacenaProductos.adapter?.notifyItemChanged(
+                it,"Payload"
+            )
+        }
         if(cantidad>0){
             showToast(requireContext(),"Se ha agregado el producto")
         }else{
             showToast(requireContext(),"Se ha quitado el producto")
         }
-    }
+            }
 }
