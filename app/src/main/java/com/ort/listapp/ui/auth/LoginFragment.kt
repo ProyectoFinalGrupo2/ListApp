@@ -85,12 +85,12 @@ class LoginFragment : Fragment() {
                 if (it.loggedConFamilia) goToMainActivity()
                 if (it.errorMessage.isNotBlank()) {
                     showToast(requireContext(), it.errorMessage)
+                    btnLogin.icon = null
+                    btnLogin.isClickable = true
+                    inputEmail?.setText("")
+                    inputPass?.setText("")
+                    authViewModel.authState.postValue(AuthState())
                 }
-                btnLogin.icon = null
-                btnLogin.isClickable = true
-                inputEmail?.text?.clear()
-                inputPass?.text?.clear()
-                authViewModel.authState.postValue(AuthState())
             }
 
             inputEmail?.doAfterTextChanged {

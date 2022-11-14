@@ -8,6 +8,7 @@ class PrefsHelper(val context: Context) {
     private val SHARED_FAMILIA_ID = "familiaId"
     private val SHARED_NOMBRE_USUARIO = "nombreUsuario"
     private val SHARED_ID_USUARIO = "idUsuario"
+    private val SHARED_EMAIL_USUARIO = "emailUsuario"
 
     private val storage = context.getSharedPreferences(SHARED_NAME, 0)
 
@@ -33,6 +34,14 @@ class PrefsHelper(val context: Context) {
 
     fun getUserId(): String {
         return storage.getString(SHARED_ID_USUARIO, "")!!
+    }
+
+    fun saveUserEmail(email: String) {
+        storage.edit().putString(SHARED_EMAIL_USUARIO, email).apply()
+    }
+
+    fun getUserEmail(): String {
+        return storage.getString(SHARED_EMAIL_USUARIO, "")!!
     }
 
     fun wipe() {
