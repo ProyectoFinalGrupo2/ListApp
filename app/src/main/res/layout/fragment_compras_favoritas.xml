@@ -101,7 +101,7 @@
             android:backgroundTint="#C9AEEC"
             android:text="Copiar a lista de compras"
 
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textSize="10sp"
             app:layout_constraintBottom_toTopOf="@+id/nombre_lista_CF"
             app:layout_constraintEnd_toStartOf="@+id/btn_borrar_lista_fav"

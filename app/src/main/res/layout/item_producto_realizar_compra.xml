@@ -32,13 +32,26 @@
             app:fontFamily="@font/poppins"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/txtPrecioRC"
-            app:layout_constraintStart_toEndOf="@+id/tvNombreProducto"
+            app:layout_constraintStart_toEndOf="@id/cbProductoText"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/cbProductoText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Nombre producto"
+            app:centerIfNoTextEnabled="false"
+            app:flow_horizontalAlign="start"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/txtCantidadRC"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <CheckBox
             android:id="@+id/cbProducto"
             android:layout_width="33dp"
             android:layout_height="33dp"
+            android:visibility="gone"
             app:centerIfNoTextEnabled="false"
             app:flow_horizontalAlign="start"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -51,6 +64,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Nombre Producto"
+            android:visibility="gone"
             app:fontFamily="@font/poppins"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/txtCantidadRC"

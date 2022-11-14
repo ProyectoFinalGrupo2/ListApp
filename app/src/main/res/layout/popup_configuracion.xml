@@ -25,10 +25,11 @@
         android:text="Configuración de usuario"
         android:textAlignment="center"
         android:textColor="#000000"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/nombreUsuarioPopup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_cerrar_popup_config"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -111,17 +112,18 @@
         android:id="@+id/materialDividerPopup"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/nombreFamiliaPopup"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toBottomOf="@id/btnCambiarEmailPopup" />
 
     <TextView
         android:id="@+id/nombreFamiliaPopup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/amaranth_bold"
         android:letterSpacing="0.1"
         android:text="Familia: Los Argento"
@@ -138,6 +140,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/amaranth_bold"
         android:letterSpacing="0.1"
         android:text="Código: zXcVbn"
@@ -154,6 +157,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/amaranth_bold"
         android:letterSpacing="0.1"
         android:text="Contraseña: 123456"
@@ -172,6 +176,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:elevation="8dp"
         android:letterSpacing="0.2"
         android:text="Salir de la familia"
@@ -188,11 +194,11 @@
         android:id="@+id/materialDividerPopup2"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnCerrarSesionPopup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.85" />
+        app:layout_constraintTop_toBottomOf="@+id/btnSalirFamiliaPopup" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCerrarSesionPopup"
@@ -200,6 +206,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:elevation="8dp"
         android:letterSpacing="0.2"
         android:text="Cerrar Sesión"

@@ -20,17 +20,16 @@ class RealizarCompraAdapter(var listaProductos: MutableList<ItemListaChecklist>,
 
         init {
             this.view = v
-            cbProducto = view.findViewById<CheckBox>(R.id.cbProducto)
+            cbProducto = view.findViewById<CheckBox>(R.id.cbProductoText)
         }
 
         fun setNombre(nombre: String) {
-            val cbNombre: TextView = view.findViewById(R.id.tvNombreProducto)
-            var nomProd = nombre
-            /*if (nombre.contains(" ")) {
-                val n = nombre.split(" ")
-                nomProd = "${n[0]} ${n[1]}..."
-            }*/
-            cbNombre.text = nomProd
+//            val cbNombre: TextView = view.findViewById(R.id.tvNombreProducto)
+//            var nomProd = nombre
+//            cbNombre.text = nomProd
+
+            val cbProducto: CheckBox = view.findViewById(R.id.cbProductoText)
+            cbProducto.text = nombre
         }
 
         fun setCantidad(cant:Int){
@@ -44,7 +43,7 @@ class RealizarCompraAdapter(var listaProductos: MutableList<ItemListaChecklist>,
         }
 
         fun setChecked(checked: Boolean){
-            val cbProducto: CheckBox = view.findViewById(R.id.cbProducto)
+            val cbProducto: CheckBox = view.findViewById(R.id.cbProductoText)
             cbProducto.isChecked = checked
         }
     }
