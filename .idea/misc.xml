@@ -26,12 +26,14 @@
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/fragment_login.xml" value="0.2463768115942029" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/fragment_productos.xml" value="0.3125" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/fragment_register.xml" value="0.2463768115942029" />
-        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/fragment_user_config.xml" value="0.5" />
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/fragment_user_config.xml" value="0.2464065708418891" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/item_compra_favorita.xml" value="0.2463768115942029" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/item_producto.xml" value="0.17831813576494426" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/item_producto_alacena.xml" value="0.5" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/item_producto_lista_de_compras.xml" value="0.5" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/item_producto_realizar_compra.xml" value="0.5" />
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/popup_configuracion.xml" value="0.2463768115942029" />
+        <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/popup_crear_compra_fav.xml" value="0.2463768115942029" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/popup_crear_producto.xml" value="0.2463768115942029" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/popup_historial.xml" value="0.2463768115942029" />
         <entry key="..\:/Archivos/Terciario ORT/Proyecto Final/ListApp/app/src/main/res/layout/popup_producto_layout.xml" value="0.36666666666666664" />
@@ -50,17 +52,14 @@
         <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/layout/popup_producto_layout.xml" value="0.2" />
         <entry key="..\:/Ort/4to cuatrimestre/P. Final/ListApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2415" />
-        <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/layout/fragment_compras_favoritas.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/layout/fragment_compras_favoritas.xml" value="0.4046875" />
         <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/layout/fragment_historial.xml" value="0.22" />
         <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/layout/fragment_historial3.xml" value="0.10416666666666667" />
         <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/layout/fragment_item_lista.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/layout/fragment_lista_de_compras.xml" value="0.25" />
         <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/layout/item_compra_favorita.xml" value="0.4046875" />
         <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/layout/item_lista_historial.xml" value="0.22" />
-        <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/layout/item_producto_lista_de_compras.xml" value="0.1796875" />
-        <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/layout/item_producto_lista_de_compras_historial.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/layout/popup_crear_producto.xml" value="0.4046875" />
-        <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/layout/popup_historial.xml" value="0.1796875" />
         <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/layout/popup_producto_layout.xml" value="0.1796875" />
         <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.124" />
         <entry key="..\:/Users/valet/Documents/GitHub/listApp-tp3/ListApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.124" />
