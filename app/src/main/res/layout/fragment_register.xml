@@ -11,36 +11,38 @@
     <TextView
         android:id="@+id/tituloRegistro"
         android:layout_width="410dp"
-        android:layout_height="33dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="37dp"
+        android:layout_marginBottom="36dp"
         android:fontFamily="@font/amaranth_bold"
         android:letterSpacing="0.1"
         android:text="Registro de usuario"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tfNombre"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tfNombre"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="24dp"
         android:hint="Nombre o apodo"
         app:boxBackgroundColor="#FFF5EDFC"
-        app:helperTextEnabled="true"
-        app:errorEnabled="true"
         app:counterEnabled="true"
         app:counterMaxLength="20"
         app:endIconMode="clear_text"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:errorEnabled="true"
+        app:helperTextEnabled="true"
+        app:layout_constraintBottom_toTopOf="@+id/tfEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.15">
+        app:layout_constraintTop_toBottomOf="@+id/tituloRegistro">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -51,18 +53,20 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tfEmail"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="25dp"
         android:hint="Email"
         app:boxBackgroundColor="#FFF5EDFC"
-        app:errorEnabled="true"
         app:endIconMode="clear_text"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toTopOf="@+id/tfPass"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3">
+        app:layout_constraintTop_toBottomOf="@+id/tfNombre">
 
 
         <com.google.android.material.textfield.TextInputEditText
@@ -74,19 +78,21 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tfPass"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="31dp"
         android:hint="Contraseña"
-        app:counterEnabled="true"
         app:boxBackgroundColor="#FFF5EDFC"
+        app:counterEnabled="true"
         app:endIconMode="password_toggle"
         app:errorEnabled="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.45">
+        app:layout_constraintTop_toBottomOf="@+id/tfEmail">
 
 
         <com.google.android.material.textfield.TextInputEditText
@@ -97,21 +103,23 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        style="@style/Widget.Material3.Button.ElevatedButton.Icon"
         android:id="@+id/btnRegister"
-        android:layout_width="match_parent"
+        style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+        android:layout_width="0dp"
         android:layout_height="70dp"
         android:layout_marginHorizontal="20dp"
-        android:text="Registrarse"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="286dp"
+        android:elevation="8dp"
         android:letterSpacing="0.2"
+        android:text="Registrarse"
         android:textAllCaps="false"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:elevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6" />
+        app:layout_constraintTop_toBottomOf="@+id/tfPass" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
