@@ -135,12 +135,26 @@ class ListaDeComprasFragment : Fragment() {
             }
         }
 
+        if(viewModel.estaEnRealizarCompra()){
+            visibilidadListaCompras(View.INVISIBLE)
+            visibilidadChecklist(View.VISIBLE)
+        }
+
         btnRealizarCompra.setOnClickListener {
             realizarCompra()
         }
 
         btnEditarLista.setOnClickListener {
             editarLista()
+        }
+
+        binding.btnConfirmarCompra.setOnClickListener {
+            if(viewModel.hayProductosCheckeados()){
+                viewModel.realizarCompra()
+                editarLista()
+            }else{
+                showToast(requireContext(),"No se seleccionó ningún producto")
+            }
         }
 
         btnComprasFavoritas.setOnClickListener {
@@ -206,18 +220,12 @@ class ListaDeComprasFragment : Fragment() {
             //muestro los componentes de realizar compra con la checklist
             visibilidadChecklist(View.VISIBLE)
 
+            viewModel.setEstaEnRealizarCompra(true)
+
             binding.precioTotalCompra.text =
                 "Precio total: $" + viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual())
                     .toString()
 
-            binding.btnConfirmarCompra.setOnClickListener {
-                if(viewModel.hayProductosCheckeados()){
-                    viewModel.realizarCompra()
-                    editarLista()
-                }else{
-                    showToast(requireContext(),"No se seleccionó ningún producto")
-                }
-            }
         }else{
             showToast(requireContext(),"No hay productos en la lista")
         }
@@ -233,6 +241,8 @@ class ListaDeComprasFragment : Fragment() {
 
         //muestro los componentes de la lista de compras
         visibilidadListaCompras(View.VISIBLE)
+
+        viewModel.setEstaEnRealizarCompra(false)
     }
 
     private fun visibilidadChecklist(visibility: Int) {
@@ -251,10 +261,5 @@ class ListaDeComprasFragment : Fragment() {
         binding.rvListaCompra.visibility = visibility
         binding.txtPrecioTotalLista.visibility = visibility
     }
-
-    //    override fun onDestroyView() {
-//        super.onDestroyView()
-//        viewModel.vaciarCheckList()
-//    }
 }
 

@@ -26,6 +26,7 @@ class FamilyViewModel : ViewModel() {
     }
 
     private val listaDeComprasChecklist: MutableList<ItemListaChecklist> = mutableListOf()
+    private var estaEnRealizarCompra: Boolean = false
 
 //    fun loadFamilia(it: MutableLiveData<Familia>) {
 //        viewModelScope.launch {
@@ -49,11 +50,22 @@ class FamilyViewModel : ViewModel() {
     }*/
 
     fun cargarChecklist(){
+        val listaProvisional: MutableList<ItemListaChecklist> = mutableListOf()
+        listaProvisional.addAll(listaDeComprasChecklist)
         listaDeComprasChecklist.clear()
         this.familia.value?.let { familia ->
             val listaDeCompras = getListaByIdEnFamilia(familia, getIdListaDeComprasActual())
             for (item: ItemLista in listaDeCompras.productos) {
-                listaDeComprasChecklist.add(ItemListaChecklist(item.producto, item.cantidad, item.nombreUsuario, false))
+                val prodCheck = listaProvisional.find { it.producto.id == item.producto.id }
+                if(prodCheck != null){
+                    if(prodCheck.estado){
+                        listaDeComprasChecklist.add(ItemListaChecklist(item.producto, item.cantidad, item.nombreUsuario, true))
+                    }else{
+                        listaDeComprasChecklist.add(ItemListaChecklist(item.producto, item.cantidad, item.nombreUsuario, false))
+                    }
+                }else{
+                    listaDeComprasChecklist.add(ItemListaChecklist(item.producto, item.cantidad, item.nombreUsuario, false))
+                }
             }
         }
     }
@@ -157,6 +169,14 @@ class FamilyViewModel : ViewModel() {
         }
     }
 
+    fun estaEnRealizarCompra(): Boolean{
+        return estaEnRealizarCompra
+    }
+
+    fun setEstaEnRealizarCompra(esta: Boolean){
+        estaEnRealizarCompra = esta
+    }
+
     fun hayProductosCheckeados(): Boolean{
         var count = 0
         for (item: ItemListaChecklist in listaDeComprasChecklist){
@@ -172,10 +192,6 @@ class FamilyViewModel : ViewModel() {
         if (prod != null) {
             prod.estado = !prod.estado
         }
-    }
-
-    fun vaciarCheckList(){
-        listaDeComprasChecklist.clear()
     }
 
     private fun pasarProductosALista(produtos:MutableList<ItemLista>,idLista: String){
