@@ -321,21 +321,25 @@ class FamilyViewModel : ViewModel() {
         }.toMutableList()
     }
 
-    fun crearLista(nombre: String,tipoLista: TipoLista) {
+    fun crearLista(nombre: String,tipoLista: TipoLista){
+
         this.familia.value?.let { familia ->
             val listaDeCompras = getListaByIdEnFamilia(familia, getIdListaDeComprasActual())
-            val nuevaLista = Lista(
-                "ListaFav${System.currentTimeMillis()}",
-                nombre,
-                tipoLista
-            )
-            for (prod in listaDeCompras.productos) {
-                nuevaLista.agregarProducto(prod)
+            if(listaDeCompras.productos.isNotEmpty()){
+                val nuevaLista = Lista(
+                    "ListaFav${System.currentTimeMillis()}",
+                    nombre,
+                    tipoLista
+                )
+                for (prod in listaDeCompras.productos) {
+                    nuevaLista.agregarProducto(prod)
+                }
+                familia.listas.add(nuevaLista)
+                actualizarFamilia(familia)
             }
-            familia.listas.add(nuevaLista)
-            actualizarFamilia(familia)
         }
     }
+
     fun borrarListaFavorita(idListaActual: String?) {
     val listaABorrar = idListaActual?.let { this.familia.value?.let { it1 ->
         getListaByIdEnFamilia(
@@ -345,6 +349,10 @@ class FamilyViewModel : ViewModel() {
             this.familia.value?.listas?.remove(listaABorrar)
             this.familia.value?.let { this.actualizarFamilia(it) }
         }
+    }
+
+    fun hayProductosEnLista():Boolean?{
+        return this.familia.value?.listas?.find { it.tipoLista == TipoLista.LISTA_DE_COMPRAS }?.productos?.isNotEmpty()
     }
 
 /*    fun crearListaFavorita(nombre:String, tipoLista: TipoLista){

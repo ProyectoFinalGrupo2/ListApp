@@ -250,29 +250,34 @@ class ListaDeComprasFragment : Fragment() {
         }
 
         btnAgregarListaFav.setOnClickListener {
-            popupBuilder = AlertDialog.Builder(context)
-            val popupView = layoutInflater.inflate(R.layout.popup_crear_compra_fav, null)
-            val nombreLista = popupView.findViewById<EditText>(R.id.txt_nombre_compra_fav)
-            val btnCrear = popupView.findViewById<Button>(R.id.btn_crear_lista)
-            val btnCerrar = popupView.findViewById<ImageView>(R.id.btn_cerrar_popup)
+            if(viewModel.hayProductosEnLista() == true){
+                popupBuilder = AlertDialog.Builder(context)
+                val popupView = layoutInflater.inflate(R.layout.popup_crear_compra_fav, null)
+                val nombreLista = popupView.findViewById<EditText>(R.id.txt_nombre_compra_fav)
+                val btnCrear = popupView.findViewById<Button>(R.id.btn_crear_lista)
+                val btnCerrar = popupView.findViewById<ImageView>(R.id.btn_cerrar_popup)
 
-            btnCerrar.setOnClickListener {
-                popup.dismiss()
-            }
-
-            btnCrear.setOnClickListener {
-                val nombre = nombreLista.text.toString()
-                if (nombre.isNotEmpty()) {
-                    viewModel.crearLista(nombre,TipoLista.LISTA_FAVORITA)
+                btnCerrar.setOnClickListener {
                     popup.dismiss()
-                } else {
-                    nombreLista.error = "El nombre de la lista no puede estar vacío."
                 }
+
+                btnCrear.setOnClickListener {
+                    val nombre = nombreLista.text.toString()
+                    if (nombre.isNotEmpty()) {
+                        viewModel.crearLista(nombre,TipoLista.LISTA_FAVORITA)
+                        popup.dismiss()
+                    } else {
+                        nombreLista.error = "El nombre de la lista no puede estar vacío."
+                    }
+                }
+
+                popupBuilder.setView(popupView)
+                popup = popupBuilder.create()
+                popup.show()
+            }else{
+                showToast(requireContext(),"No hay productos en la lista")
             }
 
-            popupBuilder.setView(popupView)
-            popup = popupBuilder.create()
-            popup.show()
         }
     }
 
