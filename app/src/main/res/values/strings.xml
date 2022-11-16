@@ -12,6 +12,13 @@
     <string name="aviso_borrar_lista">Una vez borrada no podrá recuperarse. En caso de quererla nuevamente, deberá crearla.</string>
     <string name="aviso_borrar_producto">Una vez borrado no podrá recuperarse. En caso de quererlo nuevamente, deberá crearlo.</string>
     <string name="precio_total">Precio total: $ %1$s</string>
+    <string name="atras">Atras</string>
+    <string name="configuraci_n_de_usuario">Configuración de usuario</string>
+    <string name="configuracion">Configuracion</string>
+    <string name="nuevo_email">Nuevo Email</string>
+    <string name="cambiar_email">Cambiar email</string>
+    <string name="salir_de_la_familia">Salir de la familia</string>
+    <string name="cerrar_sesi_n">Cerrar Sesión</string>
 
 
 </resources>
