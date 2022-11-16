@@ -7,7 +7,7 @@ data class Lista(
     val nombre: String? = null,
     val tipoLista: TipoLista? = null,
     val fechaCreacion: Timestamp? = Timestamp.now(),
-    val productos: MutableList<ItemLista> = mutableListOf(),
+    var productos: MutableList<ItemLista> = mutableListOf(),
 ) {
     fun agregarProducto(itemLista: ItemLista) {
         val id = itemLista.producto.id
@@ -35,10 +35,15 @@ data class Lista(
         }
     }
 
-    fun modificarProductoPorID(idProd:String, nombre:String, precio:Double, idCategoria: String){
-        var item = buscarProductoPorId(idProd)
-        if(item !=null){
-            var prod = item.producto
+    fun modificarProductoPorID(
+        idProd: String,
+        nombre: String,
+        precio: Double,
+        idCategoria: String
+    ) {
+        val item = buscarProductoPorId(idProd)
+        if (item != null) {
+            val prod = item.producto
             prod.nombre = nombre
             prod.precio = precio
             prod.id_Categoria = idCategoria
@@ -49,8 +54,5 @@ data class Lista(
         return productos.firstOrNull { it.producto.id == id } != null
     }
 
-    fun vaciarLista() {
-        productos.clear()
-    }
 }
 

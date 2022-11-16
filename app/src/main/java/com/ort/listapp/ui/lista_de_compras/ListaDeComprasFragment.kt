@@ -111,6 +111,7 @@ class ListaDeComprasFragment : Fragment() {
         val txtPrecioTotalLista = binding.txtPrecioTotalLista
 
         viewModel.getFamilia().observe(this) {
+            viewModel.actualizarPrecios()
             val total = viewModel.precioTotalListaById(viewModel.getIdListaDeComprasActual())
                 .toString()
             txtPrecioTotalLista.text = "Precio total: $$total"

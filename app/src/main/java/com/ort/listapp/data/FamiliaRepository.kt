@@ -15,20 +15,6 @@ class FamiliaRepository {
     private val db = Firebase.firestore
     private val familiassRef = db.collection(DB_FAMILIAS)
 
-
-//    suspend fun getFamiliaById(id: String): Familia {
-//        try {
-//            val documentSnapshot = familiassRef.document(id).get().await()
-//            if (documentSnapshot.exists()) {
-//                return documentSnapshot.toObject<Familia>()!!
-//            } else {
-//                throw Exception("Documento no encontrado")
-//            }
-//        } catch (e: Exception) {
-//            throw Exception("Error en getFamiliaById")
-//        }
-//    }
-
     fun suscribeFamilia(familia: MutableLiveData<Familia>) {
         val docRef = familiassRef.document(prefsHelper.getFamilyId())
         docRef.addSnapshotListener { snapshot, e ->
@@ -46,23 +32,6 @@ class FamiliaRepository {
     suspend fun guardarFamilia(familia: Familia) {
         familiassRef.document(familia.id).set(familia).await()
     }
-
-//    fun existeUsuarioEnAlgunaFamilia(email: String): Boolean =
-//        getFamiliaByEmailUsuario(email) != null
-//
-//    fun getFamiliaByEmailUsuario(email: String): Familia? =
-//        runBlocking {
-//            withContext(Dispatchers.Default) {
-//                var resp: Familia? = null
-//                val querySnapshot = familiassRef.whereArrayContains("usuarios", email)
-//                    .get()
-//                    .await()
-//                if (!querySnapshot.isEmpty) {
-//                    resp = querySnapshot.toList()[0].toObject<Familia>()
-//                }
-//                return@withContext resp
-//            }
-//        }
 
     suspend fun crearFamilia(nombre: String, id: String, password: String) {
         val familia = Familia(
