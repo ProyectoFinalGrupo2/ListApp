@@ -24,15 +24,12 @@ import com.ort.listapp.domain.model.Producto
 import com.ort.listapp.ui.FamilyViewModel
 import com.ort.listapp.ui.adapters.ProductoAdapter
 import com.ort.listapp.ui.adapters.ProductoFiltradoAdapter
-import com.ort.listapp.ui.auth.AuthViewModel
 import com.ort.listapp.utils.SysConstants.PREFIJO_PROD_PERS
 import java.text.DecimalFormat
 
 @Suppress("DEPRECATION")
 @SuppressLint("SetTextI18n")
 class ProductosFragment : Fragment() {
-
-    private val authViewModel: AuthViewModel by activityViewModels()
 
     private var _binding: FragmentProductosBinding? = null
     private val binding get() = _binding!!
@@ -108,7 +105,6 @@ class ProductosFragment : Fragment() {
 
         val tvProdFavoritos = binding.tvProdFavoritos
         val tvProdPersonalizados = binding.tvProdPersonalizados
-        val tvProdFiltrados = binding.tvProdFiltrados
 
         viewModel.getFamilia().observe(viewLifecycleOwner) {
             rvProdFavoritos.adapter =

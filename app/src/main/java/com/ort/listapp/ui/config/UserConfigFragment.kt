@@ -1,14 +1,12 @@
 package com.ort.listapp.ui.config
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ort.listapp.ListaAppApplication.Companion.prefsHelper
 import com.ort.listapp.R
 import com.ort.listapp.databinding.FragmentUserConfigBinding
@@ -31,20 +29,31 @@ class UserConfigFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentUserConfigBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val bottomNavigationView =
-            requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        bottomNavigationView.visibility = View.GONE
+    @Deprecated("Deprecated in Java")
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.tool_bar_config, menu)
     }
 
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.btnVolver -> {
+                binding.root.findNavController().navigateUp()
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+        return true
+    }
+
+    @SuppressLint("SetTextI18n")
     override fun onStart() {
         super.onStart()
 
-        val btnVolver = binding.btnVolverUserConfig
+//        val btnVolver = binding.btnVolverUserConfig
         val nombreUsuario = binding.nombreUsuario
         val email = binding.email
         val tfNewEmail = binding.tfNewEmail
@@ -68,9 +77,9 @@ class UserConfigFragment : Fragment() {
             passFamilia.text = "Contraseña: ${familia.password}"
         }
 
-        btnVolver.setOnClickListener {
-            view?.findNavController()?.navigateUp()
-        }
+//        btnVolver.setOnClickListener {
+//            view?.findNavController()?.navigateUp()
+//        }
 
         btnCambiarEmail.setOnClickListener {
             if (inputEmail != null) {
