@@ -6,16 +6,12 @@ import android.os.Bundle
 import android.view.*
 import android.widget.*
 import androidx.activity.addCallback
-import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputLayout
-import com.ort.listapp.ListaAppApplication
 import com.ort.listapp.R
 import com.ort.listapp.databinding.FragmentListaDeComprasBinding
 import com.ort.listapp.domain.model.ItemLista
@@ -24,7 +20,6 @@ import com.ort.listapp.ui.FamilyViewModel
 import com.ort.listapp.ui.adapters.ProductoListadoAdapter
 import com.ort.listapp.ui.adapters.RealizarCompraAdapter
 import com.ort.listapp.ui.auth.AuthViewModel
-import com.ort.listapp.utils.HelperClass
 import com.ort.listapp.utils.HelperClass.showToast
 
 @Suppress("DEPRECATION")
@@ -94,93 +89,15 @@ class ListaDeComprasFragment : Fragment() {
         var direction: NavDirections? = null
         when (item.itemId) {
             R.id.userConfigButton -> {
-                initPopup()
+                direction =
+                    ListaDeComprasFragmentDirections.actionListaDeComprasFragmentToUserConfigFragment()
             }
             else -> super.onOptionsItemSelected(item)
         }
+        direction?.let {
+            binding.root.findNavController().navigate(it)
+        }
         return true
-    }
-
-    private fun initPopup() {
-        popupBuilder = AlertDialog.Builder(requireContext())
-        val popUpView = layoutInflater.inflate(R.layout.popup_configuracion, null)
-        val btnCerrar = popUpView.findViewById<ImageView>(R.id.btn_cerrar_popup_config)
-        val nombreUsuario = popUpView.findViewById<TextView>(R.id.nombreUsuarioPopup)
-        val email = popUpView.findViewById<TextView>(R.id.emailConfigPopup)
-        val tfNewEmail = popUpView.findViewById<TextInputLayout>(R.id.tfNewEmailPopup)
-        val inputEmail = tfNewEmail.editText
-        val btnCambiarEmail =
-            popUpView.findViewById<MaterialButton>(R.id.btnCambiarEmailPopup)
-        val nombreFamilia = popUpView.findViewById<TextView>(R.id.nombreFamiliaPopup)
-        val codigoFamilia = popUpView.findViewById<TextView>(R.id.codigoFamiliaPopup)
-        val passFamilia = popUpView.findViewById<TextView>(R.id.passFamiliaPopup)
-        val btnSalirFamilia =
-            popUpView.findViewById<MaterialButton>(R.id.btnSalirFamiliaPopup)
-        val btnCerrarSesion =
-            popUpView.findViewById<MaterialButton>(R.id.btnCerrarSesionPopup)
-
-        val familia = viewModel.getFamilia().value
-        val userName = ListaAppApplication.prefsHelper.getUserName()
-        val userEmail = ListaAppApplication.prefsHelper.getUserEmail()
-
-        if (familia != null) {
-            nombreUsuario.text = "Nombre del usuario: $userName"
-            email.text = "Email: $userEmail"
-            nombreFamilia.text = "Familia: ${familia.nombre}"
-            codigoFamilia.text = "Código: ${familia.id}"
-            passFamilia.text = "Contraseña: ${familia.password}"
-        }
-
-        btnCambiarEmail.setOnClickListener {
-            if (inputEmail != null) {
-                if (!HelperClass.isEmailValid(inputEmail.text.toString().trim())) {
-                    tfNewEmail.error = "Email invalido"
-                } else {
-                    btnCambiarEmail.icon = HelperClass.getCircularProgress(requireContext())
-                    btnCambiarEmail.isClickable = false
-                    authViewModel.changeEmail(
-                        inputEmail.text.toString(),
-                    )
-                }
-            }
-        }
-
-        btnSalirFamilia.setOnClickListener {
-            authViewModel.borrarseDeFamilia()
-        }
-
-        btnCerrarSesion.setOnClickListener {
-            authViewModel.logout()
-        }
-
-        authViewModel.authState.observe(this) {
-            if (it.successMessage.isNotBlank()) {
-                showToast(
-                    requireContext(),
-                    it.successMessage
-                )
-                authViewModel.logout()
-            }
-            if (it.errorMessage.isNotBlank()) showToast(
-                requireContext(),
-                it.errorMessage
-            )
-        }
-
-        inputEmail?.doAfterTextChanged {
-            tfNewEmail.error = null
-            if (!HelperClass.isEmailValid(inputEmail.text.toString().trim())) {
-                tfNewEmail.helperText = "Ingrese un email válido"
-            } else tfNewEmail.helperText = null
-        }
-
-        popupBuilder.setView(popUpView)
-        popup = popupBuilder.create()
-        popup.show()
-
-        btnCerrar.setOnClickListener {
-            popup.dismiss()
-        }
     }
 
     override fun onStart() {

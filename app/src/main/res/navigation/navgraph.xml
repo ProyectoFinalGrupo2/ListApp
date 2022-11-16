@@ -9,7 +9,7 @@
         android:id="@+id/lista_de_comprasFragment"
         android:name="com.ort.listapp.ui.lista_de_compras.ListaDeComprasFragment"
         android:label="fragment_lista_de_compras"
-        tools:layout="@layout/fragment_lista_de_compras" >
+        tools:layout="@layout/fragment_lista_de_compras">
         <action
             android:id="@+id/action_lista_de_comprasFragment_to_comprasFavoritasFragment"
             app:destination="@id/comprasFavoritasFragment" />
@@ -24,16 +24,24 @@
         android:id="@+id/alacenaFragment"
         android:name="com.ort.listapp.ui.alacena.AlacenaFragment"
         android:label="fragment_alacena"
-        tools:layout="@layout/fragment_alacena" />
+        tools:layout="@layout/fragment_alacena">
+        <action
+            android:id="@+id/action_alacenaFragment_to_userConfigFragment"
+            app:destination="@id/userConfigFragment" />
+    </fragment>
     <fragment
         android:id="@+id/productosFragment"
         android:name="com.ort.listapp.ui.productos.ProductosFragment"
-        android:label="ProductosFragment" />
+        android:label="ProductosFragment">
+        <action
+            android:id="@+id/action_productosFragment_to_userConfigFragment"
+            app:destination="@id/userConfigFragment" />
+    </fragment>
     <fragment
         android:id="@+id/comprasFavoritasFragment"
         android:name="com.ort.listapp.ui.compras_favoritas.ComprasFavoritasFragment"
         android:label="fragment_compras_favoritas"
-        tools:layout="@layout/fragment_compras_favoritas" >
+        tools:layout="@layout/fragment_compras_favoritas">
         <action
             android:id="@+id/action_comprasFavoritasFragment_to_lista_de_comprasFragment"
             app:destination="@id/lista_de_comprasFragment" />
@@ -42,7 +50,7 @@
         android:id="@+id/historial"
         android:name="com.ort.listapp.ui.historial.Historial"
         android:label="fragment_historial"
-        tools:layout="@layout/fragment_historial" >
+        tools:layout="@layout/fragment_historial">
         <action
             android:id="@+id/action_historial_to_lista_de_comprasFragment"
             app:destination="@id/lista_de_comprasFragment" />
@@ -51,9 +59,5 @@
         android:id="@+id/userConfigFragment"
         android:name="com.ort.listapp.ui.config.UserConfigFragment"
         android:label="fragment_config"
-        tools:layout="@layout/fragment_user_config" >
-        <action
-            android:id="@+id/action_userConfigFragment_to_lista_de_comprasFragment"
-            app:destination="@id/lista_de_comprasFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_user_config" />
 </navigation>

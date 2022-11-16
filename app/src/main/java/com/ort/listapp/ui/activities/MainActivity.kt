@@ -2,8 +2,10 @@ package com.ort.listapp.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -26,9 +28,18 @@ class MainActivity : AppCompatActivity(), AuthStateListener {
         bottomNavView = findViewById(R.id.bottomNavigationView)
         val navController = navHostFragment.navController
         NavigationUI.setupWithNavController(bottomNavView, navController)
-
-        toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        navController.addOnDestinationChangedListener { _, nd: NavDestination, _ ->
+            if (nd.id == R.id.alacenaFragment ||
+                nd.id == R.id.productosFragment ||
+                nd.id == R.id.lista_de_comprasFragment
+            ) {
+                bottomNavView.visibility = View.VISIBLE
+            } else {
+                bottomNavView.visibility = View.GONE
+            }
+            toolbar = findViewById<Toolbar>(R.id.toolbar)
+            setSupportActionBar(toolbar)
+        }
     }
 
     override fun onStart() {

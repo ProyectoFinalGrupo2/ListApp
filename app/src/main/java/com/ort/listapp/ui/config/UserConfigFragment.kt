@@ -8,7 +8,9 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ort.listapp.ListaAppApplication.Companion.prefsHelper
+import com.ort.listapp.R
 import com.ort.listapp.databinding.FragmentUserConfigBinding
 import com.ort.listapp.ui.FamilyViewModel
 import com.ort.listapp.ui.auth.AuthViewModel
@@ -30,6 +32,13 @@ class UserConfigFragment : Fragment() {
     ): View {
         binding = FragmentUserConfigBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val bottomNavigationView =
+            requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView.visibility = View.GONE
     }
 
     override fun onStart() {
@@ -60,9 +69,7 @@ class UserConfigFragment : Fragment() {
         }
 
         btnVolver.setOnClickListener {
-            val action =
-                UserConfigFragmentDirections.actionUserConfigFragmentToListaDeComprasFragment()
-            view?.findNavController()?.navigate(action)
+            view?.findNavController()?.navigateUp()
         }
 
         btnCambiarEmail.setOnClickListener {
