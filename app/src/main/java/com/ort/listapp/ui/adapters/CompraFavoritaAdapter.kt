@@ -1,5 +1,6 @@
 package com.ort.listapp.ui.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
@@ -21,7 +22,6 @@ class CompraFavoritaAdapter(
     val context: Context,
     var onClickLista: (Lista) -> Unit
 ) : RecyclerView.Adapter<CompraFavoritaAdapter.CompraFavoritaHolder>() {
-
 
     class CompraFavoritaHolder(v: View) : RecyclerView.ViewHolder(v) {
         private var view: View
@@ -49,6 +49,7 @@ class CompraFavoritaAdapter(
             return view.findViewById(R.id.card_compra_fav)
         }
 
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CompraFavoritaHolder {
@@ -58,6 +59,7 @@ class CompraFavoritaAdapter(
     }
 
     override fun onBindViewHolder(holder: CompraFavoritaHolder, position: Int) {
+
         //Iteración de la lista y va  usando las funciones set
         //Solamente itera sobre los elementos en pantalla e itera a medida que se scrollea
         comprasFavoritas[position].nombre?.let { holder.setNombre(it) }
@@ -74,7 +76,11 @@ class CompraFavoritaAdapter(
         return comprasFavoritas.size
     }
 
-    public fun updateData(comprasFavoritas2: List<Lista>){
-        this.comprasFavoritas = comprasFavoritas2
+    fun setCompras(comprasActualizadas: List<Lista>){
+        this.comprasFavoritas = comprasActualizadas
+        notifyDataSetChanged()
     }
+
+
+
 }

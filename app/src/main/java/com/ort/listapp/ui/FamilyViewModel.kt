@@ -211,10 +211,10 @@ class FamilyViewModel : ViewModel() {
         }
     }
 
-    private fun pasarProductosALista(produtos:MutableList<ItemLista>,idLista: String){
+    private fun pasarProductosALista(productos:MutableList<ItemLista>,idLista: String){
         val listaDestino = this.familia.value?.let { getListaByIdEnFamilia(it,idLista) }
         if(listaDestino!=null){
-            for(prod in produtos){
+            for(prod in productos){
                 listaDestino.agregarProducto(prod)
             }
             this.familia.value?.let { actualizarFamilia(it) }

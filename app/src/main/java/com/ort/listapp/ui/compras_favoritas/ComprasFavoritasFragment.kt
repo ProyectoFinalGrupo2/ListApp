@@ -9,13 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ort.listapp.R
 import com.ort.listapp.databinding.FragmentComprasFavoritasBinding
-import com.ort.listapp.databinding.FragmentProductosBinding
 import com.ort.listapp.domain.model.ItemLista
 import com.ort.listapp.domain.model.Lista
 import com.ort.listapp.domain.model.TipoLista
@@ -26,15 +26,12 @@ import com.ort.listapp.utils.HelperClass
 
 class ComprasFavoritasFragment : Fragment() {
 
-    /*companion object {
-        fun newInstance() = ComprasFavoritasFragment()
-    }*/
     private var _binding: FragmentComprasFavoritasBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: FamilyViewModel by activityViewModels()
-    private var listaActual: Lista? = null
-    private var listas :MutableList<Lista>? = null
+    private val comprasViewModel : ComprasFavoritasViewModel by viewModels()
+    private lateinit var adapter : CompraFavoritaAdapter
 
 
 
@@ -43,7 +40,6 @@ class ComprasFavoritasFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentComprasFavoritasBinding.inflate(inflater, container, false)
-        cargarListas()
         initRecyclerView()
         return binding.root
     }
@@ -51,14 +47,12 @@ class ComprasFavoritasFragment : Fragment() {
         binding.rvComprasFavoritas.setHasFixedSize(true)
         binding.rvComprasFavoritas.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.rvComprasFavoritas.adapter =
-            listas?.let { it2 ->
-                CompraFavoritaAdapter(it2,requireContext()) { lista ->
-                    onClickLista(
-                        lista
-                    )
-                }
+        adapter = getListasFavoritas()?.let {
+            CompraFavoritaAdapter(it,requireContext()){lista->
+                onClickLista(lista)
             }
+        }!!
+        binding.rvComprasFavoritas.adapter = adapter
 
         binding.rvListaComprasFavoritas.setHasFixedSize(true)
         binding.rvListaComprasFavoritas.layoutManager =
@@ -68,51 +62,38 @@ class ComprasFavoritasFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        val rvComprasFavoritas = binding.rvComprasFavoritas
-        val btnVolverListaCompra = binding.btnVolverListaCompra
-
         viewModel.getFamilia().observe(this, Observer {
-            listas?.clear()
-            viewModel.getFamilia().value?.let { viewModel.getListasByTipoEnFamilia(it,TipoLista.LISTA_FAVORITA) }
-                ?.let {listas?.addAll(it) }
-
+            getListasFavoritas()?.let { it1 -> adapter.setCompras(it1) }
             this.actualizarLista()
-            rvComprasFavoritas.adapter?.notifyDataSetChanged()
-
         })
-        btnVolverListaCompra.setOnClickListener {
+
+        binding.btnVolverListaCompra.setOnClickListener {
             val action = ComprasFavoritasFragmentDirections.actionComprasFavoritasFragmentToListaDeComprasFragment()
             view?.findNavController()?.navigate(action)
         }
 
     }
 
-
-    private fun cargarListas(){
-        listas = viewModel.getFamilia().value?.let { viewModel.getListasByTipoEnFamilia(it,TipoLista.LISTA_FAVORITA) }
-    }
-
     private fun onClickLista(lista:Lista){
-        listaActual = lista
+        comprasViewModel.listaActual = lista
         this.actualizarLista()
     }
 
 
     private fun actualizarLista(){
-        if(listaActual != null) {
-            val totalLista = listaActual!!.id?.let {
+
+        if(comprasViewModel.hayListaSeleccionada()) {
+            val listaEnVista = comprasViewModel.listaActual
+            val totalLista = listaEnVista!!.id?.let {
                 viewModel.precioTotalListaById(
                     it
                 )
             }.toString()
             binding.listaFavCompleta.visibility = View.VISIBLE
             binding.txtTotalListaFav.text = resources.getString(R.string.precio_total,totalLista)
-            binding.nombreListaCF.text = listaActual!!.nombre
-            //binding.rvListaComprasFavoritas.setHasFixedSize(true)
-            //binding.rvListaComprasFavoritas.layoutManager =
-            //    LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+            binding.nombreListaCF.text = listaEnVista.nombre
             binding.rvListaComprasFavoritas.adapter =
-                listaActual!!.id?.let { viewModel.getProductosByIdLista(it) }?.let { it ->
+                listaEnVista.id?.let { viewModel.getProductosByIdLista(it) }?.let { it ->
                     ProductoListadoAdapter(
                         it,
                         requireContext(),
@@ -123,8 +104,8 @@ class ComprasFavoritasFragment : Fragment() {
                 }
 
             binding.btnCopiarListaFav.setOnClickListener {
-                listaActual!!.id?.let { it1 -> viewModel.copiarListaFavorita(it1) }
-                HelperClass.showToast(requireContext(), "Se pasaron todos los productos a la lista actual")
+                listaEnVista.id?.let { it1 -> viewModel.copiarListaFavorita(it1) }
+                HelperClass.showToast(requireContext(), comprasViewModel.prodsPasados)
 
             }
             binding.btnBorrarListaFav.setOnClickListener {
@@ -148,15 +129,13 @@ class ComprasFavoritasFragment : Fragment() {
         val txtDescripcion = popUpView.findViewById<TextView>(R.id.txt_info_borrado_item)
         val btnCerrar = popUpView.findViewById<ImageView>(R.id.btn_cerrar_popup)
 
-        txtBorrar.text = resources.getString(R.string.borrar_lista,
-            "'"+ (listaActual?.nombre +"'"
-        ))
-        txtDescripcion.text = resources.getString(R.string.aviso_borrar_lista)
+        txtBorrar.text = comprasViewModel.getTxtBorrarLista()
+        txtDescripcion.text = comprasViewModel.txtAvisoBorrar
 
         btnBorrar.setOnClickListener {
-            viewModel.borrarListaFavorita(listaActual?.id)
-            listaActual = null
-            binding.listaFavCompleta.visibility = View.INVISIBLE
+            viewModel.borrarListaFavorita(comprasViewModel.listaActual?.id)
+            comprasViewModel.listaActual = null
+            this.actualizarLista()
             popUp.dismiss()
         }
         btnCerrar.setOnClickListener {
@@ -170,7 +149,7 @@ class ComprasFavoritasFragment : Fragment() {
     }
 
     private fun removerProducto(itemLista: ItemLista) {
-        listaActual?.id?.let {
+        comprasViewModel.listaActual?.id?.let {
             viewModel.removerProductoDeListaById(
                 it,
                 itemLista.producto.id
@@ -179,7 +158,7 @@ class ComprasFavoritasFragment : Fragment() {
     }
 
     private fun clickSumaYResta(producto: ItemLista, cantidad: Int) {
-        listaActual?.id?.let {
+        comprasViewModel.listaActual?.id?.let {
             viewModel.actualizarProductoEnListaById(
                 it,
                 producto.producto.id,
@@ -192,9 +171,14 @@ class ComprasFavoritasFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(ComprasFavoritasViewModel::class.java)
         // TODO: Use the ViewModel
     }*/
+
+    private fun getListasFavoritas() : MutableList<Lista>? {
+        return viewModel.getFamilia().value?.let { viewModel.getListasByTipoEnFamilia(it, TipoLista.LISTA_FAVORITA) }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
 }
+
