@@ -53,7 +53,6 @@ class UserConfigFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-//        val btnVolver = binding.btnVolverUserConfig
         val nombreUsuario = binding.nombreUsuario
         val email = binding.email
         val tfNewEmail = binding.tfNewEmail
@@ -76,10 +75,6 @@ class UserConfigFragment : Fragment() {
             codigoFamilia.text = "Código: ${familia.id}"
             passFamilia.text = "Contraseña: ${familia.password}"
         }
-
-//        btnVolver.setOnClickListener {
-//            view?.findNavController()?.navigateUp()
-//        }
 
         btnCambiarEmail.setOnClickListener {
             if (inputEmail != null) {

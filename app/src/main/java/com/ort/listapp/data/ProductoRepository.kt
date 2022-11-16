@@ -1,24 +1,15 @@
 package com.ort.listapp.data
 
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.ort.listapp.data.model.toPreciosProductos
+import com.ort.listapp.data.network.ComparativaService
 
 class ProductoRepository {
 
-    private val db = Firebase.firestore
-    private val productosRef = db.collection("productos")
+    private val api = ComparativaService()
 
-//    suspend fun getProductoById(productoId: String): Producto {
-//        var producto = Producto(id = productoId, nombre = "No encontrado")
-//        val documentSnapshot = productosRef.document(productoId).get().await()
-//        if (documentSnapshot.exists()) {
-//            documentSnapshot.toObject<Producto>()?.let {
-//                producto = it
-//                producto.id = productoId
-//            }
-//        }
-//        return producto
-//    }
+    suspend fun obtenerPrecios(lista: List<String>): Map<String, Double>? {
+        return api.getPricesFromIds(lista)?.toPreciosProductos()
+    }
 
 }
 

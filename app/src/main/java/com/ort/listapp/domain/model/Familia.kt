@@ -1,5 +1,7 @@
 package com.ort.listapp.domain.model
 
+import com.google.firebase.Timestamp
+
 data class Familia(
     var id: String = "",
     val nombre: String = "",
@@ -7,7 +9,8 @@ data class Familia(
     val usuarios: List<String> = listOf(),
     val productosPersonalizados: ArrayList<Producto> = arrayListOf(),
     var productosFavoritos: ArrayList<Producto> = arrayListOf(),
-    val listas: ArrayList<Lista> = arrayListOf(
+    var ultimaActualizacionPrecios: Timestamp? = null,
+    var listas: ArrayList<Lista> = arrayListOf(
         Lista(
             id = "listaCompras",
             nombre = "listaCompras",
