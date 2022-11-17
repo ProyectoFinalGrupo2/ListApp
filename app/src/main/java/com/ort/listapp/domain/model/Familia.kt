@@ -9,7 +9,7 @@ data class Familia(
     val usuarios: List<String> = listOf(),
     val productosPersonalizados: ArrayList<Producto> = arrayListOf(),
     var productosFavoritos: ArrayList<Producto> = arrayListOf(),
-    var ultimaActualizacionPrecios: Timestamp? = null,
+    var ultimaActualizacionPrecios: Timestamp? = Timestamp.now(),
     var listas: ArrayList<Lista> = arrayListOf(
         Lista(
             id = "listaCompras",

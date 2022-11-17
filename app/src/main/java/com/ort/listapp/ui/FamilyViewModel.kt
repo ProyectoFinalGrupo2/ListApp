@@ -387,6 +387,31 @@ class FamilyViewModel : ViewModel() {
         }
     }
 
+    fun actualizarPrecios() {
+        this.familia.value?.let { familia ->
+            if (hayQueActualizar()) {
+                val listaProductos = obtenerProductosParaActualizarPrecios()
+                if (listaProductos.isNotEmpty()) {
+                    viewModelScope.launch {
+                        val precios =
+                            repoProductos.obtenerPrecios(listaProductos)
+                        if (precios != null) {
+                            actualizarPreciosEnListas(precios)
+                            familia.ultimaActualizacionPrecios = Timestamp.now()
+                            actualizarFamilia(familia)
+                        }
+                    }
+                } else familia.ultimaActualizacionPrecios = Timestamp.now()
+            }
+        }
+    }
+
+    private fun hayQueActualizar(): Boolean {
+        this.familia.value?.ultimaActualizacionPrecios.let {
+            return it?.seconds!! < getHorarioDeCorte()
+        }
+    }
+
     private fun obtenerProductosParaActualizarPrecios(): List<String> {
         val set = mutableSetOf<String>()
         getProductosFavoritos().forEach {
@@ -402,32 +427,6 @@ class FamilyViewModel : ViewModel() {
             }
         }
         return set.toList()
-    }
-
-
-    fun actualizarPrecios() {
-        if (hayQueActualizar()) {
-            viewModelScope.launch {
-                val precios =
-                    repoProductos.obtenerPrecios(obtenerProductosParaActualizarPrecios())
-                if (precios != null) {
-                    actualizarPreciosEnListas(precios)
-                }
-            }
-        }
-    }
-
-    private fun hayQueActualizar(): Boolean {
-        this.familia.value?.let { familia ->
-            val ultimaActualizacionPrecios = familia.ultimaActualizacionPrecios
-            if (ultimaActualizacionPrecios != null) {
-                val hoyMediodia = LocalDateTime.of(
-                    LocalDate.now(), LocalTime.of(12, 0)
-                ).toEpochSecond(ZoneOffset.ofHours(-3))
-                return ultimaActualizacionPrecios.seconds < hoyMediodia
-            } else return true
-        }
-        return false
     }
 
     private fun actualizarPreciosEnListas(precios: Map<String, Double>) {
@@ -448,11 +447,15 @@ class FamilyViewModel : ViewModel() {
                 }
                 lista
             } as ArrayList<Lista>
-            familia.ultimaActualizacionPrecios = Timestamp.now()
-            actualizarFamilia(familia)
         }
     }
 
+    private fun getHorarioDeCorte(): Long {
+        return LocalDateTime.of(
+            LocalDate.now(), LocalTime.of(12, 0)
+        ).toEpochSecond(ZoneOffset.ofHours(-3))
+    }
 }
+
 
 
