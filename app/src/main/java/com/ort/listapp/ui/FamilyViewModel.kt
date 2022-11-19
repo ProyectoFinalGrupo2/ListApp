@@ -377,7 +377,9 @@ class FamilyViewModel : ViewModel() {
     }
 
     fun hayProductosEnLista(): Boolean? {
-        return this.familia.value?.listas?.find { it.tipoLista == TipoLista.LISTA_DE_COMPRAS }?.productos?.isNotEmpty()
+        return this.familia.value?.listas?.find {
+            it.tipoLista == TipoLista.LISTA_DE_COMPRAS
+        }?.productos?.isNotEmpty()
     }
 
 
